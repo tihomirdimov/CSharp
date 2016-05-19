@@ -7,5 +7,6 @@ class Problem06TruckTour
 {
     static void Main(string[] args)
     {
+        int n = int.Parse(Console.ReadLine());
     }
 }
