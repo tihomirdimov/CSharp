@@ -5,24 +5,48 @@ using System.Text;
 using System.Threading.Tasks;
 class Problem06TruckTour
 {
-    static void Main(string[] args)
+    public static void Main()
     {
         int n = int.Parse(Console.ReadLine());
-        List<int[]> pumps = new List<int[]>();
+        Queue<long[]> pumps = new Queue<long[]>();
         for (int i = 0; i < n; i++)
         {
-            int[] currentPump = Console
+            long[] pumpToAdd = Console
                 .ReadLine()
                 .Split(new Char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(item => int.Parse(item))
+                .Select(item => long.Parse(item))
                 .ToArray();
-            pumps.Add(currentPump);
+            pumps.Enqueue(pumpToAdd);
         }
-        foreach (int[] pump in pumps)
+        for (int i = 0; i < n; i++)
         {
-            if (pump[0] > pump[1]) {
-                continue;
+            if (isTourPossible(pumps))
+            {
+                Console.WriteLine(i);
+                break;
+            }
+            else
+            {
+                pumps.Enqueue(pumps.Peek());
+                pumps.Dequeue();
             }
         }
+    }
+    public static bool isTourPossible(Queue<long[]> pumpsToCheck)
+    {
+        long fuel = 0;
+        foreach (long[] pumpToCheck in pumpsToCheck)
+        {
+            if ((pumpToCheck[0] + fuel) < pumpToCheck[1])
+            {
+                return false;
+            }
+            else
+            {
+                fuel += pumpToCheck[0];
+                fuel -= pumpToCheck[1];
+            }
+        }
+        return true;
     }
 }
