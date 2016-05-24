@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Problem06AMinerTask", "Prob
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Problem07FixEmails", "Problem07FixEmails\Problem07FixEmails.csproj", "{BBB8A1F1-CA41-44D7-8280-8FBC41776BDA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Problem08HandsOfCards", "Problem08HandsOfCards\Problem08HandsOfCards.csproj", "{63F58884-DFFC-4331-B3D6-819C349FF607}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{BBB8A1F1-CA41-44D7-8280-8FBC41776BDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBB8A1F1-CA41-44D7-8280-8FBC41776BDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBB8A1F1-CA41-44D7-8280-8FBC41776BDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63F58884-DFFC-4331-B3D6-819C349FF607}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63F58884-DFFC-4331-B3D6-819C349FF607}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63F58884-DFFC-4331-B3D6-819C349FF607}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63F58884-DFFC-4331-B3D6-819C349FF607}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
