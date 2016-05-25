@@ -65,24 +65,32 @@ namespace Problem08HandsOfCards
             switch (power)
             {
                 case 'J':
-                    return 11;
+                    result = 11;
+                    return result;
                 case 'Q':
-                    return 12;
+                    result = 12;
+                    return result;
                 case 'K':
-                    return 13;
+                    result = 13;
+                    return result;
                 case 'A':
-                    return 14;
+                    result = 14;
+                    return result;
                 case 'S':
-                    return 4;
+                    result = 4;
+                    return result;
                 case 'H':
-                    return 3;
+                    result = 3;
+                    return result;
                 case 'D':
-                    return 2;
+                    result = 2;
+                    return result;
                 case 'C':
-                    return 1;
+                    result = 1;
+                    return result;
                 default:
                     result = int.Parse(power.ToString());
-                    return power;
+                    return result;
             }
         }
     }
