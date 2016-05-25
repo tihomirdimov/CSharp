@@ -20,13 +20,12 @@ namespace Problem08HandsOfCards
             }
             foreach (KeyValuePair<string, HashSet<string>> player in playerResults)
             {
-                Console.WriteLine("{0}: ", player.Key);
+                int cardValues = 0;
                 foreach (string card in player.Value)
                 {
-                    Console.Write(card);
+                    cardValues += calculateCard(card);
                 }
-                Console.WriteLine();
-                
+                Console.Write("{0}: {1}\n", player.Key, cardValues);
             }
         }
         public static void addCards(string name, string cards)
@@ -34,63 +33,57 @@ namespace Problem08HandsOfCards
             HashSet<string> currentCards = new HashSet<string>(cards.Split(',').Select(item => item.Trim()).ToList());
             if (playerResults.ContainsKey(name))
             {
-                HashSet<string> tempCards = playerResults[name];
                 foreach (string currentCard in currentCards)
                 {
-                    tempCards.Add(currentCard);
+                    playerResults[name].Add(currentCard);
                 }
-                playerResults.Add(name, tempCards);
             }
             else
             {
                 playerResults.Add(name, currentCards);
             }
         }
-        //public static int calculateCard(string card)
-        //{
-        //    int cardPower = 0;
-        //    int cardColor = 0;
-        //    if (card.Length == 3)
-        //    {
-        //        cardPower = int.Parse(card.Substring(0, 2));
-        //        cardColor = cardToValue(card[card.Length - 1]);
-        //    }
-        //    else
-        //    {
-        //        cardPower = cardToValue(card[0]);
-        //        cardColor = cardToValue(card[card.Length - 1]);
-        //    }
-        //    return cardPower * cardColor;
-        //}
-        //public static int cardToValue(char power)
-        //{
-        //    switch (power)
-        //    {
-        //        case 'J':
-        //            return 11;
-        //        case 'Q':
-        //            return 12;
-        //        case 'K':
-        //            return 13;
-        //        case 'A':
-        //            return 14;
-        //        case 'S':
-        //            return 4;
-        //        case 'H':
-        //            return 3;
-        //        case 'D':
-        //            return 2;
-        //        case 'C':
-        //            return 1;
-        //        default:
-        //            return Convert.ToInt32(power);
-        //    }
-        //}
+        public static int calculateCard(string card)
+        {
+            int cardpower = 0;
+            int cardcolor = 0;
+            if (card.Length == 3)
+            {
+                cardpower = 10;
+                cardcolor = cardToValue(card[card.Length - 1]);
+            }
+            else
+            {
+                cardpower = cardToValue(Char.ToUpper(card[0]));
+                cardcolor = cardToValue(card[card.Length - 1]);
+            }
+            return cardpower * cardcolor;
+        }
+        public static int cardToValue(char power)
+        {
+            int result = 0;
+            switch (power)
+            {
+                case 'J':
+                    return 11;
+                case 'Q':
+                    return 12;
+                case 'K':
+                    return 13;
+                case 'A':
+                    return 14;
+                case 'S':
+                    return 4;
+                case 'H':
+                    return 3;
+                case 'D':
+                    return 2;
+                case 'C':
+                    return 1;
+                default:
+                    result = int.Parse(power.ToString());
+                    return power;
+            }
+        }
     }
 }
-//int cardrowvalue = 0;
-//            foreach (string cardwithcolor in cardswithcolor)
-//            {
-//                int cardvalue = calculatecard(cardwithcolor);
-//cardrowvalue += cardvalue;
-//            }
