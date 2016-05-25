@@ -47,7 +47,7 @@ namespace Problem08HandsOfCards
         {
             int cardpower = 0;
             int cardcolor = 0;
-            if (card.Length == 3)
+            if (card.Length > 2)
             {
                 cardpower = 10;
                 cardcolor = cardToValue(card[card.Length - 1]);
