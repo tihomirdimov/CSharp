@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Linq;
 using System.IO;
+
 class Tester
 {
     static void Main()
     {
-        Teste.CompareContent("test1.txt, ", "test2.txt");
+        Test.CompareContent("test1.txt, ", "test2.txt");
     }
     public static void CompareContent(string userOutputPath, string expectedOutputPath)
     {
@@ -28,9 +30,9 @@ class Tester
     {
         hasMismatch = false;
         string output = string.Empty;
-        string[] mismatches = new.string[actualOutputLines.lenght];
+        string[] mismatches = new string[actualOutputLines.Lenght];
         Console.WriteLine("Comparing files...");
-        for (int index = 0; index < actualOutputLines.lenght; index++)
+        for (int index = 0; index < actualOutputLines.Lenght; index++)
         {
             string actualLine = actualOutputLines[index];
             string expectedLine = expectedOutputLines[index];
@@ -42,7 +44,7 @@ class Tester
             }
             else
             {
-                output - actualLine;
+                output = actualLine;
                 output += Enviornment.NewLine;
             }
             mismatches[index] = output;
