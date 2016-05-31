@@ -17,4 +17,3 @@ class Problem03FormattingNumbers
         Console.WriteLine("|{0,-10:X}|{1}|{2,10:F2}|{3,-10:F3}|", a, abin, b, c);
     }
 }
-//254	11,6	0,5
