@@ -45,3 +45,4 @@ class Problem11PoisonousPlants
         Console.WriteLine(plantsLeft.Count-1);
     }
 }
+//77 from 100 points
