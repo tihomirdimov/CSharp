@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 class Problem08RecursiveFibonacci
 {
-    public static Stack<long> fibNumbers = new Stack<long>();
     static void Main()
     {
         long input = long.Parse(Console.ReadLine());
