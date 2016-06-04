@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 class Problem09StackFibonacci
 {
-    public static Stack<long> fibNumbers = new Stack<long>();
     static void Main()
     {
         long input = long.Parse(Console.ReadLine());
@@ -13,6 +12,7 @@ class Problem09StackFibonacci
     }
     public static long calculateFibonacci(long n)
     {
+        Stack<long> fibNumbers = new Stack<long>();
         fibNumbers.Push(1);
         fibNumbers.Push(1);
         long currentFibNum = 0;
