@@ -80,7 +80,7 @@ public class Child : Person
             }
             else
             {
-                Age = value;
+                base.Age = value;
             }
         }
     }
@@ -92,7 +92,6 @@ class Program
     {
         string name = Console.ReadLine();
         int age = int.Parse(Console.ReadLine());
-
         try
         {
             Child child = new Child(name, age);
