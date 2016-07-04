@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 public class Person
 {
-    private string name;
-    private int age;
+    string name;
+    int age;
     public Person(string name, int age)
     {
         this.name = name;
         this.age = age;
     }
-    public string Name
+    public virtual string Name
     {
         get
         {
@@ -24,7 +24,10 @@ public class Person
             {
                 throw new AggregateException("Name’s length should not be less than 3 symbols!");
             }
-            this.name = value;
+            else
+            {
+                name = value;
+            }
         }
     }
 
@@ -40,12 +43,20 @@ public class Person
             {
                 throw new ArgumentException("Age must be positive!");
             }
-            this.age = value;
+            else
+            {
+                age = value;
+            }
         }
     }
     public override string ToString()
     {
-        return $"Name: {this.Name}, Age: {this.Age}";
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.Append(String.Format("Name: {0}, Age: {1}",
+                             this.Name,
+                             this.age));
+
+        return stringBuilder.ToString();
     }
 }
 public class Child : Person
@@ -67,7 +78,10 @@ public class Child : Person
             {
                 throw new ArgumentException("Child’s age must be less than 15!");
             }
-            base.Age = value;
+            else
+            {
+                Age = value;
+            }
         }
     }
 
@@ -78,6 +92,7 @@ class Program
     {
         string name = Console.ReadLine();
         int age = int.Parse(Console.ReadLine());
+
         try
         {
             Child child = new Child(name, age);
