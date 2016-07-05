@@ -11,12 +11,12 @@ namespace _04EncapsulationProblem01
     class Box
     {
         private double lenght;
-        private double widht;
+        private double width;
         private double height;
         public Box(double lenght, double width, double height)
         {
             this.lenght = lenght;
-            this.widht = width;
+            this.width = width;
             this.height = height;
         }
         internal static string Calculate(double lenght, double width, double height)
