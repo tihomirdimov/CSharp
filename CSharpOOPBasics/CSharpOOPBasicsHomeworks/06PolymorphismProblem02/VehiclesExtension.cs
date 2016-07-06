@@ -9,6 +9,7 @@ namespace _06PolymorphismProblem01
         private string name;
         private double fuelQuantity;
         private double fuelConsumption;
+        private double tankCapacity;
         public Vehicle(string name, double fuelQuantity, double fuelConsumption)
         {
             this.name = name;
@@ -46,6 +47,17 @@ namespace _06PolymorphismProblem01
             protected set
             {
                 fuelConsumption = value;
+            }
+        }
+        public double TankCapaxity
+        {
+            get
+            {
+                return tankCapacity;
+            }
+            set
+            {
+                tankCapacity = 0;
             }
         }
         public void Drive(double distanceToDrive)
