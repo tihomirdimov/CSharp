@@ -8,12 +8,12 @@ using System.Globalization;
 
 namespace _06PolymorphismProblem01
 {
-    class Vehicle
+    public abstract class Vehicle
     {
         private string name;
         private double fuelQuantity;
         private double fuelConsumption;
-        public Vehicle(string name, double fuelQuantity, double fuelConsumption)
+        protected Vehicle(string name, double fuelQuantity, double fuelConsumption)
         {
             this.name = name;
             this.fuelQuantity = fuelQuantity;
@@ -52,58 +52,45 @@ namespace _06PolymorphismProblem01
                 fuelConsumption = value;
             }
         }
-        public virtual string Drive(double distanceToDrive)
+
+        public void Drive(double distanceToDrive)
         {
-            if (distanceToDrive * this.fuelConsumption <= fuelQuantity)
+            if (distanceToDrive * this.FuelConsumption <= this.FuelQuantity)
             {
-                return String.Format("{0} travelled {1:0.00} km", this.name, distanceToDrive);
+                Console.WriteLine("{0} travelled {1} km", this.Name, distanceToDrive);
+                this.FuelQuantity -= distanceToDrive * this.FuelConsumption;
             }
             else
             {
-                return String.Format("{0} needs refueling", this.name, distanceToDrive);
+                Console.WriteLine("{0} needs refueling", this.Name);
             }
         }
-        public virtual void Refuel(double quantityToRefuel)
+        public abstract void Refuel(double quantityToRefuel);
+        public double GetFuel()
         {
-            this.fuelQuantity += quantityToRefuel;
-        }
-        public virtual string GetInfo()
-        {
-            return String.Format("{0}: {1:0.00}", this.name, this.fuelQuantity);
+            return FuelQuantity;
         }
     }
-    class Car : Vehicle
+    public class Car : Vehicle
     {
-        private double additionalConsumption;
         public Car(string name, double fuelQuantity, double fuelConsumption) : base(name, fuelQuantity, fuelConsumption)
         {
-            this.additionalConsumption = 0.9;
-        }
-
-        public override string Drive(double distanceToDrive)
-        {
-            if (distanceToDrive * (this.FuelConsumption + additionalConsumption) <= this.FuelQuantity)
-            {
-                return String.Format("{0} travelled {1:0.00} km", this.Name, distanceToDrive);
-            }
-            else
-            {
-                return String.Format("{0} needs refueling", this.Name, distanceToDrive);
-            }
-        }
-    }
-    class Truck : Car
-    {
-        private double additionalConsumption;
-        private double fuelLossIndex;
-        public Truck(string name, double fuelQuantity, double fuelConsumption) : base(name, fuelQuantity, fuelConsumption)
-        {
-            this.additionalConsumption = 1.6;
-            this.fuelLossIndex = 0.95;
+            this.FuelConsumption += 0.9;
         }
         public override void Refuel(double quantityToRefuel)
         {
-            this.FuelQuantity += quantityToRefuel * fuelLossIndex;
+            FuelQuantity += quantityToRefuel;
+        }
+    }
+    class Truck : Vehicle
+    {
+        public Truck(string name, double fuelQuantity, double fuelConsumption) : base(name, fuelQuantity, fuelConsumption)
+        {
+            this.FuelConsumption += 1.6;
+        }
+        public override void Refuel(double quantityToRefuel)
+        {
+            FuelQuantity += quantityToRefuel * 0.95;
         }
     }
     class Vehicles
@@ -124,11 +111,11 @@ namespace _06PolymorphismProblem01
                 {
                     if (command[1] == "Car")
                     {
-                        Console.WriteLine(car.Drive(double.Parse(command[2], CultureInfo.InvariantCulture)));
+                        car.Drive(double.Parse(command[2], CultureInfo.InvariantCulture));
                     }
                     else if (command[1] == "Truck")
                     {
-                        Console.WriteLine(truck.Drive(double.Parse(command[2], CultureInfo.InvariantCulture)));
+                        truck.Drive(double.Parse(command[2], CultureInfo.InvariantCulture));
                     }
                     else
                     {
@@ -155,8 +142,8 @@ namespace _06PolymorphismProblem01
                     continue;
                 }
             }
-            Console.WriteLine("{0}", car.GetInfo());
-            Console.WriteLine("{0}", truck.GetInfo());
+            Console.WriteLine("Car: {0:F2}", car.GetFuel());
+            Console.WriteLine("Truck: {0:F2}", truck.GetFuel());
         }
     }
 }
