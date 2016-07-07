@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Diagnostics.Eventing.Reader;
 using System.Text.RegularExpressions;
 using System.Globalization;
+using System.Linq.Expressions;
 
 namespace _06PolymorphismProblem01
 {
@@ -73,7 +75,23 @@ namespace _06PolymorphismProblem01
                 Console.WriteLine("{0} needs refueling", Name);
             }
         }
+
         public abstract void Refuel(double quantityToRefuel);
+        public bool checkCapacity(double quantityToRefuel)
+        {
+            if (quantityToRefuel <= 0)
+            {
+                throw new ArgumentException("Fuel must be a positive number");
+            }
+            else if ((FuelQuantity + quantityToRefuel) > tankCapacity)
+            {
+                throw new ArgumentException("Cannot fit fuel in tank");
+            }
+            else
+            {
+                return true;
+            }
+        }
     }
     public class Car : Vehicle
     {
@@ -81,9 +99,20 @@ namespace _06PolymorphismProblem01
         {
             this.FuelConsumption += 0.9;
         }
+
         public override void Refuel(double quantityToRefuel)
         {
-            FuelQuantity += quantityToRefuel;
+            try
+            {
+                if (checkCapacity(quantityToRefuel))
+                {
+                    FuelQuantity += quantityToRefuel;
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
     public class Truck : Vehicle
@@ -94,7 +123,17 @@ namespace _06PolymorphismProblem01
         }
         public override void Refuel(double quantityToRefuel)
         {
-            FuelQuantity += quantityToRefuel * 0.95;
+            try
+            {
+                if (checkCapacity(quantityToRefuel))
+                {
+                    FuelQuantity += quantityToRefuel * 0.95;
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 
@@ -102,11 +141,33 @@ namespace _06PolymorphismProblem01
     {
         public Bus(string name, double fuelQuantity, double fuelConsumption, double tankCapacity) : base(name, fuelQuantity, fuelConsumption, tankCapacity)
         {
-            this.FuelConsumption += 1.6;
+            this.FuelConsumption += 1.4;
         }
         public override void Refuel(double quantityToRefuel)
         {
-            FuelQuantity += quantityToRefuel * 0.95;
+            try
+            {
+                if (checkCapacity(quantityToRefuel))
+                {
+                    FuelQuantity += quantityToRefuel;
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+        public void DriveEmpty(double distanceToDrive)
+        {
+            if (distanceToDrive * FuelConsumption <= FuelQuantity)
+            {
+                Console.WriteLine("{0} travelled {1} km", Name, distanceToDrive);
+                FuelQuantity -= distanceToDrive * FuelConsumption - 1.4;
+            }
+            else
+            {
+                Console.WriteLine("{0} needs refueling", Name);
+            }
         }
     }
 
@@ -116,9 +177,11 @@ namespace _06PolymorphismProblem01
         {
             string[] input;
             input = Regex.Split(Console.ReadLine(), @"\s+");
-            Car car = new Car(input[0], double.Parse(input[1], CultureInfo.InvariantCulture), double.Parse(input[2], CultureInfo.InvariantCulture), double.Parse(input[2], CultureInfo.InvariantCulture));
+            Car car = new Car(input[0], double.Parse(input[1], CultureInfo.InvariantCulture), double.Parse(input[2], CultureInfo.InvariantCulture), double.Parse(input[3], CultureInfo.InvariantCulture));
             input = Regex.Split(Console.ReadLine(), @"\s+");
-            Truck truck = new Truck(input[0], double.Parse(input[1], CultureInfo.InvariantCulture), double.Parse(input[2], CultureInfo.InvariantCulture), double.Parse(input[2], CultureInfo.InvariantCulture));
+            Truck truck = new Truck(input[0], double.Parse(input[1], CultureInfo.InvariantCulture), double.Parse(input[2], CultureInfo.InvariantCulture), double.Parse(input[3], CultureInfo.InvariantCulture));
+            input = Regex.Split(Console.ReadLine(), @"\s+");
+            Bus bus = new Bus(input[0], double.Parse(input[1], CultureInfo.InvariantCulture), double.Parse(input[2], CultureInfo.InvariantCulture), double.Parse(input[3], CultureInfo.InvariantCulture));
             int n = int.Parse(Console.ReadLine());
             string[] command;
             for (int i = 0; i < n; i++)
@@ -133,6 +196,10 @@ namespace _06PolymorphismProblem01
                     else if (command[1] == "Truck")
                     {
                         truck.Drive(double.Parse(command[2], CultureInfo.InvariantCulture));
+                    }
+                    else if (command[1] == "Bus")
+                    {
+                        bus.Drive(double.Parse(command[2], CultureInfo.InvariantCulture));
                     }
                     else
                     {
@@ -149,10 +216,18 @@ namespace _06PolymorphismProblem01
                     {
                         truck.Refuel(double.Parse(command[2], CultureInfo.InvariantCulture));
                     }
+                    else if (command[1] == "Bus")
+                    {
+                        bus.Refuel(double.Parse(command[2], CultureInfo.InvariantCulture));
+                    }
                     else
                     {
                         continue;
                     }
+                }
+                else if (command[0] == "DriveEmpty")
+                {
+                    bus.DriveEmpty(double.Parse(command[2], CultureInfo.InvariantCulture));
                 }
                 else
                 {
@@ -161,6 +236,7 @@ namespace _06PolymorphismProblem01
             }
             Console.WriteLine("Car: {0:F2}", car.FuelQuantity);
             Console.WriteLine("Truck: {0:F2}", truck.FuelQuantity);
+            Console.WriteLine("Bus: {0:F2}", truck.FuelQuantity);
         }
     }
 }
