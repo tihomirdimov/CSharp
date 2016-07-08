@@ -77,7 +77,7 @@ namespace _06PolymorphismProblem01
         }
 
         public abstract void Refuel(double quantityToRefuel);
-        public bool checkCapacity(double quantityToRefuel)
+        public bool CheckCapacity(double quantityToRefuel)
         {
             if (quantityToRefuel <= 0)
             {
@@ -104,7 +104,7 @@ namespace _06PolymorphismProblem01
         {
             try
             {
-                if (checkCapacity(quantityToRefuel))
+                if (CheckCapacity(quantityToRefuel))
                 {
                     FuelQuantity += quantityToRefuel;
                 }
@@ -125,7 +125,7 @@ namespace _06PolymorphismProblem01
         {
             try
             {
-                if (checkCapacity(quantityToRefuel))
+                if (CheckCapacity(quantityToRefuel))
                 {
                     FuelQuantity += quantityToRefuel * 0.95;
                 }
@@ -147,7 +147,7 @@ namespace _06PolymorphismProblem01
         {
             try
             {
-                if (checkCapacity(quantityToRefuel))
+                if (CheckCapacity(quantityToRefuel))
                 {
                     FuelQuantity += quantityToRefuel;
                 }
@@ -159,15 +159,17 @@ namespace _06PolymorphismProblem01
         }
         public void DriveEmpty(double distanceToDrive)
         {
+            FuelConsumption -= 1.4;
             if (distanceToDrive * FuelConsumption <= FuelQuantity)
             {
                 Console.WriteLine("{0} travelled {1} km", Name, distanceToDrive);
-                FuelQuantity -= distanceToDrive * FuelConsumption - 1.4;
+                FuelQuantity -= distanceToDrive * FuelConsumption;
             }
             else
             {
                 Console.WriteLine("{0} needs refueling", Name);
             }
+            FuelConsumption += 1.4;
         }
     }
 
