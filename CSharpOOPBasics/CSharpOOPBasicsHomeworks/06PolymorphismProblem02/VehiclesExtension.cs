@@ -12,6 +12,7 @@ namespace _06PolymorphismProblem01
         private double fuelQuantity;
         private double fuelConsumption;
         private double tankCapacity;
+
         public Vehicle(string name, double fuelQuantity, double fuelConsumption, double tankCapacity)
         {
             this.name = name;
@@ -19,50 +20,45 @@ namespace _06PolymorphismProblem01
             this.fuelConsumption = fuelConsumption;
             this.tankCapacity = tankCapacity;
         }
+
         public string Name
         {
-            get
-            {
-                return name;
-            }
-            protected set
-            {
-                name = value;
-            }
+            get { return name; }
+            protected set { name = value; }
         }
+
         public double FuelQuantity
         {
-            get
-            {
-                return fuelQuantity;
-            }
+            get { return fuelQuantity; }
             protected set
             {
-                fuelQuantity = value;
+                if (fuelQuantity + value < 0)
+                {
+                    throw new ArgumentException("Fuel must be a positive number");
+                }
+                else if (fuelQuantity + value > tankCapacity && (name.Equals("Car") || name.Equals("Bus")))
+                {
+                    throw new ArgumentException("Cannot fit fuel in tank");
+                }
+                else
+                {
+                    fuelQuantity = value;
+                }
             }
         }
+
         public double FuelConsumption
         {
-            get
-            {
-                return fuelConsumption;
-            }
-            protected set
-            {
-                fuelConsumption = value;
-            }
+            get { return fuelConsumption; }
+            protected set { fuelConsumption = value; }
         }
+
         public double TankCapacity
         {
-            get
-            {
-                return tankCapacity;
-            }
-            set
-            {
-                tankCapacity = value;
-            }
+            get { return tankCapacity; }
+            set { tankCapacity = value; }
         }
+
         public void Drive(double distanceToDrive)
         {
             if (distanceToDrive * FuelConsumption <= FuelQuantity)
@@ -77,25 +73,12 @@ namespace _06PolymorphismProblem01
         }
 
         public abstract void Refuel(double quantityToRefuel);
-        public bool CheckCapacity(double quantityToRefuel)
-        {
-            if (quantityToRefuel <= 0)
-            {
-                throw new ArgumentException("Fuel must be a positive number");
-            }
-            else if ((FuelQuantity + quantityToRefuel) > tankCapacity)
-            {
-                throw new ArgumentException("Cannot fit fuel in tank");
-            }
-            else
-            {
-                return true;
-            }
-        }
     }
+
     public class Car : Vehicle
     {
-        public Car(string name, double fuelQuantity, double fuelConsumption, double tankCapacity) : base(name, fuelQuantity, fuelConsumption, tankCapacity)
+        public Car(string name, double fuelQuantity, double fuelConsumption, double tankCapacity)
+            : base(name, fuelQuantity, fuelConsumption, tankCapacity)
         {
             this.FuelConsumption += 0.9;
         }
@@ -104,10 +87,7 @@ namespace _06PolymorphismProblem01
         {
             try
             {
-                if (CheckCapacity(quantityToRefuel))
-                {
-                    FuelQuantity += quantityToRefuel;
-                }
+                FuelQuantity += quantityToRefuel;
             }
             catch (ArgumentException ex)
             {
@@ -115,20 +95,24 @@ namespace _06PolymorphismProblem01
             }
         }
     }
+
     public class Truck : Vehicle
     {
-        public Truck(string name, double fuelQuantity, double fuelConsumption, double tankCapacity) : base(name, fuelQuantity, fuelConsumption, tankCapacity)
+        public Truck(string name, double fuelQuantity, double fuelConsumption, double tankCapacity)
+            : base(name, fuelQuantity, fuelConsumption, tankCapacity)
         {
             this.FuelConsumption += 1.6;
         }
+
         public override void Refuel(double quantityToRefuel)
         {
             try
             {
-                if (CheckCapacity(quantityToRefuel))
+                if (this.FuelQuantity + quantityToRefuel < 0)
                 {
-                    FuelQuantity += quantityToRefuel * 0.95;
+                    throw new ArgumentException("Fuel must be a positive number");
                 }
+                FuelQuantity += quantityToRefuel * 0.95;
             }
             catch (ArgumentException ex)
             {
@@ -139,24 +123,24 @@ namespace _06PolymorphismProblem01
 
     public class Bus : Vehicle
     {
-        public Bus(string name, double fuelQuantity, double fuelConsumption, double tankCapacity) : base(name, fuelQuantity, fuelConsumption, tankCapacity)
+        public Bus(string name, double fuelQuantity, double fuelConsumption, double tankCapacity)
+            : base(name, fuelQuantity, fuelConsumption, tankCapacity)
         {
             this.FuelConsumption += 1.4;
         }
+
         public override void Refuel(double quantityToRefuel)
         {
             try
             {
-                if (CheckCapacity(quantityToRefuel))
-                {
-                    FuelQuantity += quantityToRefuel;
-                }
+                FuelQuantity += quantityToRefuel;
             }
             catch (ArgumentException ex)
             {
                 Console.WriteLine(ex.Message);
             }
         }
+
         public void DriveEmpty(double distanceToDrive)
         {
             FuelConsumption -= 1.4;
@@ -179,11 +163,17 @@ namespace _06PolymorphismProblem01
         {
             string[] input;
             input = Regex.Split(Console.ReadLine(), @"\s+");
-            Car car = new Car(input[0], double.Parse(input[1], CultureInfo.InvariantCulture), double.Parse(input[2], CultureInfo.InvariantCulture), double.Parse(input[3], CultureInfo.InvariantCulture));
+            Car car = new Car(input[0], double.Parse(input[1], CultureInfo.InvariantCulture),
+                double.Parse(input[2], CultureInfo.InvariantCulture),
+                double.Parse(input[3], CultureInfo.InvariantCulture));
             input = Regex.Split(Console.ReadLine(), @"\s+");
-            Truck truck = new Truck(input[0], double.Parse(input[1], CultureInfo.InvariantCulture), double.Parse(input[2], CultureInfo.InvariantCulture), double.Parse(input[3], CultureInfo.InvariantCulture));
+            Truck truck = new Truck(input[0], double.Parse(input[1], CultureInfo.InvariantCulture),
+                double.Parse(input[2], CultureInfo.InvariantCulture),
+                double.Parse(input[3], CultureInfo.InvariantCulture));
             input = Regex.Split(Console.ReadLine(), @"\s+");
-            Bus bus = new Bus(input[0], double.Parse(input[1], CultureInfo.InvariantCulture), double.Parse(input[2], CultureInfo.InvariantCulture), double.Parse(input[3], CultureInfo.InvariantCulture));
+            Bus bus = new Bus(input[0], double.Parse(input[1], CultureInfo.InvariantCulture),
+                double.Parse(input[2], CultureInfo.InvariantCulture),
+                double.Parse(input[3], CultureInfo.InvariantCulture));
             int n = int.Parse(Console.ReadLine());
             string[] command;
             for (int i = 0; i < n; i++)
@@ -238,7 +228,7 @@ namespace _06PolymorphismProblem01
             }
             Console.WriteLine("Car: {0:F2}", car.FuelQuantity);
             Console.WriteLine("Truck: {0:F2}", truck.FuelQuantity);
-            Console.WriteLine("Bus: {0:F2}", truck.FuelQuantity);
+            Console.WriteLine("Bus: {0:F2}", bus.FuelQuantity);
         }
     }
 }
