@@ -1,0 +1,9 @@
+RegisterPowerHardware(HDD, 200, 200)
+RegisterHeavyHardware(SSD, 400, 400)
+RegisterLightSoftware(HDD, Test, 0, 10)
+RegisterExpressSoftware(HDD, Test2, 100, 100)
+RegisterExpressSoftware(HDD, Test3, 50, 100)
+RegisterLightSoftware(SSD, Windows, 20, 50)
+RegisterExpressSoftware(SSD, Linux, 50, 100)
+RegisterLightSoftware(SSD, Unix, 20, 50)
+System Split
