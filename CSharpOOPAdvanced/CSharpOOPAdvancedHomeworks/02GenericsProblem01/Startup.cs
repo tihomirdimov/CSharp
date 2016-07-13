@@ -8,7 +8,13 @@ namespace _02GenericsProblem01
 {
     public class Box<T>
     {
+        private string v;
         private T value;
+
+        public Box(string v)
+        {
+            this.v = v;
+        }
 
         public Box(T value)
         {
@@ -25,8 +31,7 @@ namespace _02GenericsProblem01
     {
         static void Main(string[] args)
         {
-            var input = Console.ReadLine();
-            var inputBox = new Box<string>(input);
+            var inputBox = new Box<string>(Console.ReadLine());
             Console.WriteLine(inputBox.ToString());
         }
     }

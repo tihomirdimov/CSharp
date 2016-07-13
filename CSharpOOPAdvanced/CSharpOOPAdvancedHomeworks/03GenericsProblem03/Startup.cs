@@ -28,8 +28,7 @@ namespace _03GenericsProblem03
             int n = int.Parse(Console.ReadLine());
             for (int i = 0; i < n; i++)
             {
-                int input = int.Parse(Console.ReadLine());
-                var inputBox = new Box<int>(input);
+                var inputBox = new Box<int>(int.Parse(Console.ReadLine()));
                 Console.WriteLine(inputBox.ToString());
             }
         }
