@@ -1,5 +1,10 @@
 ﻿using System;
-namespace _03GenericsProblem03
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace _04GenericsProblem04
 {
     public class Box<T>
     {
@@ -10,21 +15,22 @@ namespace _03GenericsProblem03
             this.value = value;
         }
 
+        public T Value { get; set; }
+
         public override string ToString()
         {
-            return (this.value.GetType() + ": " + this.value);
+            return this.Value.GetType() + ": " + this.value;
         }
     }
-
     class Startup
     {
         static void Main(string[] args)
         {
             int n = int.Parse(Console.ReadLine());
+            var boxList = new List<Box<string>>();
             for (int i = 0; i < n; i++)
             {
-                var inputBox = new Box<int>(int.Parse(Console.ReadLine()));
-                Console.WriteLine(inputBox.ToString());
+                boxList.Add(new Box<string>(Console.ReadLine()));
             }
         }
     }
