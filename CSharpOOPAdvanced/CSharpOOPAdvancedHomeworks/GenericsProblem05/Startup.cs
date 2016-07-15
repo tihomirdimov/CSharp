@@ -24,11 +24,11 @@ namespace _04GenericsProblem04
     {
         static void Main()
         {
-            var elements = new List<Box<string>>();
+            var elements = new List<Box<int>>();
             var numberOfLines = int.Parse(Console.ReadLine());
             for (int i = 0; i < numberOfLines; i++)
             {
-                elements.Add(new Box<string>(Console.ReadLine()));
+                elements.Add(new Box<int>(int.Parse(Console.ReadLine())));
             }
             var indexes = Console.ReadLine()
                 .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
@@ -48,3 +48,4 @@ namespace _04GenericsProblem04
         }
     }
 }
+
