@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _04GenericsProblem05
+namespace _02GenericsProblem05
 {
     public class Box<T>
     {

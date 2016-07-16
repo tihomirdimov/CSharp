@@ -1,5 +1,5 @@
 ﻿using System;
-namespace _03GenericsProblem03
+namespace _02GenericsProblem03
 {
     public class Box<T>
     {
