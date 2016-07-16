@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03GenericsProblem03", "03Ge
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04GenericsProblem04", "04GenericsProblem04\04GenericsProblem04.csproj", "{01007DE1-EA86-4615-9A9D-ECB56BB65CB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericsProblem05", "GenericsProblem05\GenericsProblem05.csproj", "{C07A6334-5B98-4BDC-9FCF-3252156C0593}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04GenericsProblem05", "GenericsProblem05\04GenericsProblem05.csproj", "{C07A6334-5B98-4BDC-9FCF-3252156C0593}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
