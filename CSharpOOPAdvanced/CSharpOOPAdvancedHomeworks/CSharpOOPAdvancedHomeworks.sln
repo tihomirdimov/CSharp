@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01InterfacesAndAbstractionP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01InterfacesAndAbstractionProblem04", "01InterfacesAndAbstractionProblem04\01InterfacesAndAbstractionProblem04.csproj", "{EA4519C6-F7F6-47AD-A594-EF25A202DEA8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03IteratorsAndComparatorsProblem01", "03IteratorsAndComparatorsProblem01\03IteratorsAndComparatorsProblem01.csproj", "{6F390E53-747F-4464-BACF-671F5DEE3D56}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{EA4519C6-F7F6-47AD-A594-EF25A202DEA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA4519C6-F7F6-47AD-A594-EF25A202DEA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA4519C6-F7F6-47AD-A594-EF25A202DEA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F390E53-747F-4464-BACF-671F5DEE3D56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F390E53-747F-4464-BACF-671F5DEE3D56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F390E53-747F-4464-BACF-671F5DEE3D56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F390E53-747F-4464-BACF-671F5DEE3D56}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
