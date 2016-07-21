@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 namespace _03IteratorsAndComparatorsProblem01
 {
-    public class ListyIterator<T>
+    public class ListyIterator<T> : IEnumerable<T>
     {
         private List<T> collection;
         private static int index;
@@ -38,17 +39,44 @@ namespace _03IteratorsAndComparatorsProblem01
             return true;
         }
 
-        public void Print()
+        public string Print()
         {
             try
             {
-                Console.WriteLine(collection[index]);
+                return collection[index].ToString();
             }
             catch (ArgumentException)
             {
                 throw new ArgumentException("Invalid Operation!");
             }
         }
+        public string PrintAll()
+        {
+            try
+            {
+                return string.Join(" ", this.collection);
+            }
+            catch (ArgumentException)
+            {
+                throw new ArgumentException("Invalid Operation!");
+            }
+
+
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            for (int i = 0; i < this.collection.Count; i++)
+            {
+                yield return this.collection[i];
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
     }
     class Startup
 
@@ -80,7 +108,17 @@ namespace _03IteratorsAndComparatorsProblem01
                     case "Print":
                         try
                         {
-                            collection.Print();
+                            Console.WriteLine(collection.Print());
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
+                        break;
+                    case "PrintAll":
+                        try
+                        {
+                            Console.WriteLine(collection.PrintAll());
                         }
                         catch (Exception e)
                         {
