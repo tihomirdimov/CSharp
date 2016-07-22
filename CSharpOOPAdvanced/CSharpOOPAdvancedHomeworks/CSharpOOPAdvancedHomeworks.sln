@@ -11,11 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02GenericsProblem01", "02Ge
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02GenericsProblem02", "02GenericsProblem02\02GenericsProblem02.csproj", "{55EF6FB3-E9CD-4D01-BE9A-5411CA6BE8BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02GenericsProblem03", "03GenericsProblem03\02GenericsProblem03.csproj", "{AC3ABFEB-EA1A-4772-8FCE-CB74FFDFDFB0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02GenericsProblem03", "02GenericsProblem03\02GenericsProblem03.csproj", "{AC3ABFEB-EA1A-4772-8FCE-CB74FFDFDFB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02GenericsProblem04", "04GenericsProblem04\02GenericsProblem04.csproj", "{01007DE1-EA86-4615-9A9D-ECB56BB65CB0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02GenericsProblem04", "02GenericsProblem04\02GenericsProblem04.csproj", "{01007DE1-EA86-4615-9A9D-ECB56BB65CB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02GenericsProblem05", "GenericsProblem05\02GenericsProblem05.csproj", "{C07A6334-5B98-4BDC-9FCF-3252156C0593}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02GenericsProblem05", "02GenericsProblem05\02GenericsProblem05.csproj", "{C07A6334-5B98-4BDC-9FCF-3252156C0593}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02GenericsProblem06", "02GenericsProblem06\02GenericsProblem06.csproj", "{893F62AC-14F7-4C58-BFEE-6FEC3E2B28BE}"
 EndProject
