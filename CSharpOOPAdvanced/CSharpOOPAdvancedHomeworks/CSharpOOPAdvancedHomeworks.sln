@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03IteratorsAndComparatorsPr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03IteratorsAndComparatorsProblem06", "03IteratorsAndComparatorsProblem06\03IteratorsAndComparatorsProblem06.csproj", "{42706E1A-E291-4C0F-9E19-7A44DBCB6B8B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03IteratorsAndComparatorsProblem07", "03IteratorsAndComparatorsProblem07\03IteratorsAndComparatorsProblem07.csproj", "{C6D291D3-45C6-452D-AAD7-23175812BB27}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,10 @@ Global
 		{42706E1A-E291-4C0F-9E19-7A44DBCB6B8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42706E1A-E291-4C0F-9E19-7A44DBCB6B8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42706E1A-E291-4C0F-9E19-7A44DBCB6B8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6D291D3-45C6-452D-AAD7-23175812BB27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6D291D3-45C6-452D-AAD7-23175812BB27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6D291D3-45C6-452D-AAD7-23175812BB27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6D291D3-45C6-452D-AAD7-23175812BB27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
