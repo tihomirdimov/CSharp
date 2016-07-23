@@ -49,6 +49,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04EnumerationsAndAttributes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04EnumerationsAndAttributesProblem04", "04EnumerationsAndAttributesProblem04\04EnumerationsAndAttributesProblem04.csproj", "{A21CEBE8-9E60-4559-B468-86C36AF2F941}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01InterfacesAndAbstractionProblem05", "01InterfacesAndAbstractionProblem05\01InterfacesAndAbstractionProblem05.csproj", "{BD786615-F538-437B-AEA2-32A7C8E3B103}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01InterfacesAndAbstractionProblem06", "01InterfacesAndAbstractionProblem06\01InterfacesAndAbstractionProblem06.csproj", "{A95DCACA-0D5C-4473-A609-124FD1B27930}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -147,6 +151,14 @@ Global
 		{A21CEBE8-9E60-4559-B468-86C36AF2F941}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A21CEBE8-9E60-4559-B468-86C36AF2F941}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A21CEBE8-9E60-4559-B468-86C36AF2F941}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD786615-F538-437B-AEA2-32A7C8E3B103}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD786615-F538-437B-AEA2-32A7C8E3B103}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD786615-F538-437B-AEA2-32A7C8E3B103}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD786615-F538-437B-AEA2-32A7C8E3B103}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A95DCACA-0D5C-4473-A609-124FD1B27930}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A95DCACA-0D5C-4473-A609-124FD1B27930}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A95DCACA-0D5C-4473-A609-124FD1B27930}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A95DCACA-0D5C-4473-A609-124FD1B27930}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
