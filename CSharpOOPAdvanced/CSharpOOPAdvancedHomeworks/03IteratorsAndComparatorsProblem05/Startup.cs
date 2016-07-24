@@ -20,9 +20,7 @@ namespace _03IteratorsAndComparatorsProblem05
 
         public int CompareTo(Person other)
         {
-            if (this.name.Equals(other.name) &&
-                this.age == other.age &&
-                this.town.Equals(other.town))
+            if (this.name.Equals(other.name) && this.age == other.age && this.town.Equals(other.town))
             {
                 return 1;
             }
