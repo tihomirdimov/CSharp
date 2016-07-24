@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01InterfacesAndAbstractionProblem01", "01InterfacesAndAbstractionProblem01\01InterfacesAndAbstractionProblem01.csproj", "{B09103BE-9666-4418-9A3F-FF856E1E6135}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01InterfacesAndAbstractionProblem02", "01InterfacesAndAbstractionProblme02\01InterfacesAndAbstractionProblem02.csproj", "{294991C7-6987-4121-8024-D777193149EA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01InterfacesAndAbstractionProblem02", "01InterfacesAndAbstractionProblem02\01InterfacesAndAbstractionProblem02.csproj", "{294991C7-6987-4121-8024-D777193149EA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02GenericsProblem01", "02GenericsProblem01\02GenericsProblem01.csproj", "{75826699-E304-4B3F-BCDA-61463CB9679E}"
 EndProject
@@ -52,6 +52,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01InterfacesAndAbstractionProblem05", "01InterfacesAndAbstractionProblem05\01InterfacesAndAbstractionProblem05.csproj", "{BD786615-F538-437B-AEA2-32A7C8E3B103}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01InterfacesAndAbstractionProblem06", "01InterfacesAndAbstractionProblem06\01InterfacesAndAbstractionProblem06.csproj", "{A95DCACA-0D5C-4473-A609-124FD1B27930}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01InterfacesAndAbstractionProblem07", "01InterfacesAndAbstractionProblem07\01InterfacesAndAbstractionProblem07.csproj", "{49A6CC0F-99D0-436A-A933-83ED5AF26A2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01InterfacesAndAbstractionProblem08", "01InterfacesAndAbstractionProblem08\01InterfacesAndAbstractionProblem08.csproj", "{1364ACB2-7277-4E47-820C-69478493E3EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -159,6 +163,14 @@ Global
 		{A95DCACA-0D5C-4473-A609-124FD1B27930}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A95DCACA-0D5C-4473-A609-124FD1B27930}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A95DCACA-0D5C-4473-A609-124FD1B27930}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49A6CC0F-99D0-436A-A933-83ED5AF26A2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49A6CC0F-99D0-436A-A933-83ED5AF26A2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49A6CC0F-99D0-436A-A933-83ED5AF26A2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49A6CC0F-99D0-436A-A933-83ED5AF26A2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1364ACB2-7277-4E47-820C-69478493E3EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1364ACB2-7277-4E47-820C-69478493E3EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1364ACB2-7277-4E47-820C-69478493E3EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1364ACB2-7277-4E47-820C-69478493E3EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
