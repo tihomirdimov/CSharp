@@ -9,7 +9,7 @@ namespace _20160619Problem04
 {
     class CubicAssault
     {
-        public static Dictionary<string, int[]> regionsDb = new Dictionary<string, int[]>();
+        public static Dictionary<string, Dictionary<string, long>> regionsDb = new Dictionary<string, Dictionary<string, long>>();
         static void Main(string[] args)
         {
             string patternGreen = "(.*)\\s*\\-\\>\\s*(Green)\\s*\\-\\>\\s*([0-9]+)";
@@ -23,91 +23,70 @@ namespace _20160619Problem04
                 {
                     Regex regex = new Regex(patternGreen);
                     Match match = regex.Match(input);
-                    AddRegion(match.Groups[1].Value, match.Groups[2].Value, int.Parse(match.Groups[3].Value));
+                    AddRegion(match.Groups[1].Value, match.Groups[2].Value, long.Parse(match.Groups[3].Value));
                 }
                 else if (Regex.IsMatch(input, patternRed))
                 {
                     Regex regex = new Regex(patternRed);
                     Match match = regex.Match(input);
-                    AddRegion(match.Groups[1].Value, match.Groups[2].Value, int.Parse(match.Groups[3].Value));
+                    AddRegion(match.Groups[1].Value, match.Groups[2].Value, long.Parse(match.Groups[3].Value));
                 }
                 else if (Regex.IsMatch(input, patternBlack))
                 {
                     Regex regex = new Regex(patternBlack);
                     Match match = regex.Match(input);
-                    AddRegion(match.Groups[1].Value, match.Groups[2].Value, int.Parse(match.Groups[3].Value));
+                    AddRegion(match.Groups[1].Value, match.Groups[2].Value, long.Parse(match.Groups[3].Value));
                 }
                 input = Console.ReadLine();
             }
-            foreach (var region in regionsDb)
+            var toPrintRegions = regionsDb.OrderByDescending(r => r.Value["Black"]).ThenBy(r=>r.Key.Length).ThenBy(r=>r.Key);
+            foreach (var region in toPrintRegions)
             {
                 Console.WriteLine(region.Key);
-                foreach (var item in region.Value)
+                foreach (var stone in region.Value.OrderByDescending(x => x.Value).ThenBy(x => x.Key))
                 {
-                    Console.WriteLine(item);
+                    Console.WriteLine($"-> {stone.Key} : {stone.Value}");
                 }
             }
         }
-        public static void AddRegion(string region, string type, int value)
+        public static void AddRegion(string region, string type, long value)
         {
-            //Array indexes 0-green, 1-red, 2-black
             if (!regionsDb.ContainsKey(region))
             {
-                regionsDb.Add(region, new int[3]);
-                if (type.Equals("green", StringComparison.CurrentCultureIgnoreCase) || type.Equals("red", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    int index = 0;
-                    if (type.Equals("red", StringComparison.CurrentCultureIgnoreCase))
-                    {
-                        index = 1;
-                    }
-                    regionsDb[region][index] += value;
-                    if (AboveOneM(regionsDb[region][index], value))
-                    {
-                        int remainder = (regionsDb[region][index] + value) % 1000000;
-                        int m = regionsDb[region][index] / 1000000;
-                        regionsDb[region][index] = remainder;
-                        regionsDb[region][index + 1] += m;
-                    }
-                }
-                else if (type.Equals("black", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    regionsDb[region][2] += value;
-                }
+                regionsDb.Add(region, new Dictionary<string, long>());
+                regionsDb[region].Add("Green", 0);
+                regionsDb[region].Add("Red", 0);
+                regionsDb[region].Add("Black", 0);
+                regionsDb[region][type] += value;
+                AboveOneM(region);
             }
             else
             {
-                if (type.Equals("green", StringComparison.CurrentCultureIgnoreCase) || type.Equals("red", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    int index = 0;
-                    if (type.Equals("red", StringComparison.CurrentCultureIgnoreCase))
-                    {
-                        index = 1;
-                    }
-                    regionsDb[region][index] += value;
-                    if (AboveOneM(regionsDb[region][index], value))
-                    {
-                        int remainder = (regionsDb[region][index] + value) % 1000000;
-                        int m = regionsDb[region][index] / 1000000;
-                        regionsDb[region][index] = remainder;
-                        regionsDb[region][index + 1] += m;
-                    }
-                }
-                else if (type.Equals("black", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    regionsDb[region][2] += value;
-                }
+                regionsDb[region][type] += value;
+                AboveOneM(region);
             }
         }
-        public static bool AboveOneM(int toAdd, int curent)
+        public static void AboveOneM(string region)
         {
-            if ((curent + toAdd) >= 1000000)
+            long remainder;
+            long m;
+            long value = regionsDb[region]["Green"];
+            if (value >= 1000000)
             {
-                return true;
+                remainder = value % 1000000;
+                m = value / 1000000;
+                regionsDb[region]["Green"] = remainder;
+                regionsDb[region]["Red"] += m;
+                AboveOneM(region);
             }
-            else
+            value = regionsDb[region]["Red"];
+            if (value >= 1000000)
             {
-                return false;
+                remainder = value % 1000000;
+                m = value / 1000000;
+                regionsDb[region]["Red"] = remainder;
+                regionsDb[region]["Black"] += m;
+                AboveOneM(region);
             }
         }
     }
