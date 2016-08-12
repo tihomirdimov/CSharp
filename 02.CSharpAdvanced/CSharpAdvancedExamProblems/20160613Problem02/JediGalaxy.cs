@@ -56,9 +56,9 @@ namespace _20160613Problem02
             }
             Console.WriteLine(result);
         }
-        public static bool checkIfInGalaxy(int row, int col, int galaxyCol, int galaxyRow)
+        public static bool checkIfInGalaxy(int row, int col, int galaxyRows, int galaxyCols)
         {
-            if (row >= 0 && row < galaxyRow && col >= 0 && col < galaxyCol)
+            if (row >= 0 && row < galaxyRows && col >= 0 && col < galaxyCols)
             {
                 return true;
             }
