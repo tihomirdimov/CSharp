@@ -33,7 +33,7 @@ namespace _20160613Problem04
                 int subStringlength;
                 if (i == declaredMethodsMatchCollection.Count - 1)
                 {
-                    subStringlength = text.Length -1 - startIndex;
+                    subStringlength = text.Length - 1 - startIndex;
                 }
                 else
                 {
@@ -50,7 +50,14 @@ namespace _20160613Problem04
             var printDeclared = declaredMethods.OrderByDescending(x => x.Value.Count).ThenBy(x => x.Key).ToList();
             foreach (var item in printDeclared)
             {
-                Console.WriteLine("{0} -> {1} -> {2}", item.Key, item.Value.Count, string.Join(", ", item.Value.OrderBy(x => x)));
+                if (item.Value.Count < 1)
+                {
+                    Console.WriteLine("{0} -> None", item.Key);
+                }
+                else
+                {
+                    Console.WriteLine("{0} -> {1} -> {2}", item.Key, item.Value.Count, string.Join(", ", item.Value.OrderBy(x => x)));
+                }
             }
         }
     }
