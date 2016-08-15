@@ -1,15 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace _20160313Problem01
 {
     class ArrangeNumbers
     {
-        static void Main(string[] args)
+        public class ArrangeIntegersMain
         {
+            public static void Main()
+            {
+                string[] IntegerNames = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+                Console.WriteLine(string.Join(", ", Console.ReadLine()
+                        .Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                        .OrderBy(str => string.Join(string.Empty, str.Select(ch => IntegerNames[ch - '0'])))));
+            }
         }
     }
 }
