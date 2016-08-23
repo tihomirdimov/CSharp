@@ -9,18 +9,18 @@ namespace _20160822Problem04
 {
     class AshesOfRoses
     {
-        public static Dictionary<string, Dictionary<string, int>> regions = new Dictionary<string, Dictionary<string, int>>();
+        public static Dictionary<string, Dictionary<string, long>> regions = new Dictionary<string, Dictionary<string, long>>();
         static void Main()
         {
             string input = Console.ReadLine();
-            string pattern = @"Grow\s{1}\<([A-Z]{1}[a-z]+)\>\s{1}\<([A-Za-z0-9]+)\>\s{1}([0-9]*)";
+            string pattern = @"^Grow\s{1}\<([A-Z]{1}[a-z]+)\>\s{1}\<([A-Za-z0-9]+)\>\s{1}([0-9]+)$";
             while (!input.Equals("Icarus, Ignite!"))
             {
                 if (Regex.IsMatch(input, pattern))
                 {
                     Regex regex = new Regex(pattern);
                     Match match = regex.Match(input);
-                    addRegion(match.Groups[1].Value, match.Groups[2].Value, int.Parse(match.Groups[3].Value));
+                    addRegion(match.Groups[1].Value, match.Groups[2].Value, long.Parse(match.Groups[3].Value));
                 }
                 input = Console.ReadLine();
             }
@@ -35,11 +35,11 @@ namespace _20160822Problem04
                 }
             }
         }
-        public static void addRegion(string region, string color, int flowers)
+        public static void addRegion(string region, string color, long flowers)
         {
             if (!regions.ContainsKey(region))
             {
-                regions.Add(region, new Dictionary<string, int>());
+                regions.Add(region, new Dictionary<string, long>());
                 regions[region].Add(color, flowers);
             }
             else
