@@ -43,8 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\CommandsEngine.cs" />
+    <Compile Include="Commands\RegisterPowerHardware.cs" />
     <Compile Include="Models\Component.cs" />
+    <Compile Include="Models\ExoressSoftware.cs" />
     <Compile Include="Models\Hardware.cs" />
+    <Compile Include="Models\HeavyHardware.cs" />
+    <Compile Include="Models\LightSoftware.cs" />
+    <Compile Include="Models\PowerHardware.cs" />
     <Compile Include="Models\Software.cs" />
     <Compile Include="Models\TheSystem.cs" />
     <Compile Include="Startup.cs" />
@@ -53,9 +59,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Commands\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

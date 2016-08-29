@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace _20160710.Models
 {
-    class TheSystem
+    public static class TheSystem
     {
+        public static List<Component> Components { get; set; }
+        public static void SystemSplit()
+        {
+            Console.WriteLine("System Split");
+        }
     }
 }
