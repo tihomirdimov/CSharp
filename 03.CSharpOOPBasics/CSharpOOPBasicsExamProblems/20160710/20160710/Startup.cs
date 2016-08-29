@@ -17,10 +17,10 @@ namespace _20160710
             bool isRunning = true;
             while (isRunning)
             {
+                CommandsEngine command = new CommandsEngine(input);
+                command.run();
                 if (input.Equals("System Split"))
                 {
-                    CommandsEngine command = new CommandsEngine(input);
-                    command.run();
                     isRunning = false;
                 }
                 input = Console.ReadLine();

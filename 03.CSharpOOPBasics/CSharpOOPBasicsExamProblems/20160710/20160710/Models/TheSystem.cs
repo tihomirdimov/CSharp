@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace _20160710.Models
+﻿namespace _20160710.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     public static class TheSystem
     {
-        public static List<Component> Components { get; set; }
+        public static List<Hardware> Components = new List<Hardware>();
         public static void SystemSplit()
         {
-            Console.WriteLine("System Split");
+            Console.WriteLine("System Analysis");
+            Console.WriteLine("Hardware Components: {0}", TheSystem.Components.Count());
         }
     }
 }

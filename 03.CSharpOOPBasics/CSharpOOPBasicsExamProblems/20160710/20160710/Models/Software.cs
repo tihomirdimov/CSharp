@@ -2,7 +2,7 @@
 {
     public class Software : Component
     {
-        public Software(string name, string type, int capacityConsumption, int memoryConsumption) : base(name, type)
+        public Software(string name, int capacityConsumption, int memoryConsumption) : base(name)
         {
             this.CapacityConsumption = capacityConsumption;
             this.MemoryConsumption = memoryConsumption;

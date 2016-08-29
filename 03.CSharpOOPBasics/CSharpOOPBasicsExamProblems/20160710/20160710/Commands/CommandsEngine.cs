@@ -1,6 +1,7 @@
 ﻿namespace _20160710.Commands
 {
     using System.Text.RegularExpressions;
+    using _20160710.Models;
     class CommandsEngine
     {
         private string input;
@@ -19,6 +20,15 @@
             {
                 Regex regex = new Regex(registerPowerHardwarePattern);
                 Match match = regex.Match(this.input);
+                RegisterPowerHardware toRegister = new RegisterPowerHardware(new PowerHardware(
+                    match.Groups[1].ToString(),
+                    int.Parse(match.Groups[2].Value),
+                    int.Parse(match.Groups[3].Value)));
+                toRegister.register();
+            }
+            else if (input.Equals("System Split"))
+            {
+                TheSystem.SystemSplit();
             }
         }
     }

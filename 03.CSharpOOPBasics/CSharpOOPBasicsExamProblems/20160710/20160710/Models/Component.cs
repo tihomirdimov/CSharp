@@ -2,10 +2,9 @@
 {
     public abstract class Component
     {
-        protected Component(string name, string type)
+        protected Component(string name)
         {
             this.Name = name;
-            this.Type = type;
         }
         public string Name { get; protected set; }
         public string Type { get; protected set; }

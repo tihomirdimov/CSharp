@@ -46,7 +46,7 @@
     <Compile Include="Commands\CommandsEngine.cs" />
     <Compile Include="Commands\RegisterPowerHardware.cs" />
     <Compile Include="Models\Component.cs" />
-    <Compile Include="Models\ExoressSoftware.cs" />
+    <Compile Include="Models\ExpressSoftware.cs" />
     <Compile Include="Models\Hardware.cs" />
     <Compile Include="Models\HeavyHardware.cs" />
     <Compile Include="Models\LightSoftware.cs" />
