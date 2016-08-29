@@ -46,6 +46,7 @@
     <Compile Include="Models\Component.cs" />
     <Compile Include="Models\Hardware.cs" />
     <Compile Include="Models\Software.cs" />
+    <Compile Include="Models\TheSystem.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
