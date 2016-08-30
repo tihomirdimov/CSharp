@@ -26,6 +26,16 @@
                     int.Parse(match.Groups[3].Value)));
                 toRegister.register();
             }
+            else if (Regex.IsMatch(this.input, registerHeavyHardwarePattern))
+            {
+                Regex regex = new Regex(registerHeavyHardwarePattern);
+                Match match = regex.Match(this.input);
+                RegisterHeavyHardware toRegister = new RegisterHeavyHardware(new HeavyHardware(
+                    match.Groups[1].ToString(),
+                    int.Parse(match.Groups[2].Value),
+                    int.Parse(match.Groups[3].Value)));
+                toRegister.register();
+            }
             else if (input.Equals("System Split"))
             {
                 TheSystem.SystemSplit();

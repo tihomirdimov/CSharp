@@ -3,10 +3,8 @@
     using System.Collections.Generic;
     public class Hardware : Component
     {
-        public Hardware(string name, int maximumCapacity, int maximumMemory) : base (name)
+        public Hardware(string name) : base (name)
         {
-            this.MaximumCapacity = maximumCapacity;
-            this.MaximumMemory = maximumMemory;
             this.Software = new List<Software>();
         }
         public int MaximumCapacity { get; set; }

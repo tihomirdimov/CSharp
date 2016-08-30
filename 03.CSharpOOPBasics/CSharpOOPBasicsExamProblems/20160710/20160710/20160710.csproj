@@ -43,8 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Analyze.cs" />
     <Compile Include="Commands\CommandsEngine.cs" />
+    <Compile Include="Commands\RegisterExpressSoftware.cs" />
+    <Compile Include="Commands\RegisterHeavyHardware.cs" />
+    <Compile Include="Commands\RegisterLightSoftware.cs" />
     <Compile Include="Commands\RegisterPowerHardware.cs" />
+    <Compile Include="Commands\ReleaseSoftwareComponent.cs" />
     <Compile Include="Models\Component.cs" />
     <Compile Include="Models\ExpressSoftware.cs" />
     <Compile Include="Models\Hardware.cs" />

@@ -10,6 +10,10 @@
         {
             Console.WriteLine("System Analysis");
             Console.WriteLine("Hardware Components: {0}", TheSystem.Components.Count());
+            foreach (var component in TheSystem.Components)
+            {
+                Console.WriteLine(component.Name);
+            }
         }
     }
 }

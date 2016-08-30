@@ -2,7 +2,7 @@
 {
     public class HeavyHardware : Hardware
     {
-        public HeavyHardware(string name, int maximumCapacity, int maximumMemory) : base(name, maximumCapacity, maximumMemory)
+        public HeavyHardware(string name, int maximumCapacity, int maximumMemory) : base(name)
         {
             this.MaximumCapacity = (int)2 * maximumCapacity;
             this.MaximumMemory = (int)0.75 * maximumMemory;
