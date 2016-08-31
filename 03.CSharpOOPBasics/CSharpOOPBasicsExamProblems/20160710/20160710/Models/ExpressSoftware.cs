@@ -1,8 +1,8 @@
 ﻿namespace _20160710.Models
 {
-    class ExpressSoftware : Software
+    public class ExpressSoftware : Software
     {
-        public ExpressSoftware(string name, string type, int capacityConsumption, int memoryConsumption) : base(name, capacityConsumption, memoryConsumption)
+        public ExpressSoftware(string hardware, string name, int capacityConsumption, int memoryConsumption) : base(hardware, name, capacityConsumption, memoryConsumption)
         {
             this.MemoryConsumption = (int)2 * memoryConsumption;
             this.Type = "express";

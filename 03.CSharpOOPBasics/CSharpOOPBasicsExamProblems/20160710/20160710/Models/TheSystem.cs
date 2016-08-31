@@ -6,14 +6,19 @@
     public static class TheSystem
     {
         public static List<Hardware> Components = new List<Hardware>();
-        public static void SystemSplit()
+        public static void Analyze()
         {
             Console.WriteLine("System Analysis");
             Console.WriteLine("Hardware Components: {0}", TheSystem.Components.Count());
-            foreach (var component in TheSystem.Components)
-            {
-                Console.WriteLine(component.Name);
-            }
+            Console.WriteLine("Software Components: {0}", TheSystem.Components.Sum(h => h.Software.Count));
+            Console.WriteLine("Total Operational Memory: {0} / {1}",
+                TheSystem.Components.Sum(h => h.Software.Sum(s => s.MemoryConsumption)),
+                TheSystem.Components.Sum(h => h.MaximumMemory));
+            Console.WriteLine("Total Capacity Taken: { totalCapacityTaken} / { maximumCapacity}");
+        }
+        public static void SystemSplit()
+        {
+            Console.WriteLine("Split");
         }
     }
 }

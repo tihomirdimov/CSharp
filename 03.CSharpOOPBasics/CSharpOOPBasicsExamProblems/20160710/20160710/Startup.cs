@@ -13,15 +13,15 @@ namespace _20160710
     {
         static void Main()
         {
-            string input = Console.ReadLine();
             bool isRunning = true;
+            string input = Console.ReadLine();
             while (isRunning)
             {
                 CommandsEngine command = new CommandsEngine(input);
                 command.run();
                 if (input.Equals("System Split"))
                 {
-                    isRunning = false;
+                    break;
                 }
                 input = Console.ReadLine();
             }
