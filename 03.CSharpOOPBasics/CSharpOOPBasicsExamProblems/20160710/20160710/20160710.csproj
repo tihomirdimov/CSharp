@@ -50,6 +50,7 @@
     <Compile Include="Commands\RegisterLightSoftware.cs" />
     <Compile Include="Commands\RegisterPowerHardware.cs" />
     <Compile Include="Commands\ReleaseSoftwareComponent.cs" />
+    <Compile Include="Commands\SoftwareComponentValidation.cs" />
     <Compile Include="Models\Component.cs" />
     <Compile Include="Models\ExpressSoftware.cs" />
     <Compile Include="Models\Hardware.cs" />
