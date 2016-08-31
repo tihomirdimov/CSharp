@@ -4,8 +4,8 @@
     {
         public HeavyHardware(string name, int maximumCapacity, int maximumMemory) : base(name)
         {
-            this.MaximumCapacity = (int)2 * maximumCapacity;
-            this.MaximumMemory = (int)0.75 * maximumMemory;
+            this.MaximumCapacity = maximumCapacity * 2;
+            this.MaximumMemory = maximumMemory - (int)(maximumMemory / 100 * 25);
             this.Type = "heavy";
         }
     }

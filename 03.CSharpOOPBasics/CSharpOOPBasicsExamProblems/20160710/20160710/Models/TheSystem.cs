@@ -14,7 +14,9 @@
             Console.WriteLine("Total Operational Memory: {0} / {1}",
                 TheSystem.Components.Sum(h => h.Software.Sum(s => s.MemoryConsumption)),
                 TheSystem.Components.Sum(h => h.MaximumMemory));
-            Console.WriteLine("Total Capacity Taken: { totalCapacityTaken} / { maximumCapacity}");
+            Console.WriteLine("Total Capacity Taken: {0} / {1}",
+                TheSystem.Components.Sum(h => h.Software.Sum(s => s.CapacityConsumption)),
+                TheSystem.Components.Sum(h => h.MaximumCapacity));
         }
         public static void SystemSplit()
         {
