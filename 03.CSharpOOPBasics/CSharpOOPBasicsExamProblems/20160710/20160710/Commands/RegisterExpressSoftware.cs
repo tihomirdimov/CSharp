@@ -10,7 +10,11 @@
         }
         public void register()
         {
-            TheSystem.Components.Find(c=>c.Name == software.Hardware).Software.Add(software);
+            SoftwareComponentValidation validate = new SoftwareComponentValidation(software, software.Hardware);
+            if (validate.IsValid())
+            {
+                TheSystem.Components.Find(c => c.Name == software.Hardware).Software.Add(software);
+            }
         }
     }
 }
