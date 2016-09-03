@@ -53,7 +53,7 @@
             {
                 Regex regex = new Regex(registerLightSoftwarePattern);
                 Match match = regex.Match(this.input);
-                RegisterLightSoftware toRegister = new RegisterLightSoftware(new ExpressSoftware(
+                RegisterLightSoftware toRegister = new RegisterLightSoftware(new LightSoftware(
                     match.Groups[1].ToString(),
                     match.Groups[2].ToString(),
                     int.Parse(match.Groups[3].Value),

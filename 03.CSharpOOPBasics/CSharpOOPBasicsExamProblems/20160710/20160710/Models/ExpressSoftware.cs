@@ -2,8 +2,9 @@
 {
     public class ExpressSoftware : Software
     {
-        public ExpressSoftware(string hardware, string name, int capacityConsumption, int memoryConsumption) : base(hardware, name, capacityConsumption, memoryConsumption)
-        {
+        public ExpressSoftware(string hardware, string name, int capacityConsumption, int memoryConsumption) : base(hardware, name)
+        {   
+            this.CapacityConsumption = capacityConsumption;
             this.MemoryConsumption = (int)memoryConsumption * 2;
             this.Type = "Express";
         }
