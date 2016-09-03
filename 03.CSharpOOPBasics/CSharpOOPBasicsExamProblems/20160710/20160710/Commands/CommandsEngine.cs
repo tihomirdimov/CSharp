@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace _20160710.Commands
+﻿namespace _20160710.Commands
 {
+    using System;
+    using _20160710.Output;
     using System.Text.RegularExpressions;
     using _20160710.Models;
     class CommandsEngine
@@ -64,16 +64,16 @@ namespace _20160710.Commands
             {
                 Regex regex = new Regex(releaseSoftwareComponentPattern);
                 Match match = regex.Match(this.input);
-                ReleaseSoftwareComponent toRelease = new ReleaseSoftwareComponent(match.Groups[1].ToString(),match.Groups[2].ToString());
+                ReleaseSoftwareComponent toRelease = new ReleaseSoftwareComponent(match.Groups[1].ToString(), match.Groups[2].ToString());
                 toRelease.Release();
             }
             else if (input.Equals("Analyze()"))
             {
-                TheSystem.Analyze();
+                Output.Analyze.Run();
             }
             else if (input.Equals("System Split"))
             {
-                TheSystem.SystemSplit();
+                Output.SystemSplit.Run();
             }
         }
     }

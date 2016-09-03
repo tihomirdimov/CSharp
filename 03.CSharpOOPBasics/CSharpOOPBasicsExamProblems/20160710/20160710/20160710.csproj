@@ -59,6 +59,8 @@
     <Compile Include="Models\PowerHardware.cs" />
     <Compile Include="Models\Software.cs" />
     <Compile Include="Models\TheSystem.cs" />
+    <Compile Include="Output\Analyze.cs" />
+    <Compile Include="Output\SystemSplit.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
