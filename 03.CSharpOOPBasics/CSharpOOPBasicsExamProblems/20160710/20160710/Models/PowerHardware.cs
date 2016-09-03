@@ -6,7 +6,7 @@
         {
             this.MaximumCapacity = maximumCapacity - (int)(maximumCapacity / 100 * 75);
             this.MaximumMemory = maximumMemory + (int)(maximumMemory / 100 * 75);
-            this.Type = "power";
+            this.Type = "Power";
         }
     }
 }

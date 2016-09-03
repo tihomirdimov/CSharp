@@ -5,7 +5,7 @@
         public ExpressSoftware(string hardware, string name, int capacityConsumption, int memoryConsumption) : base(hardware, name, capacityConsumption, memoryConsumption)
         {
             this.MemoryConsumption = (int)memoryConsumption * 2;
-            this.Type = "express";
+            this.Type = "Express";
         }
     }
 }

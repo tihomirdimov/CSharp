@@ -6,7 +6,7 @@
         {
             this.CapacityConsumption = capacityConsumption + (int)(capacityConsumption / 100 * 50);
             this.MemoryConsumption = memoryConsumption - (int)(memoryConsumption / 100 * 50);
-            this.Type = "light";
+            this.Type = "Light";
         }
     }
 }
