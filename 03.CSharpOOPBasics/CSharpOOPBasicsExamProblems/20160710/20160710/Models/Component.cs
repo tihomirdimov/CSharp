@@ -6,7 +6,7 @@
         {
             this.Name = name;
         }
-        public string Name { get; protected set; }
-        public string Type { get; protected set; }
+        public virtual string Name { get; set; }
+        public virtual string Type { get; set; }
     }
 }
