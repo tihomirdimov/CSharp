@@ -23,7 +23,7 @@
                 }
                 else
                 {
-                    Console.WriteLine("Software Components: ", string.Join(", ", item.Software));
+                    Console.WriteLine("Software Components: {0}", string.Join(", ", item.Software.Select(s => s.Name).ToArray()));
                 }
 
             }
@@ -43,7 +43,7 @@
                 }
                 else
                 {
-                    Console.WriteLine("Software Components: ", string.Join(", ", item.Software));
+                    Console.WriteLine("Software Components: {0}", string.Join(", ", item.Software.Select(s=>s.Name).ToArray()));
                 }
             }
         }
