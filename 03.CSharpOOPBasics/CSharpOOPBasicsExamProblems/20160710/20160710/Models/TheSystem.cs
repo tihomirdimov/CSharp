@@ -9,7 +9,7 @@
         public static void Analyze()
         {
             Console.WriteLine("System Analysis");
-            Console.WriteLine("Hardware Components: {0}", TheSystem.Components.Count());
+            Console.WriteLine("Hardware Components: {0}", TheSystem.Components.Count);
             Console.WriteLine("Software Components: {0}", TheSystem.Components.Sum(h => h.Software.Count));
             Console.WriteLine("Total Operational Memory: {0} / {1}",
                 TheSystem.Components.Sum(h => h.Software.Sum(s => s.MemoryConsumption)),
