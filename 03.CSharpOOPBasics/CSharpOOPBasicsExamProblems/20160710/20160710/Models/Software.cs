@@ -2,7 +2,6 @@
 {
     public class Software : Component
     {
-        
         public Software(string hardware, string name, int capacityConsumption, int memoryConsumption) : base(name)
         {
             this.Hardware = hardware;

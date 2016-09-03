@@ -20,7 +20,41 @@
         }
         public static void SystemSplit()
         {
-            Console.WriteLine("Split");
+            foreach (var item in TheSystem.Components.Where(h => h.Type.Equals("power")))
+            {
+                Console.WriteLine("Hardware Component – {0}", item.Name);
+                Console.WriteLine("Express Software Components: {0}", item.Software.Count(h => h.Type.Equals("express")));
+                Console.WriteLine("Light Software Components: {0}", item.Software.Count(h => h.Type.Equals("light")));
+                Console.WriteLine("Memory Usage: {0} / {1}", item.Software.Sum(s => s.MemoryConsumption), item.MaximumMemory);
+                Console.WriteLine("Capacity Usage: {0} / {1}", item.Software.Sum(s => s.CapacityConsumption), item.MaximumCapacity);
+                Console.WriteLine("Type: ", item.Type);
+                if (item.Software.Count == 0)
+                {
+                    Console.WriteLine("Software Components: None");
+                }
+                else
+                {
+                    Console.WriteLine("Software Components: ", string.Join(", ", item.Software));
+                }
+
+            }
+            foreach (var item in TheSystem.Components.Where(h => h.Type.Equals("heavy")))
+            {
+                Console.WriteLine("Hardware Component – {0}", item.Name);
+                Console.WriteLine("Express Software Components: {0}", item.Software.Count(h => h.Type.Equals("express")));
+                Console.WriteLine("Light Software Components: {0}", item.Software.Count(h => h.Type.Equals("light")));
+                Console.WriteLine("Memory Usage: {0} / {1}", item.Software.Sum(s => s.MemoryConsumption), item.MaximumMemory);
+                Console.WriteLine("Capacity Usage: {0} / {1}", item.Software.Sum(s => s.CapacityConsumption), item.MaximumCapacity);
+                Console.WriteLine("Type: ", item.Type);
+                if (item.Software.Count == 0)
+                {
+                    Console.WriteLine("Software Components: None");
+                }
+                else
+                {
+                    Console.WriteLine("Software Components: ", string.Join(", ", item.Software));
+                }
+            }
         }
     }
 }
