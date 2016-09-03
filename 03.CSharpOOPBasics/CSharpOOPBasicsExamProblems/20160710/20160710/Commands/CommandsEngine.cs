@@ -26,7 +26,7 @@
                     match.Groups[1].ToString(),
                     int.Parse(match.Groups[2].Value),
                     int.Parse(match.Groups[3].Value)));
-                toRegister.register();
+                toRegister.Register();
             }
             else if (Regex.IsMatch(this.input, registerHeavyHardwarePattern))
             {
@@ -36,7 +36,7 @@
                     match.Groups[1].ToString(),
                     int.Parse(match.Groups[2].Value),
                     int.Parse(match.Groups[3].Value)));
-                toRegister.register();
+                toRegister.Register();
             }
             else if (Regex.IsMatch(this.input, registerExpressSoftwarePattern))
             {
@@ -47,7 +47,7 @@
                     match.Groups[2].ToString(),
                     int.Parse(match.Groups[3].Value),
                     int.Parse(match.Groups[4].Value)));
-                toRegister.register();
+                toRegister.Register();
             }
             else if (Regex.IsMatch(this.input, registerLightSoftwarePattern))
             {
@@ -58,7 +58,7 @@
                     match.Groups[2].ToString(),
                     int.Parse(match.Groups[3].Value),
                     int.Parse(match.Groups[4].Value)));
-                toRegister.register();
+                toRegister.Register();
             }
             else if (Regex.IsMatch(this.input, releaseSoftwareComponentPattern))
             {
@@ -69,11 +69,11 @@
             }
             else if (input.Equals("Analyze()"))
             {
-                Output.Analyze.Run();
+                Analyze.Run();
             }
             else if (input.Equals("System Split"))
             {
-                Output.SystemSplit.Run();
+                SystemSplit.Run();
             }
         }
     }

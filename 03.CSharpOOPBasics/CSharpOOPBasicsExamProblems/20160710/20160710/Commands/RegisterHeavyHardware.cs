@@ -3,12 +3,12 @@
     using _20160710.Models;
     class RegisterHeavyHardware
     {
-        private Hardware hardware;
+        private readonly Hardware hardware;
         public RegisterHeavyHardware(Hardware hardware)
         {
             this.hardware = hardware;
         }
-        public void register()
+        public void Register()
         {
             TheSystem.Components.Add(hardware);
         }

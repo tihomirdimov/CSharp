@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\Analyze.cs" />
     <Compile Include="Commands\CommandsEngine.cs" />
     <Compile Include="Commands\RegisterExpressSoftware.cs" />
     <Compile Include="Commands\RegisterHeavyHardware.cs" />

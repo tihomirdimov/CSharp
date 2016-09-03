@@ -5,8 +5,8 @@ namespace _20160710.Commands
 {
     public class SoftwareComponentValidation
     {
-        private Software software;
-        private string hardware;
+        private readonly Software software;
+        private readonly string hardware;
         public SoftwareComponentValidation(Software software, string hardware)
         {
             this.software = software;

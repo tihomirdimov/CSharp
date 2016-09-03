@@ -6,8 +6,8 @@ namespace _20160710.Commands
 {
     class ReleaseSoftwareComponent
     {
-        private string hardware;
-        private string software;
+        private readonly string hardware;
+        private readonly string software;
         public ReleaseSoftwareComponent(string hardware, string software)
         {
             this.hardware = hardware;
