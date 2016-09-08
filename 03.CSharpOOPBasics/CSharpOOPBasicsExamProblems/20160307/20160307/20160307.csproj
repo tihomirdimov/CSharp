@@ -43,9 +43,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Input\Game.cs" />
-    <Compile Include="Models\Matrix.cs" />
+    <Compile Include="Game\Game.cs" />
+    <Compile Include="Input\Input.cs" />
+    <Compile Include="Game\Move.cs" />
+    <Compile Include="Models\Asparagus.cs" />
+    <Compile Include="Models\Broccoli.cs" />
+    <Compile Include="Models\CherryBerry.cs" />
+    <Compile Include="Game\Matrix.cs" />
+    <Compile Include="Models\Mushroom.cs" />
     <Compile Include="Models\Ninja.cs" />
+    <Compile Include="Models\Royal.cs" />
+    <Compile Include="Models\Vegetable.cs" />
     <Compile Include="Output\Output.cs" />
     <Compile Include="StartUp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace _20160307.Models
+﻿namespace _20160307.Models
 {
-    class Ninja
+    public class Ninja
     {
+        private readonly string name;
+        private int power;
+        private int stamina;
+        public Ninja(string name)
+        {
+            this.Name = name;
+        }
+        public string Name { get; }
+        public string Power { get; set; }
+        public string Stamina { get; set; }
     }
 }
