@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Game\Game.cs" />
+    <Compile Include="Game\GameEngine.cs" />
     <Compile Include="Input\Input.cs" />
     <Compile Include="Game\Move.cs" />
     <Compile Include="Models\Asparagus.cs" />

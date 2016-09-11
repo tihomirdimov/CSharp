@@ -8,9 +8,11 @@
         public Ninja(string name)
         {
             this.Name = name;
+            this.Power = 1;
+            this.Stamina = 1;
         }
         public string Name { get; }
-        public string Power { get; set; }
-        public string Stamina { get; set; }
+        public int Power { get; set; }
+        public int Stamina { get; set; }
     }
 }
