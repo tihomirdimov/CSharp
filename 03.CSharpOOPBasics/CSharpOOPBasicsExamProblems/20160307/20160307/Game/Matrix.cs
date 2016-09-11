@@ -4,16 +4,36 @@ namespace _20160307.Models
 {
     public class Matrix
     {
-        private char[,] matrix;
+        private readonly Vegetable[,] matrix;
         public Matrix(int rows, int columns)
         {
-            matrix = new char[rows, columns];
+            matrix = new Vegetable[rows, columns];
         }
         public void Populate(int row, int col, char value)
         {
-            matrix[row, col] = value;
+            switch(value)
+            {
+                case 'A':
+                    matrix[row,col] = new Asparagus();
+                    break;
+                case 'B':
+                    matrix[row, col] = new Broccoli();
+                    break;
+                case 'C':
+                    matrix[row, col] = new CherryBerry();
+                    break;
+                case 'M':
+                    matrix[row, col] = new Mushroom();
+                    break;
+                case 'R':
+                    matrix[row, col] = new Royal();
+                    break;
+                case '-':
+                    matrix[row, col] = new BlankSpace();
+                    break;
+            }
         }
-        public void Print()
+        public void Grow()
         {
             int rows = matrix.GetLength(0);
             int cols = matrix.GetLength(1);
@@ -21,7 +41,7 @@ namespace _20160307.Models
             {
                 for (int j = 0; j < cols; j++)
                 {
-                    Console.Write(matrix[i, j]);
+                    matrix[i, j].Grow();
                 }
                 Console.WriteLine();
             }

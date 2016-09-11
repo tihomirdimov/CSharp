@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace _20160307.Models
+﻿namespace _20160307.Models
 {
-    class Broccoli
+    class Broccoli : Vegetable
     {
+        private bool Grown;
+        private string Name;
+        private int Power;
+        private int Stamina;
+
+        public override void Grow()
+        {
+        }
     }
 }

@@ -2,12 +2,11 @@
 {
     using System.Collections.Generic;
     using _20160307.Models;
-
-    public static class GameEngine
+    public static class GameStructure
     {
         private static List<Ninja> Players = new List<Ninja>();
         private static Matrix Matrix;
-        private static char[] Controls;
+        private static char[] controls;
         public static void AddPlayer(string player)
         {
             var newNinja = new Ninja(player);
@@ -25,9 +24,6 @@
         {
             Controls = inputControls;
         }
-        public static void PrintMatrix()
-        {
-            Matrix.Print();
-        }
+        public static char[] Controls { get; set; }
     }
 }

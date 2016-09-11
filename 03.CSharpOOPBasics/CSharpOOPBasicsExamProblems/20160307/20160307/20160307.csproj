@@ -43,10 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Game\GameEngine.cs" />
-    <Compile Include="Input\Input.cs" />
-    <Compile Include="Game\Move.cs" />
+    <Compile Include="Game\GameStructure.cs" />
+    <Compile Include="Game\GameLoop.cs" />
     <Compile Include="Models\Asparagus.cs" />
+    <Compile Include="Models\BlankSpace.cs" />
     <Compile Include="Models\Broccoli.cs" />
     <Compile Include="Models\CherryBerry.cs" />
     <Compile Include="Game\Matrix.cs" />
