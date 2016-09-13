@@ -1,6 +1,6 @@
 ﻿namespace _20160307.Models
 {
-    public class Ninja
+    public class Ninja : MatrixElement
     {
         private readonly string name;
         private int power;

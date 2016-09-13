@@ -50,6 +50,7 @@
     <Compile Include="Models\Broccoli.cs" />
     <Compile Include="Models\CherryBerry.cs" />
     <Compile Include="Game\Matrix.cs" />
+    <Compile Include="Models\MatrixElement.cs" />
     <Compile Include="Models\Mushroom.cs" />
     <Compile Include="Models\Ninja.cs" />
     <Compile Include="Models\Royal.cs" />

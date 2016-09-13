@@ -28,6 +28,7 @@ namespace _20160307
             input = Console.ReadLine();
             char[] controls = input.ToCharArray();
             Game.GameStructure.CreateControls(controls);
+            Game.GameStructure.FindStartPositions();
         }
     }
 }

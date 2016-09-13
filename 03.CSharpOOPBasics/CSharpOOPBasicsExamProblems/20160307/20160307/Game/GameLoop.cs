@@ -4,10 +4,6 @@
     {
         public GameLoop()
         {
-            foreach (var VARIABLE in GameStructure.)
-            {
-                
-            }
         }
     }
 }

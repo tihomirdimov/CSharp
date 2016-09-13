@@ -1,6 +1,6 @@
 ﻿namespace _20160307.Models
 {
-    public abstract class Vegetable
+    public abstract class Vegetable : MatrixElement
     {
         private bool Grown;
         private string Name;
