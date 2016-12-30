@@ -1,4 +1,4 @@
-﻿using BoatRacingSimulator.Models.Boats;
+﻿using System.Diagnostics;
 
 namespace BoatRacingSimulator.Controllers
 {
@@ -12,6 +12,7 @@ namespace BoatRacingSimulator.Controllers
     using BoatRacingSimulator.Interfaces;
     using BoatRacingSimulator.Models;
     using BoatRacingSimulator.Utility;
+    using BoatRacingSimulator.Models.Boats;
     using Models.BoatEngines;
 
     public class BoatSimulatorController : IBoatSimulatorController
@@ -69,8 +70,8 @@ namespace BoatRacingSimulator.Controllers
 
         public string CreatePowerBoat(string model, int weight, string firstEngineModel, string secondEngineModel)
         {
-            BoatJetEngine firstEngine = this.Database.Engines.GetItem(firstEngineModel) as BoatJetEngine;
-            BoatSterndriveEngine secondEngine = this.Database.Engines.GetItem(secondEngineModel) as BoatSterndriveEngine;
+            IBoatEngine firstEngine = this.Database.Engines.GetItem(firstEngineModel) as IBoatEngine;
+            IBoatEngine secondEngine = this.Database.Engines.GetItem(secondEngineModel) as IBoatEngine;
             IBoat boat = new PowerBoat(model, weight, firstEngine, secondEngine);
             this.Database.Boats.Add(boat);
             return string.Format("Power boat with model {0} registered successfully.", model);
@@ -78,7 +79,7 @@ namespace BoatRacingSimulator.Controllers
 
         public string CreateYacht(string model, int weight, string engineModel, int cargoWeight)
         {
-            BoatJetEngine engine = this.Database.Engines.GetItem(engineModel) as BoatJetEngine;
+            IBoatEngine engine = this.Database.Engines.GetItem(engineModel) as IBoatEngine;
             IBoat boat = new YachtBoat(model, weight, cargoWeight, engine);
             this.Database.Boats.Add(boat);
             return string.Format("Yacht with model {0} registered successfully.", model);
@@ -99,7 +100,7 @@ namespace BoatRacingSimulator.Controllers
         {
             IBoat boat = this.Database.Boats.GetItem(model);
             this.ValidateRaceIsSet();
-            if (!this.CurrentRace.AllowsMotorboats && boat is IBoat)
+            if (!this.CurrentRace.AllowsMotorboats && boat is IEngine)
             {
                 throw new ArgumentException(Constants.IncorrectBoatTypeMessage);
             }
@@ -116,32 +117,51 @@ namespace BoatRacingSimulator.Controllers
                 throw new InsufficientContestantsException(Constants.InsufficientContestantsMessage);
             }
 
-            var first = this.FindFastest(participants);
-            participants.Remove(first.Value);
-            var second = this.FindFastest(participants);
-            participants.Remove(second.Value);
-            var third = this.FindFastest(participants);
-            participants.Remove(third.Value);
+            var participantsWithPositiveTimes = this.CurrentRace.GetParticipants()
+                .Where(p => this.CurrentRace.Distance / p.CalculateRaceSpeed(this.CurrentRace) > 0)
+                .OrderBy(p => this.CurrentRace.Distance / p.CalculateRaceSpeed(this.CurrentRace)).ToList();
+            var participantsWithNegativeTimes = this.CurrentRace.GetParticipants()
+                .Where(p => this.CurrentRace.Distance / p.CalculateRaceSpeed(this.CurrentRace) <= 0)
+                .OrderByDescending(p => this.CurrentRace.Distance / p.CalculateRaceSpeed(this.CurrentRace)).ToList();
+
+            var finalTimes = new List<IBoat>();
+
+            foreach (var participant in participantsWithPositiveTimes)
+            {
+                finalTimes.Add(participant);
+            }
+
+            foreach (var participant in participantsWithNegativeTimes)
+            {
+                finalTimes.Add(participant);
+            }
 
             var result = new StringBuilder();
-            result.AppendLine(string.Format(
-                "First place: {0} Model: {1} Time: {2}",
-                first.Value.GetType().Name,
-                first.Value.Model,
-                Double.IsInfinity(first.Key) ? "Did not finish!" : first.Key.ToString("0.00") + " sec"));
-            result.AppendLine(string.Format(
-                "Second place: {0} Model: {1} Time: {2}",
-                second.Value.GetType().Name,
-                second.Value.Model,
-                Double.IsInfinity(second.Key) ? "Did not finish!" : second.Key.ToString("0.00") + " sec"));
-            result.Append(string.Format(
-                "Third place: {0} Model: {1} Time: {2}",
-                third.Value.GetType().Name,
-                third.Value.Model,
-                Double.IsInfinity(third.Key) ? "Did not finish!" : third.Key.ToString("0.00") + " sec"));
 
+            for (int i = 0; i < 3; i++)
+            {
+                var currentBoat = finalTimes[i];
+                var currentTime = this.CurrentRace.Distance / currentBoat.CalculateRaceSpeed(this.CurrentRace);
+                string place = "";
+                switch (i)
+                {
+                    case 0:
+                        place = "First";
+                        break;
+                    case 1:
+                        place = "Second";
+                        break;
+                    case 2:
+                        place = "Third";
+                        break;
+                }
+                result.AppendLine(string.Format("{3} place: {0} Model: {1} Time: {2}",
+                    currentBoat.GetType().Name,
+                    currentBoat.Model,
+                    currentTime < 0 ? "Did not finish!" : Math.Round(currentTime, 2) + " sec",
+                    place));
+            }
             this.CurrentRace = null;
-
             return result.ToString();
         }
 
@@ -149,24 +169,6 @@ namespace BoatRacingSimulator.Controllers
         {
             //TODO Bonus Task Implement me
             throw new NotImplementedException();
-        }
-
-        private KeyValuePair<double,IBoat> FindFastest(IList<IBoat> participants)
-        {
-            double bestTime = 0; 
-            IBoat winner = null;
-            foreach (var participant in participants)
-            {
-                var speed = participant.CalculateRaceSpeed(this.CurrentRace);
-                var time = this.CurrentRace.Distance/speed;
-                if (time < bestTime)
-                {
-                    bestTime = time;
-                    winner = participant;
-                }
-            }
-
-            return new KeyValuePair<double, IBoat>(bestTime,winner);
         }
 
         private void ValidateRaceIsSet()

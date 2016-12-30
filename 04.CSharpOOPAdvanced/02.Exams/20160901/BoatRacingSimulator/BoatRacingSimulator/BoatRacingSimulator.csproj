@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Interfaces\IBoat.cs" />
     <Compile Include="Interfaces\IBoatEngine.cs" />
+    <Compile Include="Interfaces\IEngine.cs" />
     <Compile Include="Models\BoatEngines\BoatJetEngine.cs" />
     <Compile Include="Models\BoatEngines\BoatSterndriveEngine.cs" />
     <Compile Include="Models\Boats\Boat.cs" />

@@ -3,7 +3,7 @@
     using System;
     using BoatRacingSimulator.Interfaces;
     using BoatRacingSimulator.Utility;
-    class YachtBoat : Boat
+    class YachtBoat : Boat, IEngine
     {
         IBoatEngine engine;
         private int cargoWeight;
@@ -23,6 +23,7 @@
                 {
                     throw new ArgumentNullException();
                 }
+                this.engine = value;
             }
         }
 

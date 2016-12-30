@@ -21,6 +21,7 @@
                 throw new DuplicateModelException(Constants.DuplicateModelMessage);
             }
 
+            this.ItemsByModel.Add(item.Model, item);
         }
 
         public virtual T GetItem(string model)

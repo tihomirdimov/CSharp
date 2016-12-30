@@ -1,11 +1,9 @@
-﻿
-
-namespace BoatRacingSimulator.Models.Boats
+﻿namespace BoatRacingSimulator.Models.Boats
 {
     using System;
     using BoatRacingSimulator.Interfaces;
 
-    public class PowerBoat : Boat
+    public class PowerBoat : Boat, IEngine
     {
         private IBoatEngine firstEngine;
         private IBoatEngine secondEngine;
@@ -27,6 +25,7 @@ namespace BoatRacingSimulator.Models.Boats
                 {
                     throw new ArgumentNullException();
                 }
+                this.firstEngine = value;
             }
         }
 
@@ -39,6 +38,7 @@ namespace BoatRacingSimulator.Models.Boats
                 {
                     throw new ArgumentNullException();
                 }
+                this.secondEngine = value;
             }
         }
 
