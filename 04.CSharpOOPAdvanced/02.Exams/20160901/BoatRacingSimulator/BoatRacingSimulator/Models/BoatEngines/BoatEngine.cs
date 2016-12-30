@@ -23,9 +23,14 @@ namespace BoatRacingSimulator.Models.BoatEngines
         {
             get
             {
-                throw new NotImplementedException();
+                return this.model;
             }
-            set { }
+
+            private set
+            {
+                Validator.ValidateModelLength(value, Constants.MinBoatEngineModelLength);
+                this.model = value;
+            }
         }  
 
         protected int Horsepower
