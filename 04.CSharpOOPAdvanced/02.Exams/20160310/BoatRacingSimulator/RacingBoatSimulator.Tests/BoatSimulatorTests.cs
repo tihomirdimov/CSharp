@@ -1,14 +1,12 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using BoatRacingSimulator.Controllers;
-using BoatRacingSimulator.Database;
-using BoatRacingSimulator.Interfaces;
-using BoatRacingSimulator.Utility;
-using BoatRacingSimulator.Models;
-using BoatRacingSimulator.Models.Boats;
-
-namespace RacingBoatSimulator.Tests
+﻿namespace RacingBoatSimulator.Tests
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using BoatRacingSimulator.Controllers;
+    using BoatRacingSimulator.Database;
+    using BoatRacingSimulator.Interfaces;
+    using BoatRacingSimulator.Models;
+    using BoatRacingSimulator.Models.Boats;
+
 
     [TestClass]
     public class BoatSimulatorTests
@@ -32,17 +30,17 @@ namespace RacingBoatSimulator.Tests
         }
 
         [TestMethod]
-        public void StartRace()
+        public void TestStartRace()
         {
             //Arrange
-            
+
             int distance = 100;
             int windSpeed = 10;
             int oceanCurrentSpeed = 5;
             bool allowsMotorboats = true;
             var race = new Race(distance, windSpeed, oceanCurrentSpeed, allowsMotorboats);
 
-            IBoat boat1 = new SailBoat("Sailor99",600,5);
+            IBoat boat1 = new SailBoat("Sailor99", 600, 5);
             IBoat boat2 = new SailBoat("Oracle Wind Champion", 400, 2);
             IBoat boat3 = new SailBoat("BMW World Tourer", 900, 10);
 
@@ -52,18 +50,17 @@ namespace RacingBoatSimulator.Tests
             database.Boats.Add(boat2);
             database.Boats.Add(boat3);
 
-            var testController = new BoatSimulatorController(database ,race);
+            var testController = new BoatSimulatorController(database, race);
+
+            testController.SignUpBoat("Sailor99");
+            testController.SignUpBoat("Oracle Wind Champion");
+            testController.SignUpBoat("BMW World Tourer");
 
             //Act
-
-            distance = 102;
-            windSpeed = 14;
-            oceanCurrentSpeed = 15;
-            allowsMotorboats = false;
-            string commandResult = testController.OpenRace(distance, windSpeed, oceanCurrentSpeed, allowsMotorboats);
+            string commandResult = testController.StartRace();
 
             //Assert
-            string expectedResult = "A new race with distance 100 meters, wind speed 10 m/s and ocean current speed 5 m/s has been set.";
+            string expectedResult = "First place: SailBoat Model: BMW World Tourer Time: Did not finish!\r\nSecond place: SailBoat Model: Sailor99 Time: Did not finish!\r\nThird place: SailBoat Model: Oracle Wind Champion Time: Did not finish!\r\n";
             Assert.AreEqual(expectedResult, commandResult, "Correct");
         }
     }
