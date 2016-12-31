@@ -1,7 +1,7 @@
 ﻿namespace BoatRacingSimulator.Interfaces
 {
-    using BoatRacingSimulator.Database;
-    using BoatRacingSimulator.Enumerations;
+    using global::BoatRacingSimulator.Database;
+    using global::BoatRacingSimulator.Enumerations;
 
     public interface IBoatSimulatorController
     {

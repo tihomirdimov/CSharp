@@ -1,7 +1,7 @@
 ﻿namespace BoatRacingSimulator.Models.Boats
 {
     using System;
-    using BoatRacingSimulator.Interfaces;
+    using global::BoatRacingSimulator.Interfaces;
 
     public class PowerBoat : Boat, IEngine
     {

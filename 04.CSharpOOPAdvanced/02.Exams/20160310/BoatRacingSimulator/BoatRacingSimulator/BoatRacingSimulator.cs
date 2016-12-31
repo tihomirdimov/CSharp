@@ -4,13 +4,13 @@ using System.Linq;
 
 namespace BoatRacingSimulator
 {
-    using BoatRacingSimulator.Core;
+    using global::BoatRacingSimulator.Core;
 
-    public class Program
+    public class BoatRacingSimulator
     {
         public static void Main()
         {
-            var engine = new Engine();
+            var engine = new CommandEngine();
             engine.Run();
         }
     }

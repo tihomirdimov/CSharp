@@ -2,7 +2,7 @@
 {
     using System;
     using System.Linq;
-    using BoatRacingSimulator.Interfaces;
+    using global::BoatRacingSimulator.Interfaces;
 
     public class CommandEngine
     {

@@ -6,13 +6,13 @@ namespace BoatRacingSimulator.Controllers
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using BoatRacingSimulator.Database;
-    using BoatRacingSimulator.Enumerations;
-    using BoatRacingSimulator.Exceptions;
-    using BoatRacingSimulator.Interfaces;
-    using BoatRacingSimulator.Models;
-    using BoatRacingSimulator.Utility;
-    using BoatRacingSimulator.Models.Boats;
+    using global::BoatRacingSimulator.Database;
+    using global::BoatRacingSimulator.Enumerations;
+    using global::BoatRacingSimulator.Exceptions;
+    using global::BoatRacingSimulator.Interfaces;
+    using global::BoatRacingSimulator.Models;
+    using global::BoatRacingSimulator.Utility;
+    using global::BoatRacingSimulator.Models.Boats;
     using Models.BoatEngines;
 
     public class BoatSimulatorController : IBoatSimulatorController

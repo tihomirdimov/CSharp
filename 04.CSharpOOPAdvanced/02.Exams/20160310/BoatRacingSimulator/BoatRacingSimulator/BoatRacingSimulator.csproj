@@ -53,7 +53,7 @@
     <Compile Include="Models\Boats\RowBoat.cs" />
     <Compile Include="Models\Boats\SailBoat.cs" />
     <Compile Include="Models\Boats\YachtBoat.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="BoatRacingSimulator.cs" />
     <Compile Include="Controllers\BoatSimulatorController.cs" />
     <Compile Include="Core\CommandHandler.cs" />
     <Compile Include="Core\CommandEngine.cs" />

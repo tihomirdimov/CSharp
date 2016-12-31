@@ -3,9 +3,9 @@
 namespace BoatRacingSimulator.Models.Boats
 {
     using System;
-    using BoatRacingSimulator.Utility;
+    using global::BoatRacingSimulator.Utility;
 
-    class SailBoat : Boat
+    public class SailBoat : Boat
     {
         private int sailEfficiency;
 

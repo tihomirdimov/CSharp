@@ -4,8 +4,8 @@ using BoatRacingSimulator.Models.Boats;
 namespace BoatRacingSimulator.Models
 {
     using System.Collections.Generic;
-    using BoatRacingSimulator.Interfaces;
-    using BoatRacingSimulator.Utility;
+    using global::BoatRacingSimulator.Interfaces;
+    using global::BoatRacingSimulator.Utility;
 
     public class Race : IRace
     {

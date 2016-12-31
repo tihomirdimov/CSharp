@@ -1,9 +1,14 @@
-﻿namespace BoatRacingSimulator.Models.Boats
+﻿
+
+
+
+using BoatRacingSimulator.Interfaces;
+using BoatRacingSimulator.Utility;
+
+namespace BoatRacingSimulator.Models.Boats
 {
     using System;
-    using BoatRacingSimulator.Interfaces;
-    using BoatRacingSimulator.Utility;
-    class YachtBoat : Boat, IEngine
+    public class YachtBoat : Boat, IEngine
     {
         IBoatEngine engine;
         private int cargoWeight;

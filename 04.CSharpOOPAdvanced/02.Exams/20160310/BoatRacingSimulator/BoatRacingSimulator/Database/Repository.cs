@@ -1,9 +1,9 @@
 ﻿namespace BoatRacingSimulator.Database
 {
     using System.Collections.Generic;
-    using BoatRacingSimulator.Exceptions;
-    using BoatRacingSimulator.Interfaces;
-    using BoatRacingSimulator.Utility;
+    using global::BoatRacingSimulator.Exceptions;
+    using global::BoatRacingSimulator.Interfaces;
+    using global::BoatRacingSimulator.Utility;
 
     public class Repository<T> : IRepository<T> where T : IModelable
     {

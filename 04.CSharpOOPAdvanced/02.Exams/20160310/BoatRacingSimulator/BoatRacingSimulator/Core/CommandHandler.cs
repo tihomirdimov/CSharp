@@ -1,10 +1,10 @@
 ﻿namespace BoatRacingSimulator.Core
 {
     using System;
-    using BoatRacingSimulator.Controllers;
-    using BoatRacingSimulator.Enumerations;
-    using BoatRacingSimulator.Interfaces;
-    using BoatRacingSimulator.Utility;
+    using global::BoatRacingSimulator.Controllers;
+    using global::BoatRacingSimulator.Enumerations;
+    using global::BoatRacingSimulator.Interfaces;
+    using global::BoatRacingSimulator.Utility;
 
     public class CommandHandler : ICommandHandler
     {

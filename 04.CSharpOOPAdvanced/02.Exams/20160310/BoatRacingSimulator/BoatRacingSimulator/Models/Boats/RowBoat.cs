@@ -2,8 +2,8 @@
 
 namespace BoatRacingSimulator.Models.Boats
 {
-    using BoatRacingSimulator.Utility;
-    class RowBoat : Boat
+    using global::BoatRacingSimulator.Utility;
+    public class RowBoat : Boat
     {
         private int oars;
 

@@ -3,7 +3,7 @@
 namespace BoatRacingSimulator.Interfaces
 {
     using System.Collections.Generic;
-    using BoatRacingSimulator.Models;
+    using global::BoatRacingSimulator.Models;
 
     public interface IRace
     {

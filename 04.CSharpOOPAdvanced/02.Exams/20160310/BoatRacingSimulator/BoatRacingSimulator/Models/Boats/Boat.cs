@@ -8,7 +8,7 @@ using BoatRacingSimulator.Interfaces;
 
 namespace BoatRacingSimulator.Models.Boats
 {
-    using BoatRacingSimulator.Utility;
+    using global::BoatRacingSimulator.Utility;
     public abstract class Boat : IBoat
 
     {
