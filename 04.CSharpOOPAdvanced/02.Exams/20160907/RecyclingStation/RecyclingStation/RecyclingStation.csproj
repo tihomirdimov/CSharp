@@ -43,6 +43,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\BurnableAttribute.cs" />
+    <Compile Include="Attributes\RecyclableAttribute.cs" />
+    <Compile Include="Attributes\StorableAttribute.cs" />
+    <Compile Include="Core\CommandHandler.cs" />
+    <Compile Include="Core\Engine.cs" />
+    <Compile Include="Models\GarbageDisposalStrategies\BurnableGarbageDisposalStrategy.cs" />
+    <Compile Include="Models\GarbageDisposalStrategies\GarbageDisposalStrategy.cs" />
+    <Compile Include="Models\GarbageDisposalStrategies\RecyclableGarbageDisposalStrategy.cs" />
+    <Compile Include="Models\GarbageDisposalStrategies\StorableGarbageDisposalStrategy.cs" />
+    <Compile Include="Models\Garbage\BurnableGarbage.cs" />
+    <Compile Include="Models\Garbage\Garbage.cs" />
+    <Compile Include="Models\Garbage\RecyclableGabrage.cs" />
+    <Compile Include="Models\Garbage\StorableGarbage.cs" />
+    <Compile Include="Models\ProcessingData.cs" />
     <Compile Include="WasteDisposal\Interfaces\IGarbageProcessor.cs" />
     <Compile Include="WasteDisposal\Attributes\DisposableAttribute.cs" />
     <Compile Include="WasteDisposal\GarbageProcessor.cs" />
