@@ -2,9 +2,18 @@
 {
     using RecyclingStation.WasteDisposal.Interfaces;
 
-    class ProcessingData:IProcessingData
+    class ProcessingData : IProcessingData
     {
-        public double EnergyBalance { get; }
-        public double CapitalBalance { get; }
+        private double energyBalance;
+        private double capitalBalance;
+
+        public ProcessingData(double energyBalance, double capitalBalance)
+        {
+            this.EnergyBalance = energyBalance;
+            this.CapitalBalance = capitalBalance;
+        }
+
+        public double EnergyBalance { get; set; }
+        public double CapitalBalance { get; set; }
     }
 }

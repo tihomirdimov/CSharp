@@ -21,14 +21,16 @@
         public IProcessingData ProcessWaste(IWaste garbage)
         {
             Type type = garbage.GetType();
-            DisposableAttribute disposalAttribute = (DisposableAttribute)type.GetCustomAttributes(true).FirstOrDefault(x => x.GetType() == typeof(DisposableAttribute));
+            DisposableAttribute disposalAttribute = (DisposableAttribute)type
+                .GetCustomAttributes(true)
+                .FirstOrDefault();
             IGarbageDisposalStrategy currentStrategy;
-            if (disposalAttribute == null || !this.StrategyHolder.GetDisposalStrategies.TryGetValue(disposalAttribute.GetType(), out currentStrategy))
+            if (disposalAttribute == null || !this.StrategyHolder
+                .GetDisposalStrategies
+                .TryGetValue(disposalAttribute.GetType(), out currentStrategy))
             {
-                throw new ArgumentException(
-                    "The passed in garbage does not implement a supported Disposable Strategy Attribute.");
+                throw new ArgumentException("The passed in garbage does not implement a supported Disposable Strategy Attribute.");
             }
-
             return currentStrategy.ProcessGarbage(garbage);
         }
     }

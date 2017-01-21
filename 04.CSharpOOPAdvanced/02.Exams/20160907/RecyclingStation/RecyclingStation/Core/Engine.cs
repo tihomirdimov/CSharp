@@ -1,57 +1,41 @@
-﻿
-using System.Linq;
-using RecyclingStation.WasteDisposal.Attributes;
-
-namespace RecyclingStation.Core
+﻿namespace RecyclingStation.Core
 {
     using System;
-    using System.Globalization;
-    using System.Reflection;
+    using RecyclingStation.WasteDisposal.Interfaces;
 
-    class Engine
+    public class Engine
     {
-        private CommandHandler commandHandler;
+        private BalanceManager balanceManager;
 
         public Engine()
         {
+            this.BalanceManager = new BalanceManager();
         }
 
-        public CommandHandler CommandHandler { get; }
+        internal BalanceManager BalanceManager { get; set; }
 
         public void Run()
         {
-            string input = Console.ReadLine();
+            var input = Console.ReadLine();
             while (input != "TimeToRecycle")
             {
-                if (input.StartsWith("ProcessGarbage"))
+                if (input == "Status")
                 {
-                    string[] tokens = input.Substring(15).Split('|');
-                    string name = tokens[0];
-                    double weight = Double.Parse(tokens[1], CultureInfo.InvariantCulture);
-                    double volumePerKg = Double.Parse(tokens[2], CultureInfo.InvariantCulture);
-                    string type = tokens[3];
-                    var currentClass = Assembly
-                        .GetExecutingAssembly()
-                        .GetTypes()
-                        .Where(t => t.Namespace == "RecyclingStation.Models.Garbage")
-                        .ToList();
-                    foreach (var current in currentClass)
-                    {
-                        var attr = current.GetCustomAttributes(typeof(DisposableAttribute), false);
-                        foreach (var att in attr)
-                        {
-                            string attname = att.GetType().Name;
-                            string currentType = type + "Attribute";
-                            if (attname.Equals(currentType))
-                            {
-                                Console.WriteLine(current.Name);
-                            }
-                        }
-                    }
+                    var result = BalanceManager.Status();
+                    Console.WriteLine("Energy:{0:F2} Capital:{1:F2}", result.EnergyBalance, result.CapitalBalance);
                 }
                 else
                 {
-                    Console.WriteLine(input);
+                    try
+                    {
+                        CommandHandler processCommand = new CommandHandler();
+                        IProcessingData processedGarbage = processCommand.Process(input);
+                        BalanceManager.AddGabrage(processedGarbage);
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                 }
                 input = Console.ReadLine();
             }
