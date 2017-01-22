@@ -22,7 +22,7 @@
                 if (input == "Status")
                 {
                     var result = BalanceManager.Status();
-                    Console.WriteLine("Energy:{0:F2} Capital:{1:F2}", result.EnergyBalance, result.CapitalBalance);
+                    Console.WriteLine("Energy: {0:F2} Capital: {1:F2}", result.EnergyBalance, result.CapitalBalance);
                 }
                 else
                 {
