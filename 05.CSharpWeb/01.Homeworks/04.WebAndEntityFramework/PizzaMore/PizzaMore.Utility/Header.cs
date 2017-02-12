@@ -10,6 +10,7 @@
             this.Type = "Content-type: text/html";
             this.Cookies = new CookieCollection();
         }
+
         public string Type { get; }
         public string Location { get; private set; }
         public ICookieCollection Cookies { get; private set; }

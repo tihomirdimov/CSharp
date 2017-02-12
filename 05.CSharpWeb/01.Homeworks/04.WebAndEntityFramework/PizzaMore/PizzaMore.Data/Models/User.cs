@@ -9,14 +9,14 @@ namespace PizzaMore.Data.Models
 
         public User()
         {
-            this.Suggestions = new HashSet<Pizza>();
+            this.PizzaSuggestions = new HashSet<Pizza>();
         }
 
         public int Id { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
 
-        public ICollection<Pizza> Suggestions
+        public ICollection<Pizza> PizzaSuggestions
         {
             get { return pizzaSuggestions; }
             set { pizzaSuggestions = value; }

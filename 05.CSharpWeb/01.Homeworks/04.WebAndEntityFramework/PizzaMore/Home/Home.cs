@@ -4,7 +4,6 @@
     using PizzaMore.Utility;
     using PizzaMore.Data;
     using PizzaMore.Data.Models;
-    using System.Net;
 
     class Home
     {
@@ -31,9 +30,7 @@
 
             ShowPage();
         }
-        private static
-            void AddDefaultLanguageCookie
-            ()
+        private static void AddDefaultLanguageCookie()
         {
             if (!WebUtil.GetCookies().ContainsKey("lang"))
             {
@@ -43,9 +40,7 @@
             }
         }
 
-        private static
-            void ShowPage
-            ()
+        private static void ShowPage()
         {
             Header.Print();
             if (Language.Equals("DE"))
@@ -58,22 +53,16 @@
             }
         }
 
-        private static
-            void ServeHtmlBg
-            ()
+        private static void ServeHtmlBg()
         {
             WebUtil.PrintFileContent("../../htdocs/pizzamore/home-bg.html");
         }
 
-        private static
-            void ServeHtmlEn
-            ()
+        private static void ServeHtmlEn()
         {
             WebUtil.PrintFileContent("../../htdocs/pizzamore/home.html");
         }
-        private static
-            void TryLogOut
-            ()
+        private static void TryLogOut()
         {
             if (RequestParameters.ContainsKey("logout"))
             {
