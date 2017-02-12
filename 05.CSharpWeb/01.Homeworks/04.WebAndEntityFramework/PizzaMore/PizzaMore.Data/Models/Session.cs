@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace PizzaMore.Data.Models
+﻿namespace PizzaMore.Data.Models
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class Session
     {
         [Key]
