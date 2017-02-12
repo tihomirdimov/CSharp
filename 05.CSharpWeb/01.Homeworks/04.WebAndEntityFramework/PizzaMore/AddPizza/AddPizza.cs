@@ -35,7 +35,7 @@ namespace AddPizza
                 using (var ctx = new PizzaMoreContext())
                 {
                     var user = ctx.Users.Find(session.UserId);
-                    user.Suggestions.Add(new Pizza()
+                    user.PizzaSuggestions.Add(new Pizza()
                     {
                         Title = PostParams["title"],
                         Recipe = PostParams["recipe"],
@@ -53,7 +53,7 @@ namespace AddPizza
         private static void ShowPage()
         {
             Header.Print();
-            WebUtil.PrintFileContent("../../htdocs/pm/addpizza.html");
+            WebUtil.PrintFileContent("../../htdocs/pizzamore/addpizza.html");
         }
     }
 }
