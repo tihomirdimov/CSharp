@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using HandMadeWebServer.Enums;
-
-namespace HandMadeWebServer
+﻿namespace HandMadeWebServer
 {
-    class HttpProcessor
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Net.Sockets;
+    using System.Text;
+    using System.Text.RegularExpressions;
+    using HandMadeWebServer.Enums;
+    using HandMadeWebServer.Models;
+
+    public class HttpProcessor
     {
         private IList<Route> Routes;
         private HttpRequest Request;

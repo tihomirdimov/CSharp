@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HandMadeWebServer.Models
+﻿namespace HandMadeWebServer.Models
 {
-    class CookieCollection : IEnumerable<Cookie>
+    using System.Collections;
+    using System.Collections.Generic;
+
+    public class CookieCollection : IEnumerable<Cookie>
     {
         public CookieCollection()
         {

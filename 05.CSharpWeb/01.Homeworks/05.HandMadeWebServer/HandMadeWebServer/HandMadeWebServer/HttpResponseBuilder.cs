@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HandMadeWebServer.Enums;
-
-namespace HandMadeWebServer
+﻿namespace HandMadeWebServer
 {
+    using System.IO;
+    using HandMadeWebServer.Enums;
+    using HandMadeWebServer.Models;
+
     public static class HttpResponseBuilder
     {
         public static HttpResponse InternalServerError()

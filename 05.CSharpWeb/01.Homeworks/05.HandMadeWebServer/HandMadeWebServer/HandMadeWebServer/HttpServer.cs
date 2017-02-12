@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace HandMadeWebServer
+﻿namespace HandMadeWebServer
 {
-    public class Server
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Net.Sockets;
+    using System.Threading;
+    using HandMadeWebServer.Models;
+
+    public class HttpServer
     {
-        public Server(int port, IEnumerable<Route> routes)
+        public HttpServer(int port, IEnumerable<Route> routes)
         {
             this.Port = port;
             this.Processor = new HttpProcessor(routes);
@@ -21,8 +18,6 @@ namespace HandMadeWebServer
         public int Port { get; private set; }
         public HttpProcessor Processor { get; private set; }
         public bool IsActive { get; private set; }
-
-
 
         public void Listen()
         {

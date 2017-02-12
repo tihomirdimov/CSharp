@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HandMadeWebServer.Models
+﻿namespace HandMadeWebServer.Models
 {
-    class Header
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using HandMadeWebServer.Enums;
+
+    public class Header
     {
         public Header(HeaderType type)
         {
