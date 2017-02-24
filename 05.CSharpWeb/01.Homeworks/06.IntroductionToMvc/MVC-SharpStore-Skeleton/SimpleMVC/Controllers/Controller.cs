@@ -1,12 +1,12 @@
-﻿using SimpleHttpServer.Enums;
+﻿using System.Runtime.CompilerServices;
+using SimpleHttpServer.Enums;
 using SimpleHttpServer.Models;
-using SimpleMVC.App.MVC.Interfaces;
-using SimpleMVC.App.MVC.Interfaces.Generic;
-using SimpleMVC.App.MVC.ViewEngine;
-using SimpleMVC.App.MVC.ViewEngine.Generic;
-using System.Runtime.CompilerServices;
+using SimpleMVC.Interfaces;
+using SimpleMVC.Interfaces.Generic;
+using SimpleMVC.ViewEngine;
+using SimpleMVC.ViewEngine.Generic;
 
-namespace SimpleMVC.App.MVC.Controllers
+namespace SimpleMVC.Controllers
 {
     public class Controller
     {

@@ -1,16 +1,16 @@
-﻿using SimpleHttpServer.Enums;
-using SimpleHttpServer.Models;
-using SimpleMVC.App.MVC.Attributes.Methods;
-using SimpleMVC.App.MVC.Controllers;
-using SimpleMVC.App.MVC.Extensions;
-using SimpleMVC.App.MVC.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using SimpleHttpServer.Enums;
+using SimpleHttpServer.Models;
+using SimpleMVC.Attributes.Methods;
+using SimpleMVC.Controllers;
+using SimpleMVC.Extensions;
+using SimpleMVC.Interfaces;
 
-namespace SimpleMVC.App.MVC.Routers
+namespace SimpleMVC.Routers
 {
     public class ControllerRouter
     {

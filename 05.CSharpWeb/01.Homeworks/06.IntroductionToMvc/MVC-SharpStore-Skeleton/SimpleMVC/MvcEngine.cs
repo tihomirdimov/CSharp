@@ -1,14 +1,15 @@
-﻿using SimpleHttpServer;
-using System;
+﻿using System;
 using System.Reflection;
+using SimpleHttpServer;
 
-namespace SimpleMVC.App.MVC
+namespace SimpleMVC
 {
     public static class MvcEngine
     {
-        public static void Run(HttpServer server)
+        public static void Run(HttpServer server,string applicationAssemblyName)
         {
-            RegisterAssemblyName();
+            RegisterAssemblyName(applicationAssemblyName);
+            LoadApplicationAssembly(applicationAssemblyName);
             RegisterControllers();
             RegisterViews();
             RegisterModels();
@@ -24,10 +25,14 @@ namespace SimpleMVC.App.MVC
             }
         }
 
-        private static void RegisterAssemblyName()
+        private static void LoadApplicationAssembly(string applicationAssemblyName)
         {
-            MvcContext.Current.AssemblyName =
-                Assembly.GetExecutingAssembly().GetName().Name;
+            MvcContext.Current.ApplicationAssembly = Assembly.Load(applicationAssemblyName);
+        }
+
+        private static void RegisterAssemblyName(string applicationAssemblyName)
+        {
+            MvcContext.Current.AssemblyName = applicationAssemblyName;
         }
 
         private static void RegisterControllers()

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SimpleMVC.App.MVC.Attributes.Methods
+namespace SimpleMVC.Attributes.Methods
 {
     public abstract class HttpMethodAttribute : Attribute
     {

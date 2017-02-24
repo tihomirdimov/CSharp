@@ -1,8 +1,8 @@
-﻿using SimpleMVC.App.MVC.Attributes.Methods;
-using SimpleMVC.App.MVC.Controllers;
-using SimpleMVC.App.MVC.Interfaces;
+﻿using SimpleMVC.Attributes.Methods;
+using SimpleMVC.Controllers;
+using SimpleMVC.Interfaces;
 
-namespace SimpleMVC.App.Controllers
+namespace SharpStore.Controllers
 {
     public class HomeController : Controller
     {

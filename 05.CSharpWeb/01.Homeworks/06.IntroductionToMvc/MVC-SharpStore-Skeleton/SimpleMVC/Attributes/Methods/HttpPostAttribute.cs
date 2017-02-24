@@ -1,4 +1,4 @@
-﻿namespace SimpleMVC.App.MVC.Attributes.Methods
+﻿namespace SimpleMVC.Attributes.Methods
 {
     public class HttpPostAttribute : HttpMethodAttribute
     {

@@ -1,4 +1,4 @@
-﻿namespace SimpleMVC.App.MVC.Interfaces.Generic
+﻿namespace SimpleMVC.Interfaces.Generic
 {
     public interface IActionResult<T> : IInvocable
     {

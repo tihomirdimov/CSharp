@@ -1,4 +1,4 @@
-﻿namespace SimpleMVC.App.MVC.Extensions
+﻿namespace SimpleMVC.Extensions
 {
     public static class StringExtentions
     {

@@ -1,4 +1,4 @@
-﻿namespace SimpleMVC.App.MVC.Interfaces
+﻿namespace SimpleMVC.Interfaces
 {
     public interface IRenderable
     {

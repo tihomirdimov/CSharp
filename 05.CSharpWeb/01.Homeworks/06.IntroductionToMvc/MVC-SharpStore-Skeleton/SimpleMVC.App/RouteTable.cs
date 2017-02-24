@@ -1,10 +1,10 @@
-﻿using SimpleHttpServer.Enums;
-using SimpleHttpServer.Models;
-using SimpleMVC.App.MVC.Routers;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+using SimpleHttpServer.Enums;
+using SimpleHttpServer.Models;
+using SimpleMVC.Routers;
 
-namespace SimpleMVC.App
+namespace SharpStore
 {
     public static class RouteTable
     {

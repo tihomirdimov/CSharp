@@ -1,7 +1,7 @@
-﻿using SimpleMVC.App.MVC.Interfaces.Generic;
-using System;
+﻿using System;
+using SimpleMVC.Interfaces.Generic;
 
-namespace SimpleMVC.App.MVC.ViewEngine.Generic
+namespace SimpleMVC.ViewEngine.Generic
 {
     public class ActionResult<T> : IActionResult<T>
     {
@@ -9,7 +9,7 @@ namespace SimpleMVC.App.MVC.ViewEngine.Generic
         {
             this.Action =
                 (IRenderable<T>)Activator
-                .CreateInstance(Type.GetType(viewFullQualifiedName));
+                .CreateInstance(MvcContext.Current.ApplicationAssembly.GetType(viewFullQualifiedName));
 
             this.Action.Model = model;
         }

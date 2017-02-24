@@ -1,7 +1,7 @@
-﻿using SimpleMVC.App.MVC.Interfaces;
-using System.IO;
+﻿using System.IO;
+using SimpleMVC.Interfaces;
 
-namespace SimpleMVC.App.Views.About
+namespace SharpStore.Views.About
 {
     public class About : IRenderable
     {
