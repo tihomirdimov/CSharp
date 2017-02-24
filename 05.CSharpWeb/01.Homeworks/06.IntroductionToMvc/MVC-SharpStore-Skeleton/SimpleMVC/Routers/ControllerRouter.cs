@@ -203,7 +203,7 @@ namespace SimpleMVC.Routers
                 this.controllerName);
 
             var controller =
-                (Controller)Activator.CreateInstance(Type.GetType(controllerType));
+                (Controller)Activator.CreateInstance(MvcContext.Current.ApplicationAssembly.GetType(controllerType));
             return controller;
         }
 
