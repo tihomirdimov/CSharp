@@ -55,14 +55,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppStart.cs" />
+    <Compile Include="BindingModels\MessageBidning.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Data\Data.cs" />
     <Compile Include="Data\SharpStoreContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Knife.cs" />
+    <Compile Include="Models\Message.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RouteTable.cs" />
     <Compile Include="Services\KnivesService.cs" />
+    <Compile Include="Services\MessagesService.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="Views\Home\About.cs" />
     <Compile Include="Views\Home\Contacts.cs" />
@@ -83,9 +86,7 @@
       <Name>SimpleMVC</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="BindingModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
