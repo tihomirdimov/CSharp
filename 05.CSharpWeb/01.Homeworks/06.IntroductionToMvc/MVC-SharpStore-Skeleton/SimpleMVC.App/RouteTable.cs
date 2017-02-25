@@ -16,6 +16,22 @@ namespace SharpStore
                 {
                     new Route()
                     {
+                        Name = "Favicon",
+                        Method = RequestMethod.GET,
+                        UrlRegex = "/favicon.ico$",
+                        Callable = (request) =>
+                        {
+                            var response = new HttpResponse()
+                            {
+                                StatusCode = ResponseStatusCode.Ok,
+                                Content = File.ReadAllBytes("../../content/favicon.ico")
+                            };
+                            response.Header.ContentType = "image/x-icon";
+                            return response;
+                        }
+                    },
+                    new Route()
+                    {
                         Name = "Carousel CSS",
                         Method = RequestMethod.GET,
                         UrlRegex = "/content/css/carousel.css$",
@@ -46,7 +62,6 @@ namespace SharpStore
                             return response;
                         }
                     },
-                    //TODO: Add the route to bootstrap.min.css file here
                     new Route()
                     {
                         Name = "Bootstrap Min CSS",

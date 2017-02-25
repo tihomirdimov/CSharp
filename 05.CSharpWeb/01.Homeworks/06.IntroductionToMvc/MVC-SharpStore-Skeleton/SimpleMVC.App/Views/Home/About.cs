@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using SimpleMVC.Interfaces;
 
-namespace SharpStore.Views.About
+namespace SharpStore.Views.Home
 {
     public class About : IRenderable
     {
