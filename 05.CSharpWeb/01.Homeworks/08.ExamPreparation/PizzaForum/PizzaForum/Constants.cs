@@ -8,5 +8,6 @@
         public const string NavNotLogged = "nav-not-logged.html";
         public const string NavLogged = "nav-logged.html";
         public const string Register = "register.html";
+        public const string Login = "login.html";
     }
 }

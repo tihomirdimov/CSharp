@@ -1,4 +1,4 @@
-﻿namespace SimpleMVC.App.MVC.Attributes.Security
+﻿namespace SimpleMVC.Attributes.Security
 {
     class LogoutAttribute : SecurityAttribute
     {
