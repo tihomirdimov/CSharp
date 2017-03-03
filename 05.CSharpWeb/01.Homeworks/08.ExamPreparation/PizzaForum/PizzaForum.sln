@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaForum", "PizzaForum\PizzaForum.csproj", "{5BAF4C36-BC7F-4A29-951E-DE1758C7A564}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleHttpServer", "SimpleHttpServer\SimpleHttpServer.csproj", "{143AAEBB-8027-4EE9-9A54-CED5735C5E14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleMVC", "SimpleMVC\SimpleMVC.csproj", "{8D1A1532-5B5A-44C5-A571-4EEF0099FEDD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5BAF4C36-BC7F-4A29-951E-DE1758C7A564}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BAF4C36-BC7F-4A29-951E-DE1758C7A564}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BAF4C36-BC7F-4A29-951E-DE1758C7A564}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BAF4C36-BC7F-4A29-951E-DE1758C7A564}.Release|Any CPU.Build.0 = Release|Any CPU
+		{143AAEBB-8027-4EE9-9A54-CED5735C5E14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{143AAEBB-8027-4EE9-9A54-CED5735C5E14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{143AAEBB-8027-4EE9-9A54-CED5735C5E14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{143AAEBB-8027-4EE9-9A54-CED5735C5E14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D1A1532-5B5A-44C5-A571-4EEF0099FEDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D1A1532-5B5A-44C5-A571-4EEF0099FEDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D1A1532-5B5A-44C5-A571-4EEF0099FEDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D1A1532-5B5A-44C5-A571-4EEF0099FEDD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
