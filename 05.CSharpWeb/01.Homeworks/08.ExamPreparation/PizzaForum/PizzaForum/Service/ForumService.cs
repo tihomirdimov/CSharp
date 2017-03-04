@@ -82,7 +82,7 @@
 
             this.Context.Logins.Add(new Login()
             {
-                SessinId = sessionId,
+                SessionId = sessionId,
                 User = user,
                 isActive = true
             });

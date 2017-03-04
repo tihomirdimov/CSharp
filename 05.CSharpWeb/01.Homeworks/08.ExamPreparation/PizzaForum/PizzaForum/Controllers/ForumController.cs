@@ -1,13 +1,14 @@
-﻿using PizzaForum.Models;
-
-namespace PizzaForum.Controllers
+﻿namespace PizzaForum.Controllers
 {
     using PizzaForum.BindingModels;
     using PizzaForum.Service;
+    using PizzaForum.Utilities;
     using SimpleMVC.Attributes.Methods;
     using SimpleHttpServer.Models;
     using SimpleMVC.Controllers;
     using SimpleMVC.Interfaces;
+    using System.Net;
+    using PizzaForum.Models;
 
     public class ForumController : Controller
     {
@@ -19,8 +20,12 @@ namespace PizzaForum.Controllers
         }
 
         [HttpGet]
-        public IActionResult Register()
+        public IActionResult Register(HttpSession session, HttpResponse response)
         {
+            if (this.IsAuthenticated(session.Id, response))
+            {
+                return null;
+            }
             return this.View();
         }
 
@@ -39,8 +44,12 @@ namespace PizzaForum.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(HttpSession session, HttpResponse response)
         {
+            if (this.IsAuthenticated(session.Id, response))
+            {
+                return null;
+            }
             return this.View();
         }
 
@@ -57,6 +66,24 @@ namespace PizzaForum.Controllers
             this.service.LoginUser(user, session.Id);
             this.Redirect(response, "/home/topics");
             return null;
+        }
+
+        [HttpGet]
+        public void Logout(HttpResponse response, HttpSession session)
+        {
+            Utilities.AuthenticationManager.Logout(response, session.Id);
+            this.Redirect(response, "/home/topics");
+        }
+        
+
+        private bool IsAuthenticated(string sessionId, HttpResponse response)
+        {
+            if (Utilities.AuthenticationManager.IsAuthenticated(sessionId))
+            {
+                this.Redirect(response, "/home/topics");
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -1,21 +1,24 @@
-﻿namespace PizzaForum.Views.Forum
-{
-    using System.IO;
-    using System.Text;
-    using SimpleMVC.Interfaces;
+﻿using System;
+using System.IO;
+using System.Text;
+using SimpleMVC.Interfaces;
 
-    public class Login :IRenderable
+namespace PizzaForum.Views.Categories
+{
+    class New:IRenderable
     {
         public string Render()
         {
             string header = File.ReadAllText(Constants.ContentPath + Constants.Header);
             string navigation = File.ReadAllText(Constants.ContentPath + Constants.NavNotLogged);
-            string login = File.ReadAllText(Constants.ContentPath + Constants.Login);
+            navigation = string.Format(navigation, ViewBag.Bag["username"]);
+            string newCategory = File.ReadAllText(Constants.ContentPath + Constants.AdminCategoryNew);
             string footer = File.ReadAllText(Constants.ContentPath + Constants.Footer);
+
             StringBuilder builder = new StringBuilder();
             builder.Append(header);
             builder.Append(navigation);
-            builder.Append(login);
+            builder.Append(newCategory);
             builder.Append(footer);
 
             return builder.ToString();

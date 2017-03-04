@@ -9,5 +9,8 @@
         public const string NavLogged = "nav-logged.html";
         public const string Register = "register.html";
         public const string Login = "login.html";
+        public const string AdminCategories = "admin-categories.html";
+        public const string AdminCategoryNew = "admin-category-new.html";
+        public const string AdminCategoryEdit = "admin-category-edit.html";
     }
 }

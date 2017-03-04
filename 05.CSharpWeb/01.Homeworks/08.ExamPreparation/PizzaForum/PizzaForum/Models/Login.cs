@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public User User { get; set; }
-        public string SessinId { get; set; }
+        public string SessionId { get; set; }
         public bool isActive { get; set; }
     }
 }
