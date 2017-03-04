@@ -64,6 +64,10 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Data\Data.cs" />
     <Compile Include="Data\PizzaForumContext.cs" />
+    <Compile Include="Migrations\201703041756190_migration01.cs" />
+    <Compile Include="Migrations\201703041756190_migration01.Designer.cs">
+      <DependentUpon>201703041756190_migration01.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Login.cs" />
@@ -142,7 +146,11 @@
       <Name>SimpleMVC</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201703041756190_migration01.resx">
+      <DependentUpon>201703041756190_migration01.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,4 +1,6 @@
-﻿namespace PizzaForum.Controllers
+﻿using System;
+
+namespace PizzaForum.Controllers
 {
     using PizzaForum.BindingModels;
     using PizzaForum.Service;
@@ -74,7 +76,7 @@
             Utilities.AuthenticationManager.Logout(response, session.Id);
             this.Redirect(response, "/home/topics");
         }
-        
+
 
         private bool IsAuthenticated(string sessionId, HttpResponse response)
         {

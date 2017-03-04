@@ -1,4 +1,6 @@
-﻿namespace PizzaForum.Utilities
+﻿using System;
+
+namespace PizzaForum.Utilities
 {
     using System.Linq;
     using PizzaForum.Models;
@@ -7,6 +9,7 @@
 
     public class AuthenticationManager
     {
+
         public static bool IsAuthenticated(string sessionId)
         {
             return Data.Data.Context.Logins.Any(login => login.SessionId == sessionId && login.isActive);
