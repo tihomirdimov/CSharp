@@ -3,7 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using PersonalFinanceManager.Models;
+using PFM.Models.ApplicationModels;
 
 namespace PFM.Models
 {
@@ -19,20 +19,21 @@ namespace PFM.Models
         }
     }
 
-    public class PFMContext : IdentityDbContext<ApplicationUser>
+    public class PFMDbContext : IdentityDbContext<ApplicationUser>
     {
-        public PFMContext()
+        public PFMDbContext()
             : base("PFMContext", throwIfV1Schema: false)
         {
         }
 
-        public static PFMContext Create()
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<MoneyStream> MoneyStreams { get; set; }
+
+        public static PFMDbContext Create()
         {
-            return new PFMContext();
+            return new PFMDbContext();
         }
 
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Account> Accounts { get; set; }
-        public DbSet<MoneyStream> MoneyStreams { get; set; }
     }
 }

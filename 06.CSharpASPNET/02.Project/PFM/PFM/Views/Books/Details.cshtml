@@ -1,4 +1,4 @@
-﻿@model PersonalFinanceManager.Models.Account
+﻿@model PFM.Models.ApplicationModels.Book
 
 @{
     ViewBag.Title = "Details";
@@ -7,7 +7,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Account</h4>
+    <h4>Book</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -19,11 +19,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Balance)
+            @Html.DisplayNameFor(model => model.Currency)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Balance)
+            @Html.DisplayFor(model => model.Currency)
         </dd>
 
     </dl>

@@ -6,112 +6,117 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using PFM.Models;
-using PersonalFinanceManager.Models;
+using PFM.Models.ApplicationModels;
 
 namespace PFM.Controllers
 {
-    public class MoneyStreamsController : Controller
+    [Authorize]
+    public class BooksController : Controller
     {
-        private PFMContext db = new PFMContext();
+        private PFMDbContext db = new PFMDbContext();
 
-        // GET: MoneyStreams
         public ActionResult Index()
         {
-            return View(db.MoneyStreams.ToList());
+            var current = User.Identity.GetUserId();
+            return View(db.Books.Where(book => book.Owner.Id == current).ToList());
         }
 
-        // GET: MoneyStreams/Details/5
-        public ActionResult Details(int? id)
+        // GET: Books/Details/5
+        public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MoneyStream moneyStream = db.MoneyStreams.Find(id);
-            if (moneyStream == null)
+            Book book = db.Books.Find(id);
+            if (book == null)
             {
                 return HttpNotFound();
             }
-            return View(moneyStream);
+            return View(book);
         }
 
-        // GET: MoneyStreams/Create
+        // GET: Books/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: MoneyStreams/Create
+        // POST: Books/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Date,IsIncome")] MoneyStream moneyStream)
+        public ActionResult Create([Bind(Include = "Name,Currency")] Book book)
         {
+            var current = User.Identity.GetUserId();
+            var owner = db.Users.FirstOrDefault(user => user.Id == current);
+            book.Owner = owner;
             if (ModelState.IsValid)
             {
-                db.MoneyStreams.Add(moneyStream);
+                db.Books.Add(book);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(moneyStream);
+            return View(book);
         }
 
-        // GET: MoneyStreams/Edit/5
-        public ActionResult Edit(int? id)
+        // GET: Books/Edit/5
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MoneyStream moneyStream = db.MoneyStreams.Find(id);
-            if (moneyStream == null)
+            Book book = db.Books.Find(id);
+            if (book == null)
             {
                 return HttpNotFound();
             }
-            return View(moneyStream);
+            return View(book);
         }
 
-        // POST: MoneyStreams/Edit/5
+        // POST: Books/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Date,IsIncome")] MoneyStream moneyStream)
+        public ActionResult Edit([Bind(Include = "Id,Name,Currency")] Book book)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(moneyStream).State = EntityState.Modified;
+                db.Entry(book).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(moneyStream);
+            return View(book);
         }
 
-        // GET: MoneyStreams/Delete/5
-        public ActionResult Delete(int? id)
+        // GET: Books/Delete/5
+        public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MoneyStream moneyStream = db.MoneyStreams.Find(id);
-            if (moneyStream == null)
+            Book book = db.Books.Find(id);
+            if (book == null)
             {
                 return HttpNotFound();
             }
-            return View(moneyStream);
+            return View(book);
         }
 
-        // POST: MoneyStreams/Delete/5
+        // POST: Books/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string id)
         {
-            MoneyStream moneyStream = db.MoneyStreams.Find(id);
-            db.MoneyStreams.Remove(moneyStream);
+            Book book = db.Books.Find(id);
+            db.Books.Remove(book);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
