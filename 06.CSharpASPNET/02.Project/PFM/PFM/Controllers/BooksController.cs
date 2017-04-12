@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using PFM.Models;
-using PFM.Models.ApplicationModels;
+using PFM.ViewModels;
 
 namespace PFM.Controllers
 {
@@ -24,16 +24,21 @@ namespace PFM.Controllers
         }
 
         // GET: Books/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int id)
         {
+            var current = User.Identity.GetUserId();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.Books.Find(id);
+            Book book = db.Books.First(b => b.Id == id);
             if (book == null)
             {
                 return HttpNotFound();
+            }
+            if (book.Owner.Id != current)
+            {
+                return RedirectToAction("Index");
             }
             return View(book);
         }
@@ -65,16 +70,17 @@ namespace PFM.Controllers
         }
 
         // GET: Books/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
+            var current = User.Identity.GetUserId();
+            Book book = db.Books.First(b => b.Id == id);
+            if (book == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.Books.Find(id);
-            if (book == null)
+            if (book.Owner.Id != current)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
             return View(book);
         }

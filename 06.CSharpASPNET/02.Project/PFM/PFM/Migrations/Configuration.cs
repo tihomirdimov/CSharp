@@ -1,6 +1,7 @@
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using PFM.Models;
+using PFM.ViewModels;
 
 namespace PFM.Migrations
 {
@@ -9,14 +10,14 @@ namespace PFM.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<PFM.Models.PFMDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<PFMDbContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(PFM.Models.PFMDbContext context)
+        protected override void Seed(PFMDbContext context)
         {
 
             if (!context.Roles.Any(role => role.Name == "Admin"))
