@@ -2,7 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using PFM.Models;
 
-namespace PFM.ViewModels
+namespace PFM.Data
 {
     public class PFMDbContext : IdentityDbContext<ApplicationUser>
     {

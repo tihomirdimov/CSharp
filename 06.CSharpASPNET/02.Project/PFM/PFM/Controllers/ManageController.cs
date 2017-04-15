@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using PFM.Data;
 using PFM.Models;
 using PFM.ViewModels;
 
@@ -334,7 +335,14 @@ namespace PFM.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        [Authorize(Roles = "Admin")]
+        public ActionResult Users()
+        {
+            PFMDbContext db = new PFMDbContext();
+            return View(db.Users.ToList());
+        }
+
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 

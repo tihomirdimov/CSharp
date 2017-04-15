@@ -1,0 +1,21 @@
+﻿@using System.Collections
+@using PFM.Data
+@using PFM.Models
+@using PFM.ViewModels
+@{
+    ViewBag.Title = "_SelectCategoryPartial";
+}
+
+@if (Request.IsAuthenticated)
+{
+    PFMDbContext db = new PFMDbContext();
+    ICollection<Category> categories = db.Categories.ToList();
+    <div class="form-group">
+        <select class="form-control">
+            @foreach (var category in categories)
+            {
+                <option value="@category.Name">@category.Name</option>
+            }
+        </select>
+    </div>
+}

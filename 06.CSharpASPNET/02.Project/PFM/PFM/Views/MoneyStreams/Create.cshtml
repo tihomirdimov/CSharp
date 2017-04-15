@@ -1,4 +1,5 @@
-﻿@model PFM.Models.MoneyStream
+﻿@using PFM.Models
+@model PFM.ViewModels.CreateMoneyStreamViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -7,44 +8,66 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>MoneyStream</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.MoneyStream.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.MoneyStream.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MoneyStream.Name, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.MoneyStream.Date, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.MoneyStream.Date, new { htmlAttributes = new { @class = "datepicker form-control" } })
+                @Html.ValidationMessageFor(model => model.MoneyStream.Date, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.MoneyStream.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.MoneyStream.Amount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MoneyStream.Amount, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.isIncome, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.MoneyStream.isIncome, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.isIncome)
-                    @Html.ValidationMessageFor(model => model.isIncome, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.MoneyStream.isIncome)
+                    @Html.ValidationMessageFor(model => model.MoneyStream.isIncome, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MoneyStream.Book.Id, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="selectpicker">
+                    @Html.DropDownListFor(model => model.MoneyStream.Book.Id,
+                   Model.Books.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }))
+                    @Html.ValidationMessageFor(model => model.Books, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MoneyStream.Category.Id, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="selectpicker">
+                    @Html.DropDownListFor(model => model.MoneyStream.Category.Id,
+                   Model.Categories.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }))
+                    @Html.ValidationMessageFor(model => model.Categories, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

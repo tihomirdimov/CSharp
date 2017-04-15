@@ -6,57 +6,52 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using PFM.Data;
 using PFM.Models;
 using PFM.ViewModels;
 
 namespace PFM.Controllers
 {
+    [Authorize]
     public class MoneyStreamsController : Controller
     {
         private PFMDbContext db = new PFMDbContext();
 
-        // GET: MoneyStreams
         public ActionResult Index()
         {
             return View(db.MoneyStreams.ToList());
         }
 
-        // GET: MoneyStreams/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            MoneyStream moneyStream = db.MoneyStreams.Find(id);
-            if (moneyStream == null)
-            {
-                return HttpNotFound();
-            }
-            return View(moneyStream);
-        }
-
         // GET: MoneyStreams/Create
         public ActionResult Create()
         {
-            return View();
+            string current = User.Identity.GetUserId();
+            CreateMoneyStreamViewModel model = new CreateMoneyStreamViewModel();
+            model.Books = db.Books.Where(b => b.Owner.Id == current).ToList();
+            model.Categories = db.Categories.Where(b => b.Owner.Id == current).ToList();
+            return View(model);
         }
 
-        // POST: MoneyStreams/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Date,Amount,isIncome")] MoneyStream moneyStream)
+        public ActionResult Create(CreateMoneyStreamViewModel moneyStreamViewModel)
         {
+            string current = User.Identity.GetUserId();
             if (ModelState.IsValid)
             {
+                MoneyStream moneyStream = moneyStreamViewModel.MoneyStream;
+                moneyStream.Book = db.Books.FirstOrDefault(book => book.Id == moneyStreamViewModel.MoneyStream.Book.Id);
+                moneyStream.Category = db.Categories.FirstOrDefault(category => category.Id == moneyStreamViewModel.MoneyStream.Category.Id);
+                moneyStream.Owner = db.Users.FirstOrDefault(user => user.Id == current);
                 db.MoneyStreams.Add(moneyStream);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            return View(moneyStream);
+            CreateMoneyStreamViewModel model = new CreateMoneyStreamViewModel();
+            model.Books = db.Books.Where(b => b.Owner.Id == current).ToList();
+            model.Categories = db.Categories.Where(b => b.Owner.Id == current).ToList();
+            return View(model);
         }
 
         // GET: MoneyStreams/Edit/5

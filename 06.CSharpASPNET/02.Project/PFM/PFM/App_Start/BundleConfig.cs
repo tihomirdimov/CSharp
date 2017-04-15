@@ -26,6 +26,9 @@ namespace PFM
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap/bootstrap.css",
                       "~/Content/bootstrap/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/fontawesome").Include(
+                "~/Content/css/font-awesome.min.css"));
         }
     }
 }
