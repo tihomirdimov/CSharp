@@ -1,0 +1,45 @@
+﻿@model ICollection<PersonalFinanceManager.Models.ApplicationUser>
+@{
+    ViewBag.Title = "Users";
+}
+
+<h2>System Users</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Username</th>
+            <th>Locked</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count < 1)
+        {
+            <p>No users</p>
+        }
+        else
+        {
+            foreach (var user in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => user.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelitem => user.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => user.LockoutEnabled)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Change Lock Status", "LockStatus", new { id = user.Id })
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

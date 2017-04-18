@@ -1,0 +1,21 @@
+﻿@model PFM.Models.Category
+
+@{
+    ViewBag.Title = "Create Category";
+}
+
+<h2>Create Category</h2>
+
+@using (Ajax.BeginForm("Create", "Categories", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "categories" }))
+{
+    <fieldset>
+        <div id="CreateUserForm">
+            <div>
+                @Html.LabelFor(m => Model.Name)
+                @Html.TextBoxFor(m => Model.Name)
+            </div>
+            @Html.AntiForgeryToken()
+            <input type="submit" value="Create category" />
+        </div>
+    </fieldset>
+}
