@@ -6,34 +6,14 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <div id="create-edit">
-    <h2>Create Category</h2>
-    @using (Ajax.BeginForm("Create", "Categories", new AjaxOptions
-    {
-        HttpMethod = "POST",
-        InsertionMode = InsertionMode.Replace,
-        UpdateTargetId = "update-target"
-    }))
-    {
-        <fieldset>
-            <div id="CreateUserForm">
-                <div>
-                    @Html.LabelFor(m => Model.category.Name)
-                    @Html.TextBoxFor(m => Model.category.Name)
-                </div>
-                @Html.AntiForgeryToken()
-                <input type="submit" value="Create category" />
-            </div>
-        </fieldset>
-    }
+    @Html.Partial("_CategoriesCreatePartial", Model.category)
 </div>
 <div id="update-target">
     @Html.Partial("_CategoriesIndexPartial", Model.categories)
 </div>
-
-
-
-
+<script>
+    function ClearForm() {
+        $('#catname').val('');
+    }
+</script>

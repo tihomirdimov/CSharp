@@ -41,14 +41,22 @@ namespace PersonalFinanceManager.Controllers
         {
             var current = User.Identity.GetUserId();
             if (ModelState.IsValid)
-            {         
-                var owner = db.Users.FirstOrDefault(user => user.Id == current);
-                Category toAdd = new Category();
-                toAdd.Name = category.Name;
-                toAdd.Owner = owner;
-                db.Categories.Add(toAdd);
-                db.SaveChanges();
-                List<Category> model = db.Categories.Where(cat => cat.Owner.Id == current).ToList();
+            {
+                if (db.Categories.FirstOrDefault(cat => cat.Id == category.Id) != null)
+                {
+                    db.Categories.FirstOrDefault(cat => cat.Id == category.Id).Name = category.Name;
+                    db.SaveChanges();
+                }
+                else
+                {
+                    var owner = db.Users.FirstOrDefault(user => user.Id == current);
+                    Category toAdd = new Category();
+                    toAdd.Name = category.Name;
+                    toAdd.Owner = owner;
+                    db.Categories.Add(toAdd);
+                    db.SaveChanges();
+                }
+                List<Category> model = db.Categories.Where(cat => cat.Owner.Id == current && cat.isDeleted == false).ToList();
                 return this.PartialView("_CategoriesIndexPartial", model);
             }
             CategoriesViewModel categoriesViewModel = new CategoriesViewModel();
@@ -56,5 +64,23 @@ namespace PersonalFinanceManager.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Edit(int id)
+        {
+            var current = User.Identity.GetUserId();
+            Category model = db.Categories.FirstOrDefault(cat => cat.Owner.Id == current && cat.Id == id);
+            return this.PartialView("_CategoriesCreatePartial", model);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            db.Categories.FirstOrDefault(cat => cat.Id == id).isDeleted = true;
+            db.SaveChanges();
+            var current = User.Identity.GetUserId();
+            List<Category> model = db.Categories.Where(cat => cat.Owner.Id == current && cat.isDeleted == false).ToList();
+            return this.PartialView("_CategoriesIndexPartial", model);
+        }
     }
+
 }
