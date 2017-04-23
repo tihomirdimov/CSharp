@@ -3,9 +3,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using PFM.Models;
 
-namespace PersonalFinanceManager.Models
+namespace PersonalFinanceManager.Data.Models
 {
     public class ApplicationUser : IdentityUser
     {

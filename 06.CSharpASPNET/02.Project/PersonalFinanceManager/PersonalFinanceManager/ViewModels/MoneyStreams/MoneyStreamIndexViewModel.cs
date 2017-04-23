@@ -1,17 +1,20 @@
 ﻿using System.Collections.Generic;
-using PFM.Models;
+using PersonalFinanceManager.Data.Models;
 
-namespace PFM.ViewModels
+namespace PersonalFinanceManager.ViewModels.MoneyStreams
 {
     public class MoneyStreamIndexViewModel
     {
         public MoneyStreamIndexViewModel()
         {
-            this.MoneyStream = new List<MoneyStream>();
+            this.MoneyStream = new MoneyStream();
+            this.MoneyStreams = new List<MoneyStream>();
         }
 
-        public ICollection<MoneyStream> MoneyStream { get; set; }
+        public MoneyStream MoneyStream { get; set; }
 
-        public int? BookId { get; set; }
+        public ICollection<MoneyStream> MoneyStreams { get; set; }
+
+        public int BookId { get; set; }
     }
 }

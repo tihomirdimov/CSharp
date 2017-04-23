@@ -8,7 +8,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using PersonalFinanceManager.Data;
-using PersonalFinanceManager.Models;
+using PersonalFinanceManager.Data.Data;
+using PersonalFinanceManager.Data.Models;
 using PersonalFinanceManager.ViewModels.Manage;
 
 namespace PersonalFinanceManager.Controllers

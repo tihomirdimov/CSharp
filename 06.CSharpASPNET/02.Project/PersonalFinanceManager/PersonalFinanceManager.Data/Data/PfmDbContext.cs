@@ -1,9 +1,8 @@
 ﻿using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using PersonalFinanceManager.Models;
-using PFM.Models;
+using PersonalFinanceManager.Data.Models;
 
-namespace PersonalFinanceManager.Data
+namespace PersonalFinanceManager.Data.Data
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
 

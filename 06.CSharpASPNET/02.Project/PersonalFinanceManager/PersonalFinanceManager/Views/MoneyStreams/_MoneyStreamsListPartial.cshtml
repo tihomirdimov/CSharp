@@ -1,0 +1,63 @@
+﻿@model ICollection<PersonalFinanceManager.Data.Models.MoneyStream>
+
+@{
+    ViewBag.Title = "Money Streams list";
+}
+<div class="col-md-8">
+    @if (Model.Count != 0)
+    {
+        <table class="table-striped table-bordered table-responsive">
+            <thead>
+                <tr>
+                    <th class="col-md-6">
+                        Details
+                    </th>
+                    <th class="col-md-4 text-center" colspan="2">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var moneyStream in Model)
+                {
+                    <tr>
+                        <td class="col-md-6">
+                            @Html.DisplayFor(modelItem => moneyStream.Name)
+                            @Html.DisplayFor(modelItem => moneyStream.Amount)
+                            @Html.DisplayFor(modelItem => moneyStream.Date)
+                            @Html.DisplayFor(modelItem => moneyStream.isIncome)
+                        </td>
+                        <td class="col-md-2 text-center">
+                            @using (Ajax.BeginForm("Edit", "Categories", new { id = moneyStream.Id, book = moneyStream.Book}, new AjaxOptions
+                            {
+                                HttpMethod = "POST",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "create-edit",
+                            }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="submit" class="btn btn-default" value="Change">
+                            }
+                        </td>
+                        <td class="col-md-2 text-center">
+                            @using (Ajax.BeginForm("Delete", "Categories", new { id = moneyStream.Id, book = moneyStream.Book }, new AjaxOptions
+                            {
+                                HttpMethod = "POST",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "update-target",
+                            }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="submit" class="btn btn-default" value="Delete">
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h3>No records</h3>
+    }
+</div>

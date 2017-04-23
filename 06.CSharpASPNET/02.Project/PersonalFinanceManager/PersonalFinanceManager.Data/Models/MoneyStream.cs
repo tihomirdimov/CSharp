@@ -1,8 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using PersonalFinanceManager.Models;
 
-namespace PFM.Models
+namespace PersonalFinanceManager.Data.Models
 {
     public class MoneyStream
     {

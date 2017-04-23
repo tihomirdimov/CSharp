@@ -1,19 +1,17 @@
 ﻿@model PersonalFinanceManager.ViewModels.Categories.CategoriesViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Categories Index";
 }
-
-<h2>Index</h2>
-
-<div id="create-edit">
-    @Html.Partial("_CategoriesCreatePartial", Model.category)
+<div class="row">
+    <div class="col-md-4">
+        <h2>Expenses Categories</h2>
+    </div>
 </div>
-<div id="update-target">
-    @Html.Partial("_CategoriesIndexPartial", Model.categories)
+<div class="row" id="create-edit">
+    @Html.Partial("_CategoriesCreatePartial", Model.Category)
 </div>
-<script>
-    function ClearForm() {
-        $('#catname').val('');
-    }
-</script>
+<div class="row" id="update-target">
+    @Html.Partial("_CategoriesListPartial", Model.Categories)
+</div>
+@Scripts.Render("~/bundles/services")

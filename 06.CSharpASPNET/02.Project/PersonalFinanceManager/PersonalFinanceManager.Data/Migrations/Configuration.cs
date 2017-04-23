@@ -1,20 +1,19 @@
-namespace PersonalFinanceManager.Migrations
-{
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
-    using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity.Migrations;
+using System.Linq;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using PersonalFinanceManager.Data.Data;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<PersonalFinanceManager.Data.PfmDbContext>
+namespace PersonalFinanceManager.Data.Migrations
+{
+    internal sealed class Configuration : DbMigrationsConfiguration<PfmDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(PersonalFinanceManager.Data.PfmDbContext context)
+        protected override void Seed(PfmDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

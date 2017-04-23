@@ -1,21 +1,18 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<div class="container">
+    <div class="jumbotron">
+        <h1>Personal Finance Manager</h1>
+        <h3 class="lead">Personal Finance Manager allows you to plan and track records of your expense</h3>
 
-@{
-    ViewBag.Title = "Home Page";
-}
-
-<div class="jumbotron">
-    <h1>Personal Finance Manager</h1>
-    <h3 class="lead">Personal Finance Manager allows you to plan and track records of your expense</h3>
-
-    @if (!Request.IsAuthenticated)
-    {
-        <h3 class="lead">Please @Html.ActionLink("Log in", "Login", "Account") in to proceed</h3>
-    }
-    else
-    {
-        <h3 class="lead">See your Books @Html.ActionLink("HERE", "Index", "Books")</h3>
-    }
+        @if (!Request.IsAuthenticated)
+        {
+            <h3 class="lead">Please @Html.ActionLink("Log in", "Login", "Account") in to proceed</h3>
+        }
+        else
+        {
+            <h3 class="lead">See your Books @Html.ActionLink("HERE", "Index", "Books")</h3>
+        }
+    </div>
 </div>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using PFM.Models;
+using PersonalFinanceManager.Data.Models;
 
 namespace PersonalFinanceManager.ViewModels.Categories
 {
@@ -10,10 +10,10 @@ namespace PersonalFinanceManager.ViewModels.Categories
     {
         public CategoriesViewModel()
         {
-            this.category = new Category();
-            this.categories = new List<Category>();
+            this.Category = new Category();
+            this.Categories = new List<Category>();
         }
-        public Category category { get; set; }
-        public ICollection<Category> categories { get; set; }
+        public Category Category { get; set; }
+        public ICollection<Category> Categories { get; set; }
     }
 }

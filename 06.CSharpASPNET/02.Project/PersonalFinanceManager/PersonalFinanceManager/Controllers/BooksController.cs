@@ -7,11 +7,13 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using PFM.Models;
-using PersonalFinanceManager.Data;
+using PersonalFinanceManager.Data.Data;
+using PersonalFinanceManager.Data.Models;
+using PersonalFinanceManager.ViewModels.Books;
 
 namespace PersonalFinanceManager.Controllers
 {
+    [Authorize]
     public class BooksController : Controller
     {
         private PfmDbContext db = new PfmDbContext();
@@ -20,12 +22,14 @@ namespace PersonalFinanceManager.Controllers
         public ActionResult Index()
         {
             var current = User.Identity.GetUserId();
-            return View(db.Books.Where(book => book.Owner.Id == current).ToList());
-
+            BooksViewModel booksViewModel = new BooksViewModel();
+            booksViewModel.Book = new Book();
+            booksViewModel.Books = db.Books.Where(book => book.Owner.Id == current && book.isDeleted == false).ToList();
+            return View(booksViewModel);
         }
 
         // GET: Books/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
             var current = User.Identity.GetUserId();
             Book book = db.Books.First(b => b.Id == id);
@@ -33,7 +37,6 @@ namespace PersonalFinanceManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
             if (book == null)
             {
                 return HttpNotFound();
@@ -43,12 +46,6 @@ namespace PersonalFinanceManager.Controllers
                 return RedirectToAction("Index");
             }
             return View(book);
-        }
-
-        // GET: Books/Create
-        public ActionResult Create()
-        {
-            return View();
         }
 
         // POST: Books/Create
@@ -56,90 +53,52 @@ namespace PersonalFinanceManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name,Currency")] Book book)
+        public ActionResult Create(Book book)
         {
             var current = User.Identity.GetUserId();
-            var owner = db.Users.FirstOrDefault(user => user.Id == current);
-            book.Owner = owner;
             if (ModelState.IsValid)
             {
-                db.Books.Add(book);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (db.Books.FirstOrDefault(b => b.Id == book.Id) != null)
+                {
+                    db.Books.FirstOrDefault(b => b.Id == book.Id).Name = book.Name;
+                    db.Books.FirstOrDefault(b => b.Id == book.Id).Currency = book.Currency;
+                    db.SaveChanges();
+                }
+                else
+                {
+                    var owner = db.Users.FirstOrDefault(user => user.Id == current);
+                    Book toAdd = new Book();
+                    toAdd.Name = book.Name;
+                    toAdd.Currency = book.Currency;
+                    toAdd.Owner = owner;
+                    db.Books.Add(toAdd);
+                    db.SaveChanges();
+                }
+                List<Book> model = db.Books.Where(b => b.Owner.Id == current && b.isDeleted == false).ToList();
+                return this.PartialView("_BooksListPartial", model);
             }
-
-            return View(book);
+            List<Book> model2 = db.Books.Where(b => b.Owner.Id == current && b.isDeleted == false).ToList();
+            return this.PartialView("_BooksListPartial", model2);
         }
 
-        // GET: Books/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            var current = User.Identity.GetUserId();
-            Book book = db.Books.First(b => b.Id == id);
-            if (book == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            if (book.Owner.Id != current)
-            {
-                return RedirectToAction("Index");
-            }
-            return View(book);
-        }
-
-        // POST: Books/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Currency,isDeleted")] Book book)
+        public ActionResult Edit(int id)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(book).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(book);
-        }
-
-        // GET: Books/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Book book = db.Books.Find(id);
-            if (book == null)
-            {
-                return HttpNotFound();
-            }
             var current = User.Identity.GetUserId();
-            if (book.Owner.Id != current)
-            {
-                return RedirectToAction("Index");
-            }
-            return View(book);
+            Book model = db.Books.FirstOrDefault(cat => cat.Owner.Id == current && cat.Id == id);
+            return this.PartialView("_BooksCreatePartial", model);
         }
 
-        // POST: Books/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult Delete(int id)
         {
-            db.Books.FirstOrDefault(book => book.Id == id).isDeleted = true;
+            db.Books.FirstOrDefault(b => b.Id == id).isDeleted = true;
             db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            var current = User.Identity.GetUserId();
+            List<Book> model = db.Books.Where(b => b.Owner.Id == current && b.isDeleted == false).ToList();
+            return this.PartialView("_BooksListPartial", model);
         }
     }
 }

@@ -5,14 +5,16 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using PFM.Models;
-using PersonalFinanceManager.Data;
+using PersonalFinanceManager.Data.Data;
+using PersonalFinanceManager.Data.Models;
 using PersonalFinanceManager.ViewModels.Categories;
 
 namespace PersonalFinanceManager.Controllers
 {
+    [Authorize]
     public class CategoriesController : Controller
     {
         private PfmDbContext db = new PfmDbContext();
@@ -22,14 +24,8 @@ namespace PersonalFinanceManager.Controllers
         {
             var current = User.Identity.GetUserId();
             CategoriesViewModel categoriesViewModel = new CategoriesViewModel();
-            categoriesViewModel.categories = db.Categories.Where(cat => cat.Owner.Id == current && cat.isDeleted == false).ToList();
+            categoriesViewModel.Categories = db.Categories.Where(cat => cat.Owner.Id == current && cat.isDeleted == false).ToList();
             return View(categoriesViewModel);
-        }
-
-        // GET: Categories/Create
-        public ActionResult Create()
-        {
-            return View();
         }
 
         // POST: Categories/Create
@@ -57,14 +53,14 @@ namespace PersonalFinanceManager.Controllers
                     db.SaveChanges();
                 }
                 List<Category> model = db.Categories.Where(cat => cat.Owner.Id == current && cat.isDeleted == false).ToList();
-                return this.PartialView("_CategoriesIndexPartial", model);
+                return this.PartialView("_CategoriesListPartial", model);
             }
-            CategoriesViewModel categoriesViewModel = new CategoriesViewModel();
-            categoriesViewModel.categories = db.Categories.Where(cat => cat.Owner.Id == current && cat.isDeleted == false).ToList();
-            return View();
+            List<Category> model2 = db.Categories.Where(cat => cat.Owner.Id == current && cat.isDeleted == false).ToList();
+            return this.PartialView("_CategoriesListPartial", model2);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(int id)
         {
             var current = User.Identity.GetUserId();
@@ -73,13 +69,14 @@ namespace PersonalFinanceManager.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
             db.Categories.FirstOrDefault(cat => cat.Id == id).isDeleted = true;
             db.SaveChanges();
             var current = User.Identity.GetUserId();
             List<Category> model = db.Categories.Where(cat => cat.Owner.Id == current && cat.isDeleted == false).ToList();
-            return this.PartialView("_CategoriesIndexPartial", model);
+            return this.PartialView("_CategoriesListPartial", model);
         }
     }
 

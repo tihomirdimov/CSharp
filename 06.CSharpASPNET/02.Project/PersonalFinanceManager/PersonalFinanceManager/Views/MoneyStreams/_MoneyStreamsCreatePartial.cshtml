@@ -1,0 +1,43 @@
+﻿@model PersonalFinanceManager.Data.Models.MoneyStream
+
+@{
+    ViewBag.Title = "Create Money Stream";
+}
+
+<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    @using (Ajax.BeginForm("Create", "MoneyStreams", new AjaxOptions
+    {
+        HttpMethod = "POST",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "update-target",
+        OnSuccess = "ClearMoneyStreamForm()"
+    }))
+    {
+        <form id="CreateBookForm" class="form-control form-inline">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.Name, new { id = "money-stream-name", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Amount, htmlAttributes: new {@class = "control-label"})
+                @Html.TextBoxFor(model => model.Amount, new {id = "money-stream-amount", @class = "form-control"})
+                @Html.ValidationMessageFor(model => model.Amount, "", new {@class = "text-danger"})
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Date, htmlAttributes: new {@class = "control-label"})
+                @Html.TextBoxFor(model => model.Date, new {id = "money-stream-date", @class = "form-control"})
+                @Html.ValidationMessageFor(model => model.Date, "", new {@class = "text-danger"})
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.isIncome, htmlAttributes: new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.isIncome, new { id = "money-stream-isIncome", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.isIncome, "", new { @class = "text-danger" })
+            </div>
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.Book)
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-default">Create / Edit</button>
+        </form>
+    }
+</div>

@@ -1,61 +1,17 @@
-﻿@model PFM.ViewModels.MoneyStreamIndexViewModel
+﻿@model PersonalFinanceManager.ViewModels.MoneyStreams.MoneyStreamIndexViewModel
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Money Streams Index";
 }
 
-<h2>Index</h2>
-<p>
-    @Html.ActionLink("Back to Books", "Index", "Books")
-</p>
-<p>
-    @Html.ActionLink("Add New Money Stream", "Create", "MoneyStreams", new { id = Model.BookId }, null)
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => Model.MoneyStream.FirstOrDefault().Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => Model.MoneyStream.FirstOrDefault().Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => Model.MoneyStream.FirstOrDefault().Amount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => Model.MoneyStream.FirstOrDefault().isIncome)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    @if (Model.MoneyStream.Count == 0)
-    {
-        <h2>No records</h2>
-    }
-    else
-    {
-        foreach (var item in Model.MoneyStream)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.isIncome)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                </td>
-            </tr>
-        }
-    }
-
-
-</table>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Expenses Categories</h2>
+    </div>
+</div>
+<div class="row" id="create-edit">
+    @Html.Partial("_MoneyStreamsCreatePartial", Model.MoneyStream)
+</div>
+<div class="row" id="update-target">
+    @Html.Partial("_MoneyStreamsListPartial", Model.MoneyStreams)
+</div>
+@Scripts.Render("~/bundles/services")
