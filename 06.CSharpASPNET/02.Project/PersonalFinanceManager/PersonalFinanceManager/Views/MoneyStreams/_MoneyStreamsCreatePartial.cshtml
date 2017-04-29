@@ -1,43 +1,60 @@
-﻿@model PersonalFinanceManager.Data.Models.MoneyStream
+﻿@using Microsoft.AspNet.Identity
+@model PersonalFinanceManager.ViewModels.MoneyStreams.MoneyStreamManageViewModel
 
 @{
     ViewBag.Title = "Create Money Stream";
 }
-
-<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-    @using (Ajax.BeginForm("Create", "MoneyStreams", new AjaxOptions
-    {
-        HttpMethod = "POST",
-        InsertionMode = InsertionMode.Replace,
-        UpdateTargetId = "update-target",
-        OnSuccess = "ClearMoneyStreamForm()"
-    }))
-    {
-        <form id="CreateBookForm" class="form-control form-inline">
-            <div class="form-group">
-                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
-                @Html.TextBoxFor(model => model.Name, new { id = "money-stream-name", @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+@using (Ajax.BeginForm("Create", "MoneyStreams", new AjaxOptions
+{
+    HttpMethod = "POST",
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "moneyStreams-list",
+    OnSuccess = "ClearMoneyStreamForm()"
+}))
+{
+    <form id="CreateBookForm">
+        <div class="row">
+            <div class="form-group col-sm-12 col-md-4 col-lg-2 col-xl-2">
+                @Html.LabelFor(model => model.MoneyStream.Name)
+                @Html.TextBoxFor(model => model.MoneyStream.Name, new { id = "moneyStream-name", @class = "form-control input-sm" })
+                @Html.ValidationMessageFor(model => model.MoneyStream.Name, "", new { @class = "text-danger" })
             </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Amount, htmlAttributes: new {@class = "control-label"})
-                @Html.TextBoxFor(model => model.Amount, new {id = "money-stream-amount", @class = "form-control"})
-                @Html.ValidationMessageFor(model => model.Amount, "", new {@class = "text-danger"})
+            <div class="form-group col-sm-12 col-md-4 col-lg-2 col-xl-2">
+                @Html.LabelFor(model => model.MoneyStream.Amount)
+                @Html.TextBoxFor(model => model.MoneyStream.Amount, new { id = "moneyStream-amount", @class = "form-control input-sm" })
+                @Html.ValidationMessageFor(model => model.MoneyStream.Amount, "", new { @class = "text-danger" })
             </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Date, htmlAttributes: new {@class = "control-label"})
-                @Html.TextBoxFor(model => model.Date, new {id = "money-stream-date", @class = "form-control"})
-                @Html.ValidationMessageFor(model => model.Date, "", new {@class = "text-danger"})
+            <div class="form-group col-sm-12 col-md-4 col-lg-2 col-xl-2">
+                @Html.LabelFor(model => model.Categories)
+                @Html.DropDownListFor(model => model.MoneyStream.Category.Id, new SelectList(Model.Categories.Select(c => new
+                {
+                    Value = c.Id,
+                    Text = c.Name
+                }), "Value", "Text"), new { id = "moneyStream-category", @class = "form-control input-sm" })
             </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.isIncome, htmlAttributes: new { @class = "control-label" })
-                @Html.TextBoxFor(model => model.isIncome, new { id = "money-stream-isIncome", @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.isIncome, "", new { @class = "text-danger" })
+            <div class="form-group col-sm-12 col-md-4 col-lg-2 col-xl-2">
+                @Html.LabelFor(model => model.MoneyStream.Date)
+                @Html.TextBoxFor(model => model.MoneyStream.Date, "{0:dd.MM.yyyy}",
+                    new
+                    {
+                        id = "moneyStream-date",
+                        @class = "form-control input-sm",
+                        value = Model.MoneyStream.Date
+                    })
+                @Html.ValidationMessageFor(model => model.MoneyStream.Date, "", new { @class = "text-danger" })
             </div>
-            @Html.HiddenFor(model => model.Id)
-            @Html.HiddenFor(model => model.Book)
-            @Html.AntiForgeryToken()
-            <button type="submit" class="btn btn-default">Create / Edit</button>
-        </form>
+            <div class="form-group col-sm-12 col-md-1 col-lg-1 col-xl-2">
+                @Html.LabelFor(model => model.MoneyStream.IsIncome)
+                @Html.CheckBoxFor(model => model.MoneyStream.IsIncome, new { id = "moneyStream-isIncome", @class = "checkbox text-center" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-12 col-md-3 col-lg-3 col-xl-3 align-bottom">
+                @Html.HiddenFor(model => Model.Book.Id, new { id = "moneyStream-book-id" })
+                @Html.HiddenFor(model => Model.MoneyStream.Id, new { id = "moneyStream-id" })
+                @Html.AntiForgeryToken()
+                <button id="submitButton" type="submit" class="btn btn-default btn-md">Create / Edit</button>
+            </div>
+        </div>
+    </form>
     }
-</div>

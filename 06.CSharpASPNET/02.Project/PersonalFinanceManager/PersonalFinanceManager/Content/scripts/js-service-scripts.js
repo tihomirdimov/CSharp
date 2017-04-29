@@ -8,6 +8,9 @@ function ClearBookForm() {
 }
 
 function ClearMoneyStreamForm() {
-    $('#money-stream-name').val('');
-    $('#book-currency').val('');
+    $('#moneyStream-name').val('');
+    $('#moneyStream-amount').val('');
+    $('#moneyStream-date').val('');
+    $('#moneyStream-isIncome').val('');
+    $('#moneyStream-id').val('');
 }

@@ -193,6 +193,8 @@
     <Compile Include="ViewModels\Categories\CategoriesViewModel.cs" />
     <Compile Include="ViewModels\Manage\ManageViewModels.cs" />
     <Compile Include="ViewModels\MoneyStreams\MoneyStreamIndexViewModel.cs" />
+    <Compile Include="ViewModels\MoneyStreams\MoneyStreamManageViewModel.cs" />
+    <Compile Include="ViewModels\MoneyStreams\MoneyStreamsListViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap\bootstrap-theme.min.css" />

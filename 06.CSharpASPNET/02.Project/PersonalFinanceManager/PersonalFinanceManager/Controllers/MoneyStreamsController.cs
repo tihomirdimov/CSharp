@@ -17,67 +17,99 @@ namespace PersonalFinanceManager.Controllers
 
         public ActionResult Index(int id)
         {
-            var current = User.Identity.GetUserId();
-            MoneyStreamIndexViewModel model = new MoneyStreamIndexViewModel();
-            model.MoneyStream.Book = db.Books.FirstOrDefault(b => b.Id == id && b.Owner.Id == current);
-            model.MoneyStreams = db.MoneyStreams.Where(ms => ms.Owner.Id == current && ms.Book.Id == id && ms.isDeleted == false).ToList();
-            return View(model);
+            var currentUser = User.Identity.GetUserId();
+            if (db.Books.FirstOrDefault(b => b.Id == id && b.Owner.Id == currentUser) != null)
+            {
+                MoneyStreamIndexViewModel model = new MoneyStreamIndexViewModel();
+                Book currentBook = db.Books.FirstOrDefault(b => b.Id == id);
+                model.MoneyStreamManageViewModel.Book = currentBook;
+                model.MoneyStreamManageViewModel.Categories = db.Categories.Where(c => c.Owner.Id == currentUser && c.isDeleted == false).OrderBy(c => c.Name).ToList();
+                model.MoneyStreamsListViewModel.MoneyStreams = db.MoneyStreams.Where(ms => ms.Owner.Id == currentUser && ms.Book.Id == id && ms.IsDeleted == false).ToList();
+                model.MoneyStreamsListViewModel.Book = currentBook;
+                return View(model);
+            }
+            return RedirectToAction("Index", "Books");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(MoneyStream moneyStream)
-
+        public ActionResult Create(MoneyStreamManageViewModel model)
         {
-            var current = User.Identity.GetUserId();
-            if (ModelState.IsValid)
+            var currentUser = User.Identity.GetUserId();
+            var currentBook = db.Books.FirstOrDefault(b => b.Id == model.Book.Id);
+            var currentMoneyStream = db.MoneyStreams.FirstOrDefault(ms => ms.Id == model.MoneyStream.Id);
+            if (currentBook != null && currentBook.Owner.Id == currentUser)
             {
-                if (db.MoneyStreams.FirstOrDefault(b => b.Id == moneyStream.Id) != null)
+                if (model.MoneyStream.Id != 0 && currentMoneyStream.Owner.Id == currentUser)
                 {
-                    db.MoneyStreams.FirstOrDefault(b => b.Id == moneyStream.Id).Name = moneyStream.Name;
-                    db.MoneyStreams.FirstOrDefault(b => b.Id == moneyStream.Id).Amount = moneyStream.Amount;
-                    db.MoneyStreams.FirstOrDefault(b => b.Id == moneyStream.Id).Date = moneyStream.Date;
-                    db.MoneyStreams.FirstOrDefault(b => b.Id == moneyStream.Id).isIncome = moneyStream.isIncome;
+                    currentMoneyStream.Name = model.MoneyStream.Name;
+                    currentMoneyStream.Amount = model.MoneyStream.Amount;
+                    currentMoneyStream.Date = model.MoneyStream.Date;
+                    currentMoneyStream.IsIncome = model.MoneyStream.IsIncome;
+                    currentMoneyStream.Category = db.Categories.FirstOrDefault(c => c.Id == model.MoneyStream.Category.Id);
                     db.SaveChanges();
                 }
                 else
                 {
-                    var owner = db.Users.FirstOrDefault(user => user.Id == current);
                     MoneyStream toAdd = new MoneyStream();
-                    toAdd.Name = moneyStream.Name;
-                    toAdd.Amount = moneyStream.Amount;
-                    toAdd.Date = moneyStream.Date;
-                    toAdd.isIncome = moneyStream.isIncome;
-                    toAdd.Book = moneyStream.Book;
-                    toAdd.Owner = owner;
+                    toAdd.Name = model.MoneyStream.Name;
+                    toAdd.Amount = model.MoneyStream.Amount;
+                    toAdd.Date = model.MoneyStream.Date;
+                    toAdd.IsIncome = model.MoneyStream.IsIncome;
+                    toAdd.Book = db.Books.FirstOrDefault(b => b.Id == model.Book.Id);
+                    toAdd.Category = db.Categories.FirstOrDefault(c => c.Id == model.MoneyStream.Category.Id);
+                    toAdd.Owner = db.Users.FirstOrDefault(u => u.Id == currentUser);
                     db.MoneyStreams.Add(toAdd);
                     db.SaveChanges();
                 }
-                List<MoneyStream> model = db.MoneyStreams.Where(ms => ms.Owner.Id == current && ms.Book == moneyStream.Book && ms.isDeleted == false).ToList();
-                return this.PartialView("_MoneyStreamsListPartial", model);
+                MoneyStreamsListViewModel outputModel = new MoneyStreamsListViewModel();
+                outputModel.MoneyStreams =
+                    db.MoneyStreams.Where(
+                        ms => ms.Owner.Id == currentUser && ms.Book.Id == currentBook.Id && ms.IsDeleted == false).OrderByDescending(b => b.Date).ToList();
+                outputModel.Book = currentBook;
+                ModelState.Clear();
+                return PartialView("_MoneyStreamsListPartial", outputModel);
             }
-            List<MoneyStream> model2 = db.MoneyStreams.Where(ms => ms.Owner.Id == current && ms.Book == moneyStream.Book && ms.isDeleted == false).ToList();
-            return this.PartialView("_MoneyStreamsListPartial", model2);
+            return RedirectToAction("Index", "Books");
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Book book)
+        public ActionResult Edit(MoneyStreamManageViewModel model)
         {
-            var current = User.Identity.GetUserId();
-            MoneyStream model = db.MoneyStreams.FirstOrDefault(ms => ms.Owner.Id == current && ms.Book == book && ms.Id == id);
-            return this.PartialView("_MoneyStreamsCreatePartial", model);
+            var currentUser = User.Identity.GetUserId();
+            var currentBook = db.Books.FirstOrDefault(b => b.Id == model.Book.Id);
+            var currentMoneyStream = db.MoneyStreams.FirstOrDefault(ms => ms.Id == model.MoneyStream.Id);
+            if (currentBook != null && currentMoneyStream != null &&
+                currentBook.Owner.Id == currentUser && currentMoneyStream.Book.Id == currentBook.Id)
+            {
+                MoneyStreamManageViewModel outputModel = new MoneyStreamManageViewModel();
+                outputModel.MoneyStream = currentMoneyStream;
+                outputModel.Book = currentBook;
+                outputModel.Categories = db.Categories.Where(c => c.Owner.Id == currentUser && c.isDeleted == false).OrderBy(c => c.Name).ToList();
+                ModelState.Clear();
+                return PartialView("_MoneyStreamsCreatePartial", outputModel);
+            }
+            return RedirectToAction("Index", "Books");
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, Book book)
+        public ActionResult Delete(MoneyStreamManageViewModel model)
         {
-            var current = User.Identity.GetUserId();
-            db.MoneyStreams.FirstOrDefault(ms => ms.Owner.Id == current && ms.Book == book && ms.Id == id).isDeleted = true;
-            db.SaveChanges();
-            List<MoneyStream> model = db.MoneyStreams.Where(ms => ms.Owner.Id == current && ms.Book == book && ms.isDeleted == false).ToList();
-            return this.PartialView("_MoneyStreamsListPartial", model);
+            var currentUser = User.Identity.GetUserId();
+            var currentBook = db.Books.FirstOrDefault(b => b.Id == model.Book.Id);
+            var currentMoneyStream = db.MoneyStreams.FirstOrDefault(ms => ms.Id == model.MoneyStream.Id);
+            if (currentBook != null && currentMoneyStream != null &&
+                currentBook.Owner.Id == currentUser && currentMoneyStream.Book.Id == currentBook.Id)
+            {
+                currentMoneyStream.IsDeleted = true;
+                db.SaveChanges();
+                MoneyStreamsListViewModel outputModel = new MoneyStreamsListViewModel();
+                outputModel.MoneyStreams =
+                    db.MoneyStreams.Where(
+                        ms => ms.Owner.Id == currentUser && ms.Book.Id == currentBook.Id && ms.IsDeleted == false).OrderByDescending(b=>b.Date).ToList();
+                outputModel.Book = currentBook;
+                ModelState.Clear();
+                return PartialView("_MoneyStreamsListPartial", outputModel);
+            }
+            return RedirectToAction("Index", "Books");
         }
     }
 }
