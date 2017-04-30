@@ -19,7 +19,6 @@ namespace PersonalFinanceManager.Controllers
     {
         private PfmDbContext db = new PfmDbContext();
 
-        // GET: Categories
         public ActionResult Index()
         {
             var current = User.Identity.GetUserId();
@@ -28,35 +27,27 @@ namespace PersonalFinanceManager.Controllers
             return View(categoriesViewModel);
         }
 
-        // POST: Categories/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Category category)
         {
             var current = User.Identity.GetUserId();
-            if (ModelState.IsValid)
+            if (db.Categories.FirstOrDefault(cat => cat.Id == category.Id) != null)
             {
-                if (db.Categories.FirstOrDefault(cat => cat.Id == category.Id) != null)
-                {
-                    db.Categories.FirstOrDefault(cat => cat.Id == category.Id).Name = category.Name;
-                    db.SaveChanges();
-                }
-                else
-                {
-                    var owner = db.Users.FirstOrDefault(user => user.Id == current);
-                    Category toAdd = new Category();
-                    toAdd.Name = category.Name;
-                    toAdd.Owner = owner;
-                    db.Categories.Add(toAdd);
-                    db.SaveChanges();
-                }
-                List<Category> model = db.Categories.Where(cat => cat.Owner.Id == current && cat.isDeleted == false).ToList();
-                return this.PartialView("_CategoriesListPartial", model);
+                db.Categories.FirstOrDefault(cat => cat.Id == category.Id).Name = category.Name;
+                db.SaveChanges();
             }
-            List<Category> model2 = db.Categories.Where(cat => cat.Owner.Id == current && cat.isDeleted == false).ToList();
-            return this.PartialView("_CategoriesListPartial", model2);
+            else
+            {
+                var owner = db.Users.FirstOrDefault(user => user.Id == current);
+                Category toAdd = new Category();
+                toAdd.Name = category.Name;
+                toAdd.Owner = owner;
+                db.Categories.Add(toAdd);
+                db.SaveChanges();
+            }
+            List<Category> model = db.Categories.Where(cat => cat.Owner.Id == current && cat.isDeleted == false).ToList();
+            return this.PartialView("_CategoriesListPartial", model);
         }
 
         [HttpPost]

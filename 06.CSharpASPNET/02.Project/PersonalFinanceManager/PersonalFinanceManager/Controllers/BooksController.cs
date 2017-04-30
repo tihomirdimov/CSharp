@@ -18,7 +18,6 @@ namespace PersonalFinanceManager.Controllers
     {
         private PfmDbContext db = new PfmDbContext();
 
-        // GET: Books
         public ActionResult Index()
         {
             var current = User.Identity.GetUserId();
@@ -28,59 +27,46 @@ namespace PersonalFinanceManager.Controllers
             return View(booksViewModel);
         }
 
-        // GET: Books/Details/5
+        [ChildActionOnly]
         public ActionResult Details(int id)
         {
-            var current = User.Identity.GetUserId();
-            Book book = db.Books.First(b => b.Id == id);
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            if (book == null)
-            {
-                return HttpNotFound();
-            }
-            if (book.Owner.Id != current)
+            if (db.Books.First(b => b.Id == id).Owner.Id != User.Identity.GetUserId())
             {
                 return RedirectToAction("Index");
             }
-            return View(book);
+            var current = User.Identity.GetUserId();
+            BookDetailsViewModel model = new BookDetailsViewModel();
+            model.Book = db.Books.First(b => b.Id == id);
+            return View(model);
         }
 
-        // POST: Books/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [ChildActionOnly]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Book book)
         {
             var current = User.Identity.GetUserId();
-            if (ModelState.IsValid)
+            if (db.Books.FirstOrDefault(b => b.Id == book.Id) != null)
             {
-                if (db.Books.FirstOrDefault(b => b.Id == book.Id) != null)
-                {
-                    db.Books.FirstOrDefault(b => b.Id == book.Id).Name = book.Name;
-                    db.Books.FirstOrDefault(b => b.Id == book.Id).Currency = book.Currency;
-                    db.SaveChanges();
-                }
-                else
-                {
-                    var owner = db.Users.FirstOrDefault(user => user.Id == current);
-                    Book toAdd = new Book();
-                    toAdd.Name = book.Name;
-                    toAdd.Currency = book.Currency;
-                    toAdd.Owner = owner;
-                    db.Books.Add(toAdd);
-                    db.SaveChanges();
-                }
-                List<Book> model = db.Books.Where(b => b.Owner.Id == current && b.isDeleted == false).ToList();
-                return this.PartialView("_BooksListPartial", model);
+                db.Books.FirstOrDefault(b => b.Id == book.Id).Name = book.Name;
+                db.Books.FirstOrDefault(b => b.Id == book.Id).Currency = book.Currency;
+                db.SaveChanges();
             }
-            List<Book> model2 = db.Books.Where(b => b.Owner.Id == current && b.isDeleted == false).ToList();
-            return this.PartialView("_BooksListPartial", model2);
+            else
+            {
+                var owner = db.Users.FirstOrDefault(user => user.Id == current);
+                Book toAdd = new Book();
+                toAdd.Name = book.Name;
+                toAdd.Currency = book.Currency;
+                toAdd.Owner = owner;
+                db.Books.Add(toAdd);
+                db.SaveChanges();
+            }
+            List<Book> model = db.Books.Where(b => b.Owner.Id == current && b.isDeleted == false).ToList();
+            return this.PartialView("_BooksListPartial", model);
         }
 
+        [ChildActionOnly]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id)

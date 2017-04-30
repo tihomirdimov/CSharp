@@ -3,15 +3,16 @@
 @{
     ViewBag.Title = "Categories Index";
 }
+
 <div class="row">
     <div class="col-md-4">
         <h2>Expenses Categories</h2>
     </div>
 </div>
-<div class="row" id="create-edit">
+<div id="create-edit">
     @Html.Partial("_CategoriesCreatePartial", Model.Category)
 </div>
-<div class="row" id="update-target">
+<div id="update-target">
     @Html.Partial("_CategoriesListPartial", Model.Categories)
 </div>
 @Scripts.Render("~/bundles/services")

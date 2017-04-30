@@ -9,10 +9,10 @@
         <h2>Expenses Books</h2>
     </div>
 </div>
-<div class="row" id="create-edit">
+<div id="create-edit">
     @Html.Partial("_BooksCreatePartial", Model.Book)
 </div>
-<div class="row" id="update-target">
+<div id="update-target">
     @Html.Partial("_BooksListPartial", Model.Books)
 </div>
 @Scripts.Render("~/bundles/services")

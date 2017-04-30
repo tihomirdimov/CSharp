@@ -11,7 +11,9 @@
 <div id="moneyStreams-create">
     @Html.Partial("_MoneyStreamsCreatePartial", Model.MoneyStreamManageViewModel)
 </div>
-<div class="row" id="moneyStreams-list">
+<div id="moneyStreams-list">
     @Html.Partial("_MoneyStreamsListPartial", Model.MoneyStreamsListViewModel)
 </div>
 @Scripts.Render("~/bundles/services")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")

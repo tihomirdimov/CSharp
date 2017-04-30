@@ -279,6 +279,7 @@
     <Content Include="Views\MoneyStreams\_MoneyStreamsListPartial.cshtml" />
     <Content Include="Views\Books\_BooksCreatePartial.cshtml" />
     <Content Include="Views\Books\_BooksListPartial.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -288,6 +289,10 @@
     <ProjectReference Include="..\PersonalFinanceManager.Data\PersonalFinanceManager.Data.csproj">
       <Project>{7d7d035c-35a8-4c00-a249-97bf1ba21dea}</Project>
       <Name>PersonalFinanceManager.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PersonalFinanceManager.Services\PersonalFinanceManager.Services.csproj">
+      <Project>{2deea171-4431-48f3-88d9-d01c0c8af366}</Project>
+      <Name>PersonalFinanceManager.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

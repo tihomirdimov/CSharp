@@ -1,28 +1,62 @@
-﻿@model PersonalFinanceManager.Data.Models.Book
+﻿@model PersonalFinanceManager.ViewModels.Books.BookDetailsViewModel
 
 @{
     ViewBag.Title = "Book Details";
 }
 
-<div>
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Currency)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Currency)
-        </dd>
-    </dl>
+<div class="row">
+    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Book.Name)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Book.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.AverageDailyBudget)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.AverageDailyBudget)
+                @Html.DisplayFor(model => model.Book.Currency)
+            </dd>
+        </dl>
+        <p>
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+        <table class="table-striped table-bordered table-responsive col-md-4">
+            <thead>
+                <tr>
+                    <th>
+                        Category
+                    </th>
+                    <th>
+                        Total Spent
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if(Model.ExpensesByCategory.Count != 0)
+                {
+                    foreach (var item in Model.ExpensesByCategory)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Key.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Value)
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                <tr>
+                    <td colspan="2">No data</td>
+                <tr/>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>

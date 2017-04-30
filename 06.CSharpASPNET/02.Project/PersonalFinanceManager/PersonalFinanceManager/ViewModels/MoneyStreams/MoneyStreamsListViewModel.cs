@@ -8,9 +8,8 @@ namespace PersonalFinanceManager.ViewModels.MoneyStreams
         public MoneyStreamsListViewModel()
         {
             this.MoneyStreams = new List<MoneyStream>();
-            this.Book = new Book();
         }
         public ICollection<MoneyStream> MoneyStreams{ get; set; }
-        public Book Book { get; set; }        
+        public int BookId { get; set; }        
     }
 }

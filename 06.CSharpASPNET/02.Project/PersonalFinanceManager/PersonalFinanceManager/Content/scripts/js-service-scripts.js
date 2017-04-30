@@ -1,10 +1,12 @@
 ﻿function ClearCategoryForm() {
     $('#category-name').val('');
+    $('#category-id').val('');
 }
 
 function ClearBookForm() {
     $('#book-name').val('');
     $('#book-currency').val('');
+    $('#book-id').val('');
 }
 
 function ClearMoneyStreamForm() {
