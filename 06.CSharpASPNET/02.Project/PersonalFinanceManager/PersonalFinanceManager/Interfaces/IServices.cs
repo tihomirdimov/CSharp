@@ -7,7 +7,6 @@ namespace PersonalFinanceManager.Interfaces
 {
     public interface IServices
     {
-        string CurrentUserId { get; set; }
         ApplicationUsersService ApplicationUsersService { get; set; }
         BooksService BooksService { get; set; }
         CategoriesService CategoriesService { get; set; }

@@ -52,17 +52,14 @@ namespace PersonalFinanceManager.Services.MoneyStreamsService
             Context.SaveChanges();
         }
 
-        public ICollection<MoneyStream> GetCurrentMonthExpenses(int bookId, DateTime monthDateTime)
+        public decimal GetCurrentMonthDailyBudget(int bookId, string userId)
         {
-            DateTime from = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            return Context.MoneyStreams.Where(ms => ms.Book.Id == bookId && ms.Date >= from && ms.IsIncome == false && ms.IsDeleted == false).ToList();
-
+            return Context.MoneyStreams.Where(ms => ms.Book.Id == bookId &&
+                                                    ms.Owner.Id == userId &&
+                                                    ms.Date >= DateTime.Now.Month &&
+                                                    ms.IsIncome == false &&
+                                                    ms.IsDeleted == false);
         }
 
-        public ICollection<MoneyStream> GetCurrentMonthIncomes(int bookId, DateTime monthDateTime)
-        {
-            DateTime from = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            return Context.MoneyStreams.Where(ms => ms.Book.Id == bookId && ms.Date >= from && ms.IsIncome == true && ms.IsDeleted == false).ToList();
-        }
     }
 }

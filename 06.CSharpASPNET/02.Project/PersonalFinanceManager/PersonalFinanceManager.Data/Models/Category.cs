@@ -4,10 +4,15 @@ namespace PersonalFinanceManager.Data.Models
 {
     public class Category
     {
+        public Category()
+        {
+            this.IsDeleted = false;
+        }
+
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-        public bool isDeleted { get; set; }
+        public bool IsDeleted { get; set; }
         public virtual ApplicationUser Owner { get; set; }
     }
 }

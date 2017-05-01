@@ -10,6 +10,7 @@ namespace PersonalFinanceManager.Data.Models
     {
         public virtual ICollection<Book> Books { get; set; }
         public virtual ICollection<Category> Categoris { get; set; }
+        public virtual ICollection<MoneyStream> MoneyStreams { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

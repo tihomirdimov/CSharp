@@ -3,9 +3,8 @@
 @{
     ViewBag.Title = "Book Details";
 }
-
 <div class="row">
-    <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <dl class="dl-horizontal">
             <dt>
                 @Html.DisplayNameFor(model => model.Book.Name)
@@ -21,10 +20,7 @@
                 @Html.DisplayFor(model => model.Book.Currency)
             </dd>
         </dl>
-        <p>
-            @Html.ActionLink("Back to List", "Index")
-        </p>
-        <table class="table-striped table-bordered table-responsive col-md-4">
+        <table class="table-striped table-bordered table-responsive">
             <thead>
                 <tr>
                     <th>
@@ -36,7 +32,7 @@
                 </tr>
             </thead>
             <tbody>
-                @if(Model.ExpensesByCategory.Count != 0)
+                @if (Model.ExpensesByCategory.Count != 0)
                 {
                     foreach (var item in Model.ExpensesByCategory)
                     {
@@ -52,11 +48,16 @@
                 }
                 else
                 {
-                <tr>
-                    <td colspan="2">No data</td>
-                <tr/>
+                    <tr>
+                        <td colspan="2">
+                            No data
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
+        <p>
+            @Html.ActionLink("Back to List", "Index")
+        </p>
     </div>
 </div>

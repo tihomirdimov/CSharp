@@ -15,14 +15,12 @@ namespace PersonalFinanceManager.Controllers
     {
         public CategoriesController()
         {
-            this.CurrentUserId = User.Identity.GetUserId();
             this.ApplicationUsersService = new ApplicationUsersService();
             this.BooksService = new BooksService();
             this.CategoriesService = new CategoriesService();
             this.MoneyStreamsService = new MoneyStreamsService();
         }
 
-        public string CurrentUserId { get; set; }
         public ApplicationUsersService ApplicationUsersService { get; set; }
         public BooksService BooksService { get; set; }
         public CategoriesService CategoriesService { get; set; }
@@ -30,8 +28,9 @@ namespace PersonalFinanceManager.Controllers
 
         public ActionResult Index()
         {
+            string currentUserId = User.Identity.GetUserId();
             CategoryViewModel categoriesViewModel = new CategoryViewModel();
-            categoriesViewModel.Categories = CategoriesService.GetCategories(CurrentUserId);
+            categoriesViewModel.Categories = CategoriesService.GetCategories(currentUserId);
             return View(categoriesViewModel);
         }
 
@@ -39,7 +38,8 @@ namespace PersonalFinanceManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Category category)
         {
-            var currentCategory = CategoriesService.GetCategory(category.Id,CurrentUserId);
+            string currentUserId = User.Identity.GetUserId();
+            var currentCategory = CategoriesService.GetCategory(category.Id, currentUserId);
             if (currentCategory != null)
             {
                 currentCategory.Name = category.Name;
@@ -49,17 +49,18 @@ namespace PersonalFinanceManager.Controllers
             {
                 Category toAdd = new Category();
                 toAdd.Name = category.Name;
-                toAdd.Owner = ApplicationUsersService.GetUser(CurrentUserId);
+                toAdd.Owner = ApplicationUsersService.GetUser(currentUserId);
                 CategoriesService.SaveCategory(toAdd);
             }
-            return this.PartialView("_CategoriesListPartial", CategoriesService.GetCategories(CurrentUserId));
+            return this.PartialView("_CategoriesListPartial", CategoriesService.GetCategories(currentUserId));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id)
         {
-            Category model = CategoriesService.GetCategory(id, CurrentUserId);
+            string currentUserId = User.Identity.GetUserId();
+            Category model = CategoriesService.GetCategory(id, currentUserId);
             return this.PartialView("_CategoriesCreatePartial", model);
         }
 
@@ -67,8 +68,9 @@ namespace PersonalFinanceManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
-            CategoriesService.DeleteCategory(id, CurrentUserId);
-            return this.PartialView("_CategoriesListPartial", CategoriesService.GetCategories(CurrentUserId));
+            string currentUserId = User.Identity.GetUserId();
+            CategoriesService.DeleteCategory(id, currentUserId);
+            return this.PartialView("_CategoriesListPartial", CategoriesService.GetCategories(currentUserId));
         }
     }
 

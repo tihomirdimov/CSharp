@@ -6,6 +6,11 @@ namespace PersonalFinanceManager.Data.Models
 {
     public class MoneyStream
     {
+        public MoneyStream()
+        {
+            IsDeleted = false;
+        }
+
         [Key]
         public int Id { get; set; }
         [Required]

@@ -2,12 +2,12 @@
 
 namespace PersonalFinanceManager.Services
 {
-    public class DbService
+    public abstract class DbService
     {
-        public DbService()
+        protected DbService()
         {
             this.Context = new PfmDbContext();
         }
-        public  PfmDbContext Context { get; set; }
+        protected  PfmDbContext Context { get; set; }
     }
 }

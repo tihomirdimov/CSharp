@@ -2,27 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PersonalFinanceManager;
 using PersonalFinanceManager.Controllers;
 
 namespace PersonalFinanceManager.Tests.Controllers
 {
     [TestClass]
-    public class HomeControllerTest
+    public class CategoriesControllerTest
     {
         [TestMethod]
-        public void Index()
+        public void ViewMaps()
         {
             // Arrange
-            HomeController controller = new HomeController();
+            //CategoriesController controller = new CategoriesController();
 
             // Act
-            ViewResult result = controller.Index() as ViewResult;
+            //ViewResult result = controller Index() as ViewResult;
 
             // Assert
-            Assert.IsNotNull(result);
+            //Assert.IsNotNull(result);
         }
     }
 }

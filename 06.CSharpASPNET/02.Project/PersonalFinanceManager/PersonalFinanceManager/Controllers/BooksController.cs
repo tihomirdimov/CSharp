@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using PersonalFinanceManager.Data.Models;
@@ -14,7 +14,14 @@ namespace PersonalFinanceManager.Controllers
     [Authorize]
     public class BooksController : Controller, IServices
     {
-        public string CurrentUserId { get; set; }
+        public BooksController()
+        {
+            this.ApplicationUsersService = new ApplicationUsersService();
+            this.BooksService = new BooksService();
+            this.CategoriesService = new CategoriesService();
+            this.MoneyStreamsService = new MoneyStreamsService();
+        }
+
         public ApplicationUsersService ApplicationUsersService { get; set; }
         public BooksService BooksService { get; set; }
         public CategoriesService CategoriesService { get; set; }
@@ -22,19 +29,21 @@ namespace PersonalFinanceManager.Controllers
 
         public ActionResult Index()
         {
+            string currentUserId = User.Identity.GetUserId();
             BooksViewModel booksViewModel = new BooksViewModel();
             booksViewModel.Book = new Book();
-            booksViewModel.Books = BooksService.GetBooks(CurrentUserId);
+            booksViewModel.Books = BooksService.GetBooks(currentUserId);
             return View(booksViewModel);
         }
 
         public ActionResult Details(int id)
         {
-            if (BooksService.CheckIfValidBook(id, CurrentUserId))
+            string currentUserId = User.Identity.GetUserId();
+            if (BooksService.CheckIfValidBook(id, currentUserId))
             {
-                var current = User.Identity.GetUserId();
                 BookDetailsViewModel model = new BookDetailsViewModel();
-                model.Book = BooksService.GetBook(id, CurrentUserId);
+                model.Book = BooksService.GetBook(id, currentUserId);
+                model.AverageDailyBudget = MoneyStreamsService.GetCurrentMonthDailyBudget(model.Book.Id, currentUserId);
                 return View(model);           
             }
             return RedirectToAction("Index");
@@ -44,7 +53,8 @@ namespace PersonalFinanceManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Book book)
         {
-            var currentBook = BooksService.GetBook(book.Id, CurrentUserId);
+            string currentUserId = User.Identity.GetUserId();
+            var currentBook = BooksService.GetBook(book.Id, currentUserId);
             if (currentBook != null)
             {
                 currentBook.Name = book.Name;
@@ -56,17 +66,18 @@ namespace PersonalFinanceManager.Controllers
                 Book toAdd = new Book();
                 toAdd.Name = book.Name;
                 toAdd.Currency = book.Currency;
-                toAdd.Owner = ApplicationUsersService.GetUser(CurrentUserId);
+                toAdd.Owner = ApplicationUsersService.GetUser(currentUserId);
                 BooksService.SaveBook(toAdd);
             }
-            return this.PartialView("_BooksListPartial", BooksService.GetBooks(CurrentUserId));
+            return this.PartialView("_BooksListPartial", BooksService.GetBooks(currentUserId));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id)
         {
-            Book model = BooksService.GetBook(id, CurrentUserId);
+            string currentUserId = User.Identity.GetUserId();
+            Book model = BooksService.GetBook(id, currentUserId);
             return this.PartialView("_BooksCreatePartial", model);
         }
 
@@ -74,9 +85,9 @@ namespace PersonalFinanceManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
-            BooksService.DeleteBook(id, CurrentUserId);
-
-            return this.PartialView("_BooksListPartial", BooksService.GetBooks(CurrentUserId));
+            string currentUserId = User.Identity.GetUserId();
+            BooksService.DeleteBook(id, currentUserId);
+            return this.PartialView("_BooksListPartial", BooksService.GetBooks(currentUserId));
         }
     }
 }

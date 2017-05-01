@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using PersonalFinanceManager.Data.Data;
 using PersonalFinanceManager.Data.Models;
 
 namespace PersonalFinanceManager.Services.CategoriesService
@@ -13,29 +8,29 @@ namespace PersonalFinanceManager.Services.CategoriesService
     {
         public Category GetCategory(int categoryId, string userId)
         {
-            return Context.Categories.FirstOrDefault(c => c.Id == categoryId && c.Owner.Id == userId);
+            return this.Context.Categories.FirstOrDefault(c => c.Id == categoryId && c.Owner.Id == userId);
         }
 
         public ICollection<Category> GetCategories(string userId)
         {
-            return Context.Categories.Where(c => c.Owner.Id == userId && c.isDeleted == false).OrderBy(c => c.Name).ToList();
+            return this.Context.Categories.Where(c => c.Owner.Id == userId && c.IsDeleted == false).OrderBy(c => c.Name).ToList();
         }
 
         public void SaveCategory()
         {
-            Context.SaveChanges();
+            this.Context.SaveChanges();
         }
 
         public void SaveCategory(Category category)
         {
-            Context.Categories.Add(category);
-            Context.SaveChanges();
+            this.Context.Categories.Add(category);
+            this.Context.SaveChanges();
         }
 
         public void DeleteCategory(int categoryId, string userId)
         {
-            Context.Categories.FirstOrDefault(c => c.Id == categoryId && c.Owner.Id == userId).isDeleted = true;
-            Context.SaveChanges();
+            this.Context.Categories.FirstOrDefault(c => c.Id == categoryId && c.Owner.Id == userId).IsDeleted = true;
+            this.Context.SaveChanges();
         }
     }
 }
