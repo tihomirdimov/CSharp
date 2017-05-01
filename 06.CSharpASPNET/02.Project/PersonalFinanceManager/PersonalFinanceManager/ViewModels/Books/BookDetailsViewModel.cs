@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 using PersonalFinanceManager.Data.Models;
 
 namespace PersonalFinanceManager.ViewModels.Books
@@ -8,11 +9,11 @@ namespace PersonalFinanceManager.ViewModels.Books
     {
         public BookDetailsViewModel()
         {
-            this.ExpensesByCategory = new Dictionary<Category, decimal>();
+            this.ExpensesByCategory = new Dictionary<string, decimal>();
         }
         public Book Book { get; set; }
         [Display(Name = "Average Daily Budget")]
         public decimal AverageDailyBudget { get; set; }
-        public IDictionary<Category,decimal> ExpensesByCategory { get; set; }
+        public IDictionary<string, decimal> ExpensesByCategory { get; set; }
     }
 }

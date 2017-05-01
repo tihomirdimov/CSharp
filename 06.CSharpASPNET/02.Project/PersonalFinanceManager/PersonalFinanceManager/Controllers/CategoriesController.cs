@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using PersonalFinanceManager.Data.Data;
 using PersonalFinanceManager.Data.Models;
 using PersonalFinanceManager.Interfaces;
 using PersonalFinanceManager.Services.ApplicationUsersService;
@@ -13,6 +14,8 @@ namespace PersonalFinanceManager.Controllers
     [Authorize]
     public class CategoriesController : Controller, IServices
     {
+        private readonly PfmDbContext _context = new PfmDbContext();
+
         public CategoriesController()
         {
             this.ApplicationUsersService = new ApplicationUsersService();
@@ -26,6 +29,9 @@ namespace PersonalFinanceManager.Controllers
         public CategoriesService CategoriesService { get; set; }
         public MoneyStreamsService MoneyStreamsService { get; set; }
 
+        
+
+        [HandleError(View = "Home/Index")]
         public ActionResult Index()
         {
             string currentUserId = User.Identity.GetUserId();
@@ -34,6 +40,7 @@ namespace PersonalFinanceManager.Controllers
             return View(categoriesViewModel);
         }
 
+        [HandleError(View = "Home/Index")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Category category)
@@ -50,11 +57,12 @@ namespace PersonalFinanceManager.Controllers
                 Category toAdd = new Category();
                 toAdd.Name = category.Name;
                 toAdd.Owner = ApplicationUsersService.GetUser(currentUserId);
-                CategoriesService.SaveCategory(toAdd);
+                _context.Categories.Add(toAdd);
             }
             return this.PartialView("_CategoriesListPartial", CategoriesService.GetCategories(currentUserId));
         }
 
+        [HandleError(View = "Home/Index")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id)
@@ -64,6 +72,7 @@ namespace PersonalFinanceManager.Controllers
             return this.PartialView("_CategoriesCreatePartial", model);
         }
 
+        [HandleError(View = "Home/Index")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)

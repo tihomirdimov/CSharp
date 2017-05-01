@@ -339,6 +339,7 @@ namespace PersonalFinanceManager.Controllers
 
         //T.D.
         //GET: /Manage/Users
+        [HandleError(View = "Home/Index")]
         [Authorize(Roles = "Admin")]
         public ActionResult Users()
         {
@@ -351,6 +352,7 @@ namespace PersonalFinanceManager.Controllers
 
         //T.D.
         //GET: /Manage/LockStatus
+        [HandleError(View = "Home/Index")]
         [Authorize(Roles = "Admin")]
         public ActionResult LockStatus(string id)
         {
@@ -361,6 +363,7 @@ namespace PersonalFinanceManager.Controllers
 
         //T.D.
         //POST: /Manage/LockStatus
+        [HandleError(View = "Home/Index")]
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public ActionResult LockStatus(ApplicationUser userToLockUnlock)

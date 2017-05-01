@@ -16,7 +16,7 @@ namespace PersonalFinanceManager.Data.Models
         public string Name { get; set; }
         public string Currency { get; set; }
         public bool IsDeleted { get; set; }
-        public ICollection<MoneyStream> MoneyStreams { get; set; }
+        public virtual ICollection<MoneyStream> MoneyStreams { get; set; }
         public virtual ApplicationUser Owner { get; set; }
     }
 }

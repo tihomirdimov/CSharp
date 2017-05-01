@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
+using PersonalFinanceManager.Data.Data;
 using PersonalFinanceManager.Data.Models;
 using PersonalFinanceManager.Interfaces;
 using PersonalFinanceManager.Services.ApplicationUsersService;
@@ -27,6 +28,7 @@ namespace PersonalFinanceManager.Controllers
         public CategoriesService CategoriesService { get; set; }
         public MoneyStreamsService MoneyStreamsService { get; set; }
 
+        [HandleError(View = "Home/Index")]
         public ActionResult Index(int id)
         {
             string currentUserId = User.Identity.GetUserId();
@@ -42,6 +44,7 @@ namespace PersonalFinanceManager.Controllers
             return RedirectToAction("Index", "Books");
         }
 
+        [HandleError(View = "Home/Index")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(MoneyStreamManageViewModel model)
@@ -65,6 +68,7 @@ namespace PersonalFinanceManager.Controllers
             return PartialView("_MoneyStreamsListPartial", outputModel);
         }
 
+        [HandleError(View = "Home/Index")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(MoneyStreamManageViewModel model)

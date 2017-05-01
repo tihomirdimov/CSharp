@@ -1,19 +1,18 @@
-using System.Data.Entity.Migrations;
-using System.Linq;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using PersonalFinanceManager.Data.Data;
-
 namespace PersonalFinanceManager.Data.Migrations
 {
-    internal sealed class Configuration : DbMigrationsConfiguration<PfmDbContext>
+    using System;
+    using System.Data.Entity;
+    using System.Data.Entity.Migrations;
+    using System.Linq;
+
+    internal sealed class Configuration : DbMigrationsConfiguration<PersonalFinanceManager.Data.Data.PfmDbContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(PfmDbContext context)
+        protected override void Seed(PersonalFinanceManager.Data.Data.PfmDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -27,23 +26,6 @@ namespace PersonalFinanceManager.Data.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-
-            // T.D. Populating Roles Table
-            if (!context.Roles.Any(role => role.Name == "Admin"))
-            {
-                var store = new RoleStore<IdentityRole>(context);
-                var manager = new RoleManager<IdentityRole>(store);
-                var role = new IdentityRole("Admin");
-                manager.Create(role);
-
-            }
-            if (!context.Roles.Any(role => role.Name == "User"))
-            {
-                var store = new RoleStore<IdentityRole>(context);
-                var manager = new RoleManager<IdentityRole>(store);
-                var role = new IdentityRole("User");
-                manager.Create(role);
-            }
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using PersonalFinanceManager.Data.Data;
 using PersonalFinanceManager.Data.Models;
 using PersonalFinanceManager.Interfaces;
 using PersonalFinanceManager.Services.ApplicationUsersService;
@@ -27,6 +28,7 @@ namespace PersonalFinanceManager.Controllers
         public CategoriesService CategoriesService { get; set; }
         public MoneyStreamsService MoneyStreamsService { get; set; }
 
+        [HandleError(View = "Home/Index")]
         public ActionResult Index()
         {
             string currentUserId = User.Identity.GetUserId();
@@ -36,6 +38,7 @@ namespace PersonalFinanceManager.Controllers
             return View(booksViewModel);
         }
 
+        [HandleError(View = "Home/Index")]
         public ActionResult Details(int id)
         {
             string currentUserId = User.Identity.GetUserId();
@@ -44,11 +47,13 @@ namespace PersonalFinanceManager.Controllers
                 BookDetailsViewModel model = new BookDetailsViewModel();
                 model.Book = BooksService.GetBook(id, currentUserId);
                 model.AverageDailyBudget = MoneyStreamsService.GetCurrentMonthDailyBudget(model.Book.Id, currentUserId);
-                return View(model);           
+                model.ExpensesByCategory = CategoriesService.GetCurrentMonthExpensesCategories(id, currentUserId);
+                return View(model);
             }
             return RedirectToAction("Index");
         }
 
+        [HandleError(View = "Home/Index")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Book book)
@@ -59,7 +64,7 @@ namespace PersonalFinanceManager.Controllers
             {
                 currentBook.Name = book.Name;
                 currentBook.Currency = book.Currency;
-                CategoriesService.SaveCategory();
+                BooksService.SaveBook();
             }
             else
             {
@@ -72,6 +77,7 @@ namespace PersonalFinanceManager.Controllers
             return this.PartialView("_BooksListPartial", BooksService.GetBooks(currentUserId));
         }
 
+        [HandleError(View = "Home/Index")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id)
@@ -81,6 +87,7 @@ namespace PersonalFinanceManager.Controllers
             return this.PartialView("_BooksCreatePartial", model);
         }
 
+        [HandleError(View = "Home/Index")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)

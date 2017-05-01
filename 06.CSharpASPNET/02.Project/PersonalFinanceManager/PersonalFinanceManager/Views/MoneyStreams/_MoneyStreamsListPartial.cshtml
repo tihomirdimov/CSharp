@@ -4,71 +4,80 @@
     ViewBag.Title = "Money Streams list";
 }
 <div class="row">
-    @if (Model.MoneyStreams.Count != 0)
-    {
-    <table class="table-striped table-bordered table-responsive col-md-12">
-        <thead>
-            <tr>
-                <th>
-                    Name
-                </th>
-                <th>
-                    Amount
-                </th>
-                <th>
-                    Date
-                </th>
-                <th>
-                    Category
-                </th>
-                <th>
-                    Income
-                </th>
-                <th classs="center-text" colspan="2">
-                    Actions
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var moneyStream in Model.MoneyStreams.ToList())
-            {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => moneyStream.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => moneyStream.Amount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => moneyStream.Date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => moneyStream.Category.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => moneyStream.IsIncome)
-                </td>
-                <td class="text-center">
-                    @using (Ajax.BeginForm("Delete", "MoneyStreams", new AjaxOptions
+    <div class="col-md-12">
+        <table class="table-striped table-bordered table-responsive col-md-6">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Amount
+                    </th>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        Category
+                    </th>
+                    <th>
+                        Income
+                    </th>
+                    <th classs="center-text" colspan="2">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.MoneyStreams.Count != 0)
+                {
+                    foreach (var moneyStream in Model.MoneyStreams.ToList())
                     {
-                    HttpMethod = "POST",
-                    InsertionMode = InsertionMode.Replace,
-                    UpdateTargetId = "moneyStreams-list",
-                    }))
-                    {
-                    @Html.HiddenFor(model => moneyStream.Id)
-                    @Html.HiddenFor(model => Model.BookId)
-                    @Html.AntiForgeryToken()
-                    <input type="submit" class="btn btn-default" value="Delete">
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => moneyStream.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => moneyStream.Amount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => moneyStream.Date)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => moneyStream.Category.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => moneyStream.IsIncome)
+                            </td>
+                            <td class="text-center">
+                                @using (Ajax.BeginForm("Delete", "MoneyStreams", new AjaxOptions
+                                {
+                                    HttpMethod = "POST",
+                                    InsertionMode = InsertionMode.Replace,
+                                    UpdateTargetId = "moneyStreams-list",
+                                }))
+                                {
+                                    @Html.HiddenFor(model => moneyStream.Id)
+                                    @Html.HiddenFor(model => Model.BookId)
+                                    @Html.AntiForgeryToken()
+                                    <input type="submit" class="btn btn-default" value="Delete">
+                                }
+                            </td>
+                        </tr>
                     }
-                </td>
-            </tr>
-            }
-        </tbody>
-    </table>
-    }
-    else
-    {
-    <h3>No records</h3>
-    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6">No records</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <h5>
+            @Html.ActionLink("Back to List", "Index")
+        </h5>
+    </div>
 </div>

@@ -284,7 +284,6 @@
     <Content Include="Views\MoneyStreams\_MoneyStreamsListPartial.cshtml" />
     <Content Include="Views\Books\_BooksCreatePartial.cshtml" />
     <Content Include="Views\Books\_BooksListPartial.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

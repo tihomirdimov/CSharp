@@ -54,11 +54,17 @@ namespace PersonalFinanceManager.Services.MoneyStreamsService
 
         public decimal GetCurrentMonthDailyBudget(int bookId, string userId)
         {
-            return Context.MoneyStreams.Where(ms => ms.Book.Id == bookId &&
+            decimal expenses = Context.MoneyStreams.Where(ms => ms.Book.Id == bookId &&
                                                     ms.Owner.Id == userId &&
-                                                    ms.Date >= DateTime.Now.Month &&
                                                     ms.IsIncome == false &&
-                                                    ms.IsDeleted == false);
+                                                    ms.IsDeleted == false &&
+                                                    ms.Date.Month == DateTime.Today.Month).Sum(ms => ms.Amount);
+            decimal incomes = Context.MoneyStreams.Where(ms => ms.Book.Id == bookId &&
+                                                    ms.Owner.Id == userId &&
+                                                    ms.IsIncome == true &&
+                                                    ms.IsDeleted == false &&
+                                                    ms.Date.Month == DateTime.Today.Month).Sum(ms => ms.Amount);
+            return expenses / incomes;
         }
 
     }

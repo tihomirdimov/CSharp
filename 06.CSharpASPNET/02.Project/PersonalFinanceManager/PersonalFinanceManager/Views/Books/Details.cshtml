@@ -4,6 +4,9 @@
     ViewBag.Title = "Book Details";
 }
 <div class="row">
+    <div class="col-md-4">
+        <h2>Expenses Books</h2>
+    </div>
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <dl class="dl-horizontal">
             <dt>
@@ -20,44 +23,48 @@
                 @Html.DisplayFor(model => model.Book.Currency)
             </dd>
         </dl>
-        <table class="table-striped table-bordered table-responsive">
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <table class="table-striped table-bordered table-responsive col-sm-12 col-md-4 col-lg-4 col-xl-4">
             <thead>
-                <tr>
-                    <th>
-                        Category
-                    </th>
-                    <th>
-                        Total Spent
-                    </th>
-                </tr>
+            <tr>
+                <th class="col-sm-6 col-md-2 col-lg-2 col-xl-2">
+                    Category
+                </th>
+                <th class="col-sm-6 col-md-2 col-lg-2 col-xl-2">
+                    Total Spent
+                </th>
+            </tr>
             </thead>
             <tbody>
-                @if (Model.ExpensesByCategory.Count != 0)
-                {
-                    foreach (var item in Model.ExpensesByCategory)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Key.Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Value)
-                            </td>
-                        </tr>
-                    }
-                }
-                else
+            @if (Model.ExpensesByCategory.Count != 0)
+            {
+                foreach (var item in Model.ExpensesByCategory)
                 {
                     <tr>
-                        <td colspan="2">
-                            No data
+                        <td class="col-sm-6 col-md-2 col-lg-2 col-xl-2">
+                            @Html.DisplayFor(modelItem => item.Key)
+                        </td>
+                        <td class="col-sm-6 col-md-2 col-lg-2 col-xl-2">
+                            @Html.DisplayFor(modelItem => item.Value)
                         </td>
                     </tr>
                 }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="2">
+                        No data
+                    </td>
+                </tr>
+            }
             </tbody>
         </table>
-        <p>
+    </div>
+    <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2">
+        <h5>
             @Html.ActionLink("Back to List", "Index")
-        </p>
+        </h5>
     </div>
 </div>
