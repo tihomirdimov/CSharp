@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using AutoMapper;
 using Microsoft.AspNet.Identity;
-using PersonalFinanceManager.Data.Data;
 using PersonalFinanceManager.Data.Models;
+using PersonalFinanceManager.Interfaces;
+using PersonalFinanceManager.Services.ApplicationUsersService;
 using PersonalFinanceManager.Services.BooksService;
 using PersonalFinanceManager.Services.CategoriesService;
 using PersonalFinanceManager.Services.MoneyStreamsService;
@@ -14,22 +12,31 @@ using PersonalFinanceManager.ViewModels.MoneyStreams;
 namespace PersonalFinanceManager.Controllers
 {
     [Authorize]
-    public class MoneyStreamsController : Controller
-    {
-        private PfmDbContext db = new PfmDbContext();
+    public class MoneyStreamsController : Controller, IServices    {
+
+        public MoneyStreamsController()
+        {
+            this.CurrentUserId = User.Identity.GetUserId();
+            this.ApplicationUsersService = new ApplicationUsersService();
+            this.BooksService = new BooksService();
+            this.CategoriesService = new CategoriesService();
+            this.MoneyStreamsService = new MoneyStreamsService();
+        }
+
+        public string CurrentUserId { get; set; }
+        public ApplicationUsersService ApplicationUsersService { get; set; }
+        public BooksService BooksService { get; set; }
+        public CategoriesService CategoriesService { get; set; }
+        public MoneyStreamsService MoneyStreamsService { get; set; }
 
         public ActionResult Index(int id)
-        {
-            var currentUser = User.Identity.GetUserId();
-            var bookService = new BooksService(db);
-            var categoriesService = new CategoriesService(db);
-            var moneyStreamsService = new MoneyStreamsService(db);
-            if (bookService.CheckIfValidBook(id, currentUser))
+        {   
+            if (BooksService.CheckIfValidBook(id, CurrentUserId))
             {
                 MoneyStreamIndexViewModel model = new MoneyStreamIndexViewModel();
-                model.MoneyStreamManageViewModel.Categories = categoriesService.GetCategories(currentUser);
+                model.MoneyStreamManageViewModel.Categories = CategoriesService.GetCategories(CurrentUserId);
                 model.MoneyStreamManageViewModel.BookId = id;
-                model.MoneyStreamsListViewModel.MoneyStreams = moneyStreamsService.GetMoneyStreamsList(id, currentUser);
+                model.MoneyStreamsListViewModel.MoneyStreams = MoneyStreamsService.GetMoneyStreamsList(id, CurrentUserId);
                 model.MoneyStreamsListViewModel.BookId = id;
                 return View(model);
             }
@@ -38,48 +45,37 @@ namespace PersonalFinanceManager.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ChildActionOnly]
         public ActionResult Create(MoneyStreamManageViewModel model)
         {
-            var currentUser = User.Identity.GetUserId();
-            var categoriesService = new CategoriesService(db);
-            var bookService = new BooksService(db);      
-            var moneyStreamsService = new MoneyStreamsService(db);
-            if (bookService.CheckIfValidBook(model.BookId, currentUser) &&
-                moneyStreamsService.CheckIfValidMoneyStream(model.MoneyStream.Id, model.BookId, currentUser))
+            if (BooksService.CheckIfValidBook(model.BookId, CurrentUserId))
             {
-                MoneyStream toAdd = new MoneyStream();
+                MoneyStream toAdd = Mapper.Map<MoneyStreamManageViewModel, MoneyStream>(model);
                 toAdd.Name = model.MoneyStream.Name;
                 toAdd.Amount = model.MoneyStream.Amount;
                 toAdd.Date = model.MoneyStream.Date;
                 toAdd.IsIncome = model.MoneyStream.IsIncome;
-                toAdd.Book = db.Books.FirstOrDefault(b => b.Id == model.BookId);
-                toAdd.Category = categoriesService.GetCategory(model.MoneyStream.Category.Id);
-                toAdd.Owner = db.Users.FirstOrDefault(u => u.Id == currentUser);
-                db.MoneyStreams.Add(toAdd);
-                db.SaveChanges();
+                toAdd.Book = BooksService.GetBook(model.BookId, CurrentUserId);
+                toAdd.Category = CategoriesService.GetCategory(model.MoneyStream.Category.Id, CurrentUserId);
+                toAdd.Owner = ApplicationUsersService.GetUser(CurrentUserId);
+                MoneyStreamsService.SaveMoneyStream(toAdd);
             }
             MoneyStreamsListViewModel outputModel = new MoneyStreamsListViewModel();
-            outputModel.MoneyStreams = moneyStreamsService.GetMoneyStreamsList(model.BookId, currentUser);
+            outputModel.MoneyStreams = MoneyStreamsService.GetMoneyStreamsList(model.BookId, CurrentUserId);
             outputModel.BookId = model.BookId;
             return PartialView("_MoneyStreamsListPartial", outputModel);
         }
 
-        [ChildActionOnly]
+        [HttpPost]
         public ActionResult Delete(MoneyStreamManageViewModel model)
         {
-            var currentUser = User.Identity.GetUserId();
-            var moneyStreamService = new MoneyStreamsService(db);
-            if (moneyStreamService.CheckIfValidMoneyStream(model.MoneyStream.Id, model.BookId, currentUser))
+            if (MoneyStreamsService.CheckIfValidMoneyStream(model.MoneyStream.Id, model.BookId, CurrentUserId))
             {
-                var currentMoneyStream = moneyStreamService.GetMoneyStream(model.MoneyStream.Id);
-                currentMoneyStream.IsDeleted = true;
-                db.SaveChanges();
-                MoneyStreamsListViewModel outputModel = new MoneyStreamsListViewModel();
-                outputModel.MoneyStreams = moneyStreamService.GetMoneyStreamsList(model.BookId, currentUser);
-                return PartialView("_MoneyStreamsListPartial", outputModel);
+                MoneyStreamsService.DeleteMoneyStream(model.MoneyStream.Id, CurrentUserId);         
             }
-            return RedirectToAction("Index", "Books");
+            MoneyStreamsListViewModel outputModel = new MoneyStreamsListViewModel();
+            outputModel.MoneyStreams = MoneyStreamsService.GetMoneyStreamsList(model.BookId, CurrentUserId);
+            outputModel.BookId = model.BookId;
+            return PartialView("_MoneyStreamsListPartial", outputModel);
         }
     }
 }

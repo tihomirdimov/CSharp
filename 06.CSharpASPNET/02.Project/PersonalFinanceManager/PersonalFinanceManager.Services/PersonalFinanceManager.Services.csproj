@@ -85,10 +85,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationUsersService\ApplicationUsersService.cs" />
     <Compile Include="BooksService\BooksService.cs" />
     <Compile Include="CategoriesService\CategoriesService.cs" />
     <Compile Include="MoneyStreamsService\MoneyStreamsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DbService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

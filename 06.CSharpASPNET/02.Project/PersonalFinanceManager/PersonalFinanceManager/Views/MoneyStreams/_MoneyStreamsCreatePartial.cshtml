@@ -36,14 +36,8 @@
             </div>
             <div class="form-group col-sm-12 col-md-4 col-lg-2 col-xl-2">
                 @Html.LabelFor(model => model.MoneyStream.Date)
-                @Html.TextBoxFor(model => model.MoneyStream.Date, "{0:dd.MM.yyyy}",
-                    new
-                    {
-                        id = "moneyStream-date",
-                        @class = "form-control input-sm",
-                        type = "date"
-                    })
-                @Html.ValidationMessageFor(model => model.MoneyStream.Date, "", new { @class = "text-danger", type = "date" })
+                @Html.TextBoxFor(model => model.MoneyStream.Date, new { id = "moneyStream-date", type = "date" , @class = "form-control input-sm" })
+                @Html.ValidationMessageFor(model => model.MoneyStream.Date, "", new { @class = "text-danger", })
             </div>
             <div class="form-group col-sm-12 col-md-1 col-lg-1 col-xl-2">
                 @Html.LabelFor(model => model.MoneyStream.IsIncome)

@@ -1,29 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Helpers;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using PersonalFinanceManager.Data.Data;
 using PersonalFinanceManager.Data.Models;
+using PersonalFinanceManager.Interfaces;
+using PersonalFinanceManager.Services.ApplicationUsersService;
+using PersonalFinanceManager.Services.BooksService;
+using PersonalFinanceManager.Services.CategoriesService;
+using PersonalFinanceManager.Services.MoneyStreamsService;
 using PersonalFinanceManager.ViewModels.Categories;
 
 namespace PersonalFinanceManager.Controllers
 {
     [Authorize]
-    public class CategoriesController : Controller
+    public class CategoriesController : Controller, IServices
     {
-        private PfmDbContext db = new PfmDbContext();
+        public CategoriesController()
+        {
+            this.CurrentUserId = User.Identity.GetUserId();
+            this.ApplicationUsersService = new ApplicationUsersService();
+            this.BooksService = new BooksService();
+            this.CategoriesService = new CategoriesService();
+            this.MoneyStreamsService = new MoneyStreamsService();
+        }
+
+        public string CurrentUserId { get; set; }
+        public ApplicationUsersService ApplicationUsersService { get; set; }
+        public BooksService BooksService { get; set; }
+        public CategoriesService CategoriesService { get; set; }
+        public MoneyStreamsService MoneyStreamsService { get; set; }
 
         public ActionResult Index()
         {
-            var current = User.Identity.GetUserId();
-            CategoriesViewModel categoriesViewModel = new CategoriesViewModel();
-            categoriesViewModel.Categories = db.Categories.Where(cat => cat.Owner.Id == current && cat.isDeleted == false).ToList();
+            CategoryViewModel categoriesViewModel = new CategoryViewModel();
+            categoriesViewModel.Categories = CategoriesService.GetCategories(CurrentUserId);
             return View(categoriesViewModel);
         }
 
@@ -31,31 +39,27 @@ namespace PersonalFinanceManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Category category)
         {
-            var current = User.Identity.GetUserId();
-            if (db.Categories.FirstOrDefault(cat => cat.Id == category.Id) != null)
+            var currentCategory = CategoriesService.GetCategory(category.Id,CurrentUserId);
+            if (currentCategory != null)
             {
-                db.Categories.FirstOrDefault(cat => cat.Id == category.Id).Name = category.Name;
-                db.SaveChanges();
+                currentCategory.Name = category.Name;
+                CategoriesService.SaveCategory();
             }
             else
             {
-                var owner = db.Users.FirstOrDefault(user => user.Id == current);
                 Category toAdd = new Category();
                 toAdd.Name = category.Name;
-                toAdd.Owner = owner;
-                db.Categories.Add(toAdd);
-                db.SaveChanges();
+                toAdd.Owner = ApplicationUsersService.GetUser(CurrentUserId);
+                CategoriesService.SaveCategory(toAdd);
             }
-            List<Category> model = db.Categories.Where(cat => cat.Owner.Id == current && cat.isDeleted == false).ToList();
-            return this.PartialView("_CategoriesListPartial", model);
+            return this.PartialView("_CategoriesListPartial", CategoriesService.GetCategories(CurrentUserId));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id)
         {
-            var current = User.Identity.GetUserId();
-            Category model = db.Categories.FirstOrDefault(cat => cat.Owner.Id == current && cat.Id == id);
+            Category model = CategoriesService.GetCategory(id, CurrentUserId);
             return this.PartialView("_CategoriesCreatePartial", model);
         }
 
@@ -63,11 +67,8 @@ namespace PersonalFinanceManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
-            db.Categories.FirstOrDefault(cat => cat.Id == id).isDeleted = true;
-            db.SaveChanges();
-            var current = User.Identity.GetUserId();
-            List<Category> model = db.Categories.Where(cat => cat.Owner.Id == current && cat.isDeleted == false).ToList();
-            return this.PartialView("_CategoriesListPartial", model);
+            CategoriesService.DeleteCategory(id, CurrentUserId);
+            return this.PartialView("_CategoriesListPartial", CategoriesService.GetCategories(CurrentUserId));
         }
     }
 

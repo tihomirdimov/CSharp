@@ -9,23 +9,33 @@ using PersonalFinanceManager.Data.Models;
 
 namespace PersonalFinanceManager.Services.CategoriesService
 {
-    public class CategoriesService
+    public class CategoriesService : DbService
     {
-        public CategoriesService(PfmDbContext context)
+        public Category GetCategory(int categoryId, string userId)
         {
-            this.Context = context;
+            return Context.Categories.FirstOrDefault(c => c.Id == categoryId && c.Owner.Id == userId);
         }
 
-        private PfmDbContext Context { get; set; }
-
-        public Category GetCategory(int id)
+        public ICollection<Category> GetCategories(string userId)
         {
-            return Context.Categories.FirstOrDefault(c => c.Id == id);
+            return Context.Categories.Where(c => c.Owner.Id == userId && c.isDeleted == false).OrderBy(c => c.Name).ToList();
         }
 
-        public ICollection<Category> GetCategories(string user)
+        public void SaveCategory()
         {
-            return Context.Categories.Where(c => c.Owner.Id == user && c.isDeleted == false).OrderBy(c => c.Name).ToList();
+            Context.SaveChanges();
+        }
+
+        public void SaveCategory(Category category)
+        {
+            Context.Categories.Add(category);
+            Context.SaveChanges();
+        }
+
+        public void DeleteCategory(int categoryId, string userId)
+        {
+            Context.Categories.FirstOrDefault(c => c.Id == categoryId && c.Owner.Id == userId).isDeleted = true;
+            Context.SaveChanges();
         }
     }
 }
