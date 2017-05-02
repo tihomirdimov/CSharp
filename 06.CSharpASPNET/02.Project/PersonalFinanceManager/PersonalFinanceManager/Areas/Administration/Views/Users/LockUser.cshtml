@@ -1,0 +1,41 @@
+﻿@model PersonalFinanceManager.Areas.Administration.ViewModels.LockUserVM
+
+@{
+    ViewBag.Title = "Lock Status";
+    Layout = "~/Areas/Administration/Views/Shared/_AdministrationLayout.cshtml";
+}
+
+<button class="btn btn-default btn-md">
+    @Html.ActionLink("Back To Users", "Index")
+</button>
+
+<h2>LockStatus</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>@Html.LabelFor(model => Model.Email)</th>
+                <th>@Html.LabelFor(model => Model.UserName)</th>
+                <th>@Html.LabelFor(model => Model.LockoutEnabled)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => Model.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => Model.UserName)
+                </td>
+                <td>
+                    @Html.EditorFor(model => Model.LockoutEnabled)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <input type="submit" value="Save" class="btn btn-default btn-md" />
+}

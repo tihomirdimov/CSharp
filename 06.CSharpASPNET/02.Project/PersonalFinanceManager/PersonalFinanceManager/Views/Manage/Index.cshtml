@@ -25,11 +25,6 @@
         </dd>
         @if (User.IsInRole("Admin"))
         {
-            @*
-                T.D. Included link to users lock status administration ("Admin" role only)
-            *@
-            <dt>Admin Panel:</dt>
-            <dd>[ @Html.ActionLink("Users", "Users", "Manage") ]</dd>
             @* Disabled by T.D.
                 <dt>External Logins:</dt>
                 <dd>

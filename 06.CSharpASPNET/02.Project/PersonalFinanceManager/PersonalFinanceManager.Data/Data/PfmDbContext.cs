@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using PersonalFinanceManager.Data.Models;
 
@@ -20,6 +21,12 @@ namespace PersonalFinanceManager.Data.Data
         public static PfmDbContext Create()
         {
             return new PfmDbContext();
+        }
+
+        public new void Dispose()
+        {
+            base.SaveChanges();
+            base.Dispose();
         }
     }
 }

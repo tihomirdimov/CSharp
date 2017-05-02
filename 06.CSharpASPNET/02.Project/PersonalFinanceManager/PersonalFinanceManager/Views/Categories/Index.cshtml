@@ -1,5 +1,4 @@
-﻿@model PersonalFinanceManager.ViewModels.Categories.CategoryViewModel
-
+﻿@model PersonalFinanceManager.ViewModels.Categories.CategoriesVM
 @{
     ViewBag.Title = "Categories Index";
 }
@@ -10,7 +9,7 @@
     </div>
 </div>
 <div id="create-edit">
-    @Html.Partial("_CategoriesCreatePartial", Model.Category)
+    @Html.Partial("_CategoriesFormPartial", Model.CategoryFormVM)
 </div>
 <div id="update-target">
     @Html.Partial("_CategoriesListPartial", Model.Categories)

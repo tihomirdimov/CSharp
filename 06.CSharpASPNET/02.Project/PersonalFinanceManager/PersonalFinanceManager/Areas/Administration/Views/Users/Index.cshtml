@@ -1,0 +1,49 @@
+﻿@model ICollection<PersonalFinanceManager.Areas.Administration.ViewModels.LockUserVM>
+
+@{
+    ViewBag.Title = "Administration Index";
+    Layout = "~/Areas/Administration/Views/Shared/_AdministrationLayout.cshtml";
+}
+
+<button class="btn btn-default btn-md">
+    @Html.ActionLink("Back To App", "Index", "Home", new { Area = "" }, null)
+</button>
+
+<h2>Users List</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Username</th>
+            <th>Locked</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count < 1)
+        {
+            <p>No users</p>
+        }
+        else
+        {
+            foreach (var user in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => user.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelitem => user.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => user.LockoutEnabled)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Change Lock Status", "LockUser", new { id = user.Id })
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

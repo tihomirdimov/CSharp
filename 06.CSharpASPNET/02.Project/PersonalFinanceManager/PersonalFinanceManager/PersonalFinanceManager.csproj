@@ -180,6 +180,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
+    <Compile Include="Areas\Administration\Controllers\UsersController.cs" />
+    <Compile Include="Areas\Administration\ViewModels\LockUserVM.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
@@ -193,15 +196,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\Account\AccountViewModels.cs" />
-    <Compile Include="ViewModels\Books\BookDetailsViewModel.cs" />
-    <Compile Include="ViewModels\Books\BooksViewModel.cs" />
-    <Compile Include="ViewModels\Categories\CategoryViewModel.cs" />
+    <Compile Include="ViewModels\Books\BooksDetailsVM.cs" />
+    <Compile Include="ViewModels\Books\BooksFormVM.cs" />
+    <Compile Include="ViewModels\Books\BooksVM.cs" />
+    <Compile Include="ViewModels\Categories\CategoriesFormVM.cs" />
+    <Compile Include="ViewModels\Categories\CategoriesVM.cs" />
     <Compile Include="ViewModels\Manage\ManageViewModels.cs" />
-    <Compile Include="ViewModels\MoneyStreams\MoneyStreamIndexViewModel.cs" />
-    <Compile Include="ViewModels\MoneyStreams\MoneyStreamManageViewModel.cs" />
-    <Compile Include="ViewModels\MoneyStreams\MoneyStreamsListViewModel.cs" />
+    <Compile Include="ViewModels\MoneyStreams\MoneyStreamsIndexVM.cs" />
+    <Compile Include="ViewModels\MoneyStreams\MoneyStreamsFormVM.cs" />
+    <Compile Include="ViewModels\MoneyStreams\MoneyStreamsListVM.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap\bootstrap.css" />
     <Content Include="Content\bootstrap\bootstrap.min.css" />
@@ -217,6 +224,11 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Areas\Administration\Views\web.config" />
+    <Content Include="Areas\Administration\Views\Users\LockUser.cshtml" />
+    <Content Include="Areas\Administration\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Administration\Views\Shared\_AdministrationLayout.cshtml" />
+    <Content Include="Areas\Administration\Views\Users\Index.cshtml" />
     <None Include="Content\scripts\_references.js" />
     <Content Include="Content\scripts\bootstrap.js" />
     <Content Include="Content\scripts\bootstrap.min.js" />
@@ -238,8 +250,16 @@
     <Content Include="Content\scripts\respond.matchmedia.addListener.js" />
     <Content Include="Content\scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Content\scripts\respond.min.js" />
+    <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -272,21 +292,24 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Manage\LockStatus.cshtml" />
-    <Content Include="Views\Manage\Users.cshtml" />
     <Content Include="Views\Books\Details.cshtml" />
     <Content Include="Views\Books\Index.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
     <Content Include="Views\MoneyStreams\Index.cshtml" />
     <Content Include="Views\Categories\_CategoriesListPartial.cshtml" />
-    <Content Include="Views\Categories\_CategoriesCreatePartial.cshtml" />
-    <Content Include="Views\MoneyStreams\_MoneyStreamsCreatePartial.cshtml" />
+    <Content Include="Views\Categories\_CategoriesFormPartial.cshtml" />
+    <Content Include="Views\MoneyStreams\_MoneyStreamsFormPartial.cshtml" />
     <Content Include="Views\MoneyStreams\_MoneyStreamsListPartial.cshtml" />
-    <Content Include="Views\Books\_BooksCreatePartial.cshtml" />
+    <Content Include="Views\Books\_BooksFormPartial.cshtml" />
     <Content Include="Views\Books\_BooksListPartial.cshtml" />
+    <Content Include="Views\Shared\_ErrorPartial.cshtml" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
@@ -302,6 +325,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

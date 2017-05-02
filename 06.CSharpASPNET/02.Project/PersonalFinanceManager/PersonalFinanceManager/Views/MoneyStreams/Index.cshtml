@@ -1,4 +1,4 @@
-﻿@model PersonalFinanceManager.ViewModels.MoneyStreams.MoneyStreamIndexViewModel
+﻿@model PersonalFinanceManager.ViewModels.MoneyStreams.MoneyStreamsIndexVM
 @{
     ViewBag.Title = "Money Streams Index";
 }
@@ -9,9 +9,9 @@
     </div>
 </div>
 <div id="moneyStreams-create">
-    @Html.Partial("_MoneyStreamsCreatePartial", Model.MoneyStreamManageViewModel)
+    @Html.Partial("_MoneyStreamsFormPartial", Model.MoneyStreamsFormVM)
 </div>
 <div id="moneyStreams-list">
-    @Html.Partial("_MoneyStreamsListPartial", Model.MoneyStreamsListViewModel)
+    @Html.Partial("_MoneyStreamsListPartial", Model.MoneyStreamsListVM)
 </div>
 @Scripts.Render("~/bundles/services")

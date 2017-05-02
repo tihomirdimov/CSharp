@@ -1,7 +1,4 @@
-﻿using PersonalFinanceManager.Services.ApplicationUsersService;
-using PersonalFinanceManager.Services.BooksService;
-using PersonalFinanceManager.Services.CategoriesService;
-using PersonalFinanceManager.Services.MoneyStreamsService;
+﻿using PersonalFinanceManager.Services.ControllerServices;
 
 namespace PersonalFinanceManager.Interfaces
 {

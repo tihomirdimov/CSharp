@@ -1,4 +1,4 @@
-﻿@model PersonalFinanceManager.ViewModels.MoneyStreams.MoneyStreamsListViewModel
+﻿@model PersonalFinanceManager.ViewModels.MoneyStreams.MoneyStreamsListVM
 
 @{
     ViewBag.Title = "Money Streams list";
@@ -50,19 +50,25 @@
                                 @Html.DisplayFor(modelItem => moneyStream.IsIncome)
                             </td>
                             <td class="text-center">
-                                @using (Ajax.BeginForm("Delete", "MoneyStreams", new AjaxOptions
-                                {
-                                    HttpMethod = "POST",
-                                    InsertionMode = InsertionMode.Replace,
-                                    UpdateTargetId = "moneyStreams-list",
-                                }))
+                                @using (Ajax.BeginForm("Delete", "MoneyStreams",
+            new
+            {
+                id = moneyStream.Id,
+                bookId = Model.BookId
+            },
+            new AjaxOptions
+            {
+                HttpMethod = "POST",
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "moneyStreams-list",
+            }))
                                 {
                                     @Html.HiddenFor(model => moneyStream.Id)
-                                    @Html.HiddenFor(model => Model.BookId)
                                     @Html.AntiForgeryToken()
                                     <input type="submit" class="btn btn-default" value="Delete">
                                 }
                             </td>
+
                         </tr>
                     }
                 }
@@ -77,7 +83,7 @@
     </div>
     <div class="col-md-6">
         <h5>
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("Back to Books", "Index", "Books")
         </h5>
     </div>
 </div>

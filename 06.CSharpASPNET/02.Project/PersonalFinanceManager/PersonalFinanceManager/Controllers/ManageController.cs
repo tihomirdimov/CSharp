@@ -337,43 +337,6 @@ namespace PersonalFinanceManager.Controllers
             base.Dispose(disposing);
         }
 
-        //T.D.
-        //GET: /Manage/Users
-        [HandleError(View = "Home/Index")]
-        [Authorize(Roles = "Admin")]
-        public ActionResult Users()
-        {
-            string current = User.Identity.GetUserId();
-            PfmDbContext db = new PfmDbContext();
-            List<ApplicationUser> model = db.Users.ToList();
-            model.Remove(model.FirstOrDefault(user => user.Id == current));
-            return View(model);
-        }
-
-        //T.D.
-        //GET: /Manage/LockStatus
-        [HandleError(View = "Home/Index")]
-        [Authorize(Roles = "Admin")]
-        public ActionResult LockStatus(string id)
-        {
-            PfmDbContext db = new PfmDbContext();
-            ApplicationUser model = db.Users.FirstOrDefault(user => user.Id == id);
-            return View(model);
-        }
-
-        //T.D.
-        //POST: /Manage/LockStatus
-        [HandleError(View = "Home/Index")]
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public ActionResult LockStatus(ApplicationUser userToLockUnlock)
-        {
-            PfmDbContext db = new PfmDbContext();
-            db.Users.FirstOrDefault(user => user.Id == userToLockUnlock.Id).LockoutEnabled =
-                userToLockUnlock.LockoutEnabled;
-            db.SaveChanges();
-            return RedirectToAction("Users");
-        }
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";

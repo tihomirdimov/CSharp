@@ -1,4 +1,4 @@
-﻿@model PersonalFinanceManager.ViewModels.Books.BookDetailsViewModel
+﻿@model PersonalFinanceManager.ViewModels.Books.BooksDetailsVM
 
 @{
     ViewBag.Title = "Book Details";
@@ -10,23 +10,28 @@
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <dl class="dl-horizontal">
             <dt>
-                @Html.DisplayNameFor(model => model.Book.Name)
+                @Html.DisplayNameFor(model => model.Name)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Book.Name)
+                @Html.DisplayFor(model => model.Name)
             </dd>
             <dt>
                 @Html.DisplayNameFor(model => model.AverageDailyBudget)
             </dt>
             <dd>
                 @Html.DisplayFor(model => model.AverageDailyBudget)
-                @Html.DisplayFor(model => model.Book.Currency)
+                @Html.DisplayFor(model => model.Currency)
             </dd>
         </dl>
     </div>
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <table class="table-striped table-bordered table-responsive col-sm-12 col-md-4 col-lg-4 col-xl-4">
             <thead>
+                <tr>
+                    <th class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                        @Html.DisplayNameFor(modelItem => Model.ExpensesByCategory)
+                    </th>
+                </tr>
             <tr>
                 <th class="col-sm-6 col-md-2 col-lg-2 col-xl-2">
                     Category

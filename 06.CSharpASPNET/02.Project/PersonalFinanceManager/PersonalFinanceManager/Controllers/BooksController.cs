@@ -4,10 +4,8 @@ using Microsoft.AspNet.Identity;
 using PersonalFinanceManager.Data.Data;
 using PersonalFinanceManager.Data.Models;
 using PersonalFinanceManager.Interfaces;
-using PersonalFinanceManager.Services.ApplicationUsersService;
-using PersonalFinanceManager.Services.BooksService;
-using PersonalFinanceManager.Services.CategoriesService;
-using PersonalFinanceManager.Services.MoneyStreamsService;
+using PersonalFinanceManager.Services.ControllerServices;
+using PersonalFinanceManager.Services.Interfaces;
 using PersonalFinanceManager.ViewModels.Books;
 
 namespace PersonalFinanceManager.Controllers
@@ -32,69 +30,80 @@ namespace PersonalFinanceManager.Controllers
         public ActionResult Index()
         {
             string currentUserId = User.Identity.GetUserId();
-            BooksViewModel booksViewModel = new BooksViewModel();
-            booksViewModel.Book = new Book();
-            booksViewModel.Books = BooksService.GetBooks(currentUserId);
-            return View(booksViewModel);
+            PfmDbContext context = new PfmDbContext();
+            BooksVM booksVM= new BooksVM();
+            booksVM.BookFormVm = new BooksFormVM();
+            booksVM.Books = BooksService.GetBooks(context, currentUserId);
+            return View(booksVM);
         }
 
-        [HandleError(View = "Home/Index")]
+        [HandleError(View = "Books/Index")]
         public ActionResult Details(int id)
         {
             string currentUserId = User.Identity.GetUserId();
-            if (BooksService.CheckIfValidBook(id, currentUserId))
+            PfmDbContext context = new PfmDbContext();
+            if (BooksService.CheckIfValidBook(context, id, currentUserId))
             {
-                BookDetailsViewModel model = new BookDetailsViewModel();
-                model.Book = BooksService.GetBook(id, currentUserId);
-                model.AverageDailyBudget = MoneyStreamsService.GetCurrentMonthDailyBudget(model.Book.Id, currentUserId);
-                model.ExpensesByCategory = CategoriesService.GetCurrentMonthExpensesCategories(id, currentUserId);
+                BooksDetailsVM model = new BooksDetailsVM();
+                Book currentBook = BooksService.GetBook(context, id, currentUserId);
+                model.Name = currentBook.Name;
+                model.Currency = currentBook.Currency;    
+                model.AverageDailyBudget = MoneyStreamsService.GetCurrentMonthDailyBudget(context, id, currentUserId);
+                model.ExpensesByCategory = CategoriesService.GetCurrentMonthExpensesCategories(context, id, currentUserId);
                 return View(model);
             }
             return RedirectToAction("Index");
         }
 
-        [HandleError(View = "Home/Index")]
+        [HandleError(View = "_ErrorPartial")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Book book)
-        {
+        public ActionResult Create(BooksFormVM booksFormVM)
+        {         
             string currentUserId = User.Identity.GetUserId();
-            var currentBook = BooksService.GetBook(book.Id, currentUserId);
+            PfmDbContext context = new PfmDbContext();
+            var currentBook = BooksService.GetBook(context, booksFormVM.Id, currentUserId);
             if (currentBook != null)
             {
-                currentBook.Name = book.Name;
-                currentBook.Currency = book.Currency;
-                BooksService.SaveBook();
+                currentBook.Name = booksFormVM.Name;
+                currentBook.Currency = booksFormVM.Currency;
+                BooksService.SaveBook(context);
             }
             else
             {
                 Book toAdd = new Book();
-                toAdd.Name = book.Name;
-                toAdd.Currency = book.Currency;
-                toAdd.Owner = ApplicationUsersService.GetUser(currentUserId);
-                BooksService.SaveBook(toAdd);
+                toAdd.Name = booksFormVM.Name;
+                toAdd.Currency = booksFormVM.Currency;
+                toAdd.Owner = ApplicationUsersService.GetUser(context, currentUserId);
+                BooksService.SaveBook(context, toAdd);
             }
-            return this.PartialView("_BooksListPartial", BooksService.GetBooks(currentUserId));
+            return this.PartialView("_BooksListPartial", BooksService.GetBooks(context, currentUserId));
         }
 
-        [HandleError(View = "Home/Index")]
+        [HandleError(View = "_ErrorPartial")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id)
         {
             string currentUserId = User.Identity.GetUserId();
-            Book model = BooksService.GetBook(id, currentUserId);
-            return this.PartialView("_BooksCreatePartial", model);
+            PfmDbContext context = new PfmDbContext();
+            Book currentBook = BooksService.GetBook(context, id, currentUserId);
+            BooksFormVM model = new BooksFormVM();
+            model.Id = currentBook.Id;
+            model.Name = currentBook.Name;
+            model.Currency = currentBook.Currency;
+            return this.PartialView("_BooksFormPartial", model);
         }
 
-        [HandleError(View = "Home/Index")]
+        [HandleError(View = "_ErrorPartial")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
             string currentUserId = User.Identity.GetUserId();
-            BooksService.DeleteBook(id, currentUserId);
-            return this.PartialView("_BooksListPartial", BooksService.GetBooks(currentUserId));
+            PfmDbContext context = new PfmDbContext();
+            BooksService.DeleteBook(context, id, currentUserId);
+            return this.PartialView("_BooksListPartial", BooksService.GetBooks(context, currentUserId));
         }
     }
 }

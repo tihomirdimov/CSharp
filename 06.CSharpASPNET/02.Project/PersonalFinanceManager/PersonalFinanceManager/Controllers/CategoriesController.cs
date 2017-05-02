@@ -3,10 +3,7 @@ using Microsoft.AspNet.Identity;
 using PersonalFinanceManager.Data.Data;
 using PersonalFinanceManager.Data.Models;
 using PersonalFinanceManager.Interfaces;
-using PersonalFinanceManager.Services.ApplicationUsersService;
-using PersonalFinanceManager.Services.BooksService;
-using PersonalFinanceManager.Services.CategoriesService;
-using PersonalFinanceManager.Services.MoneyStreamsService;
+using PersonalFinanceManager.Services.ControllerServices;
 using PersonalFinanceManager.ViewModels.Categories;
 
 namespace PersonalFinanceManager.Controllers
@@ -14,8 +11,6 @@ namespace PersonalFinanceManager.Controllers
     [Authorize]
     public class CategoriesController : Controller, IServices
     {
-        private readonly PfmDbContext _context = new PfmDbContext();
-
         public CategoriesController()
         {
             this.ApplicationUsersService = new ApplicationUsersService();
@@ -29,57 +24,64 @@ namespace PersonalFinanceManager.Controllers
         public CategoriesService CategoriesService { get; set; }
         public MoneyStreamsService MoneyStreamsService { get; set; }
 
-        
 
-        [HandleError(View = "Home/Index")]
+
+        [HandleError(View = "_ErrorPartial")]
         public ActionResult Index()
         {
             string currentUserId = User.Identity.GetUserId();
-            CategoryViewModel categoriesViewModel = new CategoryViewModel();
-            categoriesViewModel.Categories = CategoriesService.GetCategories(currentUserId);
-            return View(categoriesViewModel);
+            PfmDbContext context = new PfmDbContext();
+            CategoriesVM categoriesVM = new CategoriesVM();
+            categoriesVM.Categories = CategoriesService.GetCategories(context, currentUserId);
+            return View(categoriesVM);
         }
 
-        [HandleError(View = "Home/Index")]
+        [HandleError(View = "_ErrorPartial")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Category category)
+        public ActionResult Create(CategoriesFormVM categoryFormVM)
         {
             string currentUserId = User.Identity.GetUserId();
-            var currentCategory = CategoriesService.GetCategory(category.Id, currentUserId);
+            PfmDbContext context = new PfmDbContext();
+            var currentCategory = CategoriesService.GetCategory(context, categoryFormVM.Id, currentUserId);
             if (currentCategory != null)
             {
-                currentCategory.Name = category.Name;
-                CategoriesService.SaveCategory();
+                currentCategory.Name = categoryFormVM.Name;
+                CategoriesService.SaveCategory(context);
             }
             else
             {
                 Category toAdd = new Category();
-                toAdd.Name = category.Name;
-                toAdd.Owner = ApplicationUsersService.GetUser(currentUserId);
-                _context.Categories.Add(toAdd);
+                toAdd.Name = categoryFormVM.Name;
+                toAdd.Owner = ApplicationUsersService.GetUser(context, currentUserId);
+                CategoriesService.SaveCategory(context, toAdd);
             }
-            return this.PartialView("_CategoriesListPartial", CategoriesService.GetCategories(currentUserId));
+            return this.PartialView("_CategoriesListPartial", CategoriesService.GetCategories(context, currentUserId));
         }
 
-        [HandleError(View = "Home/Index")]
+        [HandleError(View = "_ErrorPartial")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id)
         {
             string currentUserId = User.Identity.GetUserId();
-            Category model = CategoriesService.GetCategory(id, currentUserId);
-            return this.PartialView("_CategoriesCreatePartial", model);
+            PfmDbContext context = new PfmDbContext();
+            Category currentCategory = CategoriesService.GetCategory(context, id, currentUserId);
+            CategoriesFormVM model = new CategoriesFormVM();
+            model.Id = currentCategory.Id;
+            model.Name = currentCategory.Name;
+            return this.PartialView("_CategoriesFormPartial", model);
         }
 
-        [HandleError(View = "Home/Index")]
+        [HandleError(View = "_ErrorPartial")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
             string currentUserId = User.Identity.GetUserId();
-            CategoriesService.DeleteCategory(id, currentUserId);
-            return this.PartialView("_CategoriesListPartial", CategoriesService.GetCategories(currentUserId));
+            PfmDbContext context = new PfmDbContext();
+            CategoriesService.DeleteCategory(context, id, currentUserId);
+            return this.PartialView("_CategoriesListPartial", CategoriesService.GetCategories(context, currentUserId));
         }
     }
 

@@ -1,4 +1,4 @@
-﻿@model PersonalFinanceManager.ViewModels.Books.BooksViewModel
+﻿@model PersonalFinanceManager.ViewModels.Books.BooksVM
 
 @{
     ViewBag.Title = "Books Index";
@@ -10,7 +10,7 @@
     </div>
 </div>
 <div id="create-edit">
-    @Html.Partial("_BooksCreatePartial", Model.Book)
+    @Html.Partial("_BooksFormPartial", Model.BookFormVm)
 </div>
 <div id="update-target">
     @Html.Partial("_BooksListPartial", Model.Books)
