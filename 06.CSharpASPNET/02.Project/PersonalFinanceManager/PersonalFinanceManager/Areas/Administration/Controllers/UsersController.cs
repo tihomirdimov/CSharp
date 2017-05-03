@@ -6,6 +6,8 @@ using PersonalFinanceManager.Areas.Administration.ViewModels;
 using PersonalFinanceManager.Data.Data;
 using PersonalFinanceManager.Data.Models;
 using AutoMapper;
+using PersonalFinanceManager.Services.ControllerServices;
+using PersonalFinanceManager.Services.Interfaces;
 
 namespace PersonalFinanceManager.Areas.Administration.Controllers
 {
@@ -13,20 +15,30 @@ namespace PersonalFinanceManager.Areas.Administration.Controllers
     [Authorize(Roles = "Admin")]
     public class UsersController : Controller
     {
+        private readonly IApplicationUserService _applicationUsersService;
+
+        public UsersController()
+        {
+            this._applicationUsersService = new ApplicationUsersService();
+        }
+
+        public UsersController(IApplicationUserService applicationUsersService) : this()
+        {
+            this._applicationUsersService = applicationUsersService;
+        }
+
         public ActionResult Index()
         {
-            PfmDbContext db = new PfmDbContext();
             string current = User.Identity.GetUserId();
-            List<ApplicationUser> inputData = db.Users.ToList();
+            ICollection<ApplicationUser> inputData = _applicationUsersService.GetUsers();
             inputData.Remove(inputData.FirstOrDefault(user => user.Id == current));
-            var model = Mapper.Map<List<ApplicationUser>, List<LockUserVM>>(inputData);
+            var model = Mapper.Map<ICollection<ApplicationUser>, ICollection<LockUserVM>>(inputData);
             return View(model);
         }
 
         public ActionResult LockUser(string id)
         {
-            PfmDbContext db = new PfmDbContext();
-            ApplicationUser userToManage = db.Users.FirstOrDefault(user => user.Id == id);
+            ApplicationUser userToManage = _applicationUsersService.GetUser(id);
             var model = Mapper.Map<ApplicationUser, LockUserVM>(userToManage);
             return View(model);
         }
