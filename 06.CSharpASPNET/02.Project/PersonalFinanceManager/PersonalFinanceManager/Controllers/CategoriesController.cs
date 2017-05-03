@@ -2,37 +2,44 @@
 using Microsoft.AspNet.Identity;
 using PersonalFinanceManager.Data.Data;
 using PersonalFinanceManager.Data.Models;
-using PersonalFinanceManager.Interfaces;
 using PersonalFinanceManager.Services.ControllerServices;
+using PersonalFinanceManager.Services.Interfaces;
 using PersonalFinanceManager.ViewModels.Categories;
+using AutoMapper.Mappers;
 
 namespace PersonalFinanceManager.Controllers
 {
     [Authorize]
-    public class CategoriesController : Controller, IServices
+    public class CategoriesController : Controller
     {
+        private readonly IApplicationUserService _applicationUsersService;
+        private readonly IBooksService _booksService;
+        private readonly ICategoriesService _categoriesService;
+        private readonly IMoneyStreamsService _moneyStreamsService;
+
         public CategoriesController()
         {
-            this.ApplicationUsersService = new ApplicationUsersService();
-            this.BooksService = new BooksService();
-            this.CategoriesService = new CategoriesService();
-            this.MoneyStreamsService = new MoneyStreamsService();
+            this._booksService = new BooksService();
+            this._categoriesService = new CategoriesService();
+            this._moneyStreamsService = new MoneyStreamsService();
+            this._applicationUsersService = new ApplicationUsersService();
         }
 
-        public ApplicationUsersService ApplicationUsersService { get; set; }
-        public BooksService BooksService { get; set; }
-        public CategoriesService CategoriesService { get; set; }
-        public MoneyStreamsService MoneyStreamsService { get; set; }
-
-
+        public CategoriesController(IApplicationUserService applicationUsersService, IBooksService booksService,
+            ICategoriesService categoriesService, IMoneyStreamsService moneyStreamsService) : this()
+        {
+            this._booksService = booksService;
+            this._categoriesService = categoriesService;
+            this._moneyStreamsService = moneyStreamsService;
+            this._applicationUsersService = applicationUsersService;
+        }
 
         [HandleError(View = "_ErrorPartial")]
         public ActionResult Index()
         {
             string currentUserId = User.Identity.GetUserId();
-            PfmDbContext context = new PfmDbContext();
             CategoriesVM categoriesVM = new CategoriesVM();
-            categoriesVM.Categories = CategoriesService.GetCategories(context, currentUserId);
+            categoriesVM.Categories = _categoriesService.GetCategories(currentUserId);
             return View(categoriesVM);
         }
 
@@ -42,21 +49,20 @@ namespace PersonalFinanceManager.Controllers
         public ActionResult Create(CategoriesFormVM categoryFormVM)
         {
             string currentUserId = User.Identity.GetUserId();
-            PfmDbContext context = new PfmDbContext();
-            var currentCategory = CategoriesService.GetCategory(context, categoryFormVM.Id, currentUserId);
+            var currentCategory = _categoriesService.GetCategory(categoryFormVM.Id, currentUserId);
             if (currentCategory != null)
             {
                 currentCategory.Name = categoryFormVM.Name;
-                CategoriesService.SaveCategory(context);
+                _categoriesService.SaveCategory();
             }
             else
             {
                 Category toAdd = new Category();
                 toAdd.Name = categoryFormVM.Name;
-                toAdd.Owner = ApplicationUsersService.GetUser(context, currentUserId);
-                CategoriesService.SaveCategory(context, toAdd);
+                toAdd.Owner = _applicationUsersService.GetUser(currentUserId);
+                _categoriesService.SaveCategory(toAdd);
             }
-            return this.PartialView("_CategoriesListPartial", CategoriesService.GetCategories(context, currentUserId));
+            return this.PartialView("_CategoriesListPartial", _categoriesService.GetCategories(currentUserId));
         }
 
         [HandleError(View = "_ErrorPartial")]
@@ -65,8 +71,7 @@ namespace PersonalFinanceManager.Controllers
         public ActionResult Edit(int id)
         {
             string currentUserId = User.Identity.GetUserId();
-            PfmDbContext context = new PfmDbContext();
-            Category currentCategory = CategoriesService.GetCategory(context, id, currentUserId);
+            Category currentCategory = _categoriesService.GetCategory(id, currentUserId);
             CategoriesFormVM model = new CategoriesFormVM();
             model.Id = currentCategory.Id;
             model.Name = currentCategory.Name;
@@ -79,9 +84,8 @@ namespace PersonalFinanceManager.Controllers
         public ActionResult Delete(int id)
         {
             string currentUserId = User.Identity.GetUserId();
-            PfmDbContext context = new PfmDbContext();
-            CategoriesService.DeleteCategory(context, id, currentUserId);
-            return this.PartialView("_CategoriesListPartial", CategoriesService.GetCategories(context, currentUserId));
+            _categoriesService.DeleteCategory(id, currentUserId);
+            return this.PartialView("_CategoriesListPartial", _categoriesService.GetCategories(currentUserId));
         }
     }
 

@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using PersonalFinanceManager.Areas.Administration.ViewModels;
 using PersonalFinanceManager.Data.Data;
 using PersonalFinanceManager.Data.Models;
+using AutoMapper;
 
 namespace PersonalFinanceManager.Areas.Administration.Controllers
 {
@@ -12,21 +13,13 @@ namespace PersonalFinanceManager.Areas.Administration.Controllers
     [Authorize(Roles = "Admin")]
     public class UsersController : Controller
     {
-        
         public ActionResult Index()
         {
             PfmDbContext db = new PfmDbContext();
             string current = User.Identity.GetUserId();
             List<ApplicationUser> inputData = db.Users.ToList();
             inputData.Remove(inputData.FirstOrDefault(user => user.Id == current));
-            List<LockUserVM> model = inputData
-                .Select(u => new LockUserVM
-                {
-                    Id = u.Id,
-                    Email = u.Email,
-                    UserName = u.UserName,
-                    LockoutEnabled = u.LockoutEnabled
-                }).ToList();
+            var model = Mapper.Map<List<ApplicationUser>, List<LockUserVM>>(inputData);
             return View(model);
         }
 
@@ -34,11 +27,7 @@ namespace PersonalFinanceManager.Areas.Administration.Controllers
         {
             PfmDbContext db = new PfmDbContext();
             ApplicationUser userToManage = db.Users.FirstOrDefault(user => user.Id == id);
-            LockUserVM model = new LockUserVM();
-            model.Id = userToManage.Id;
-            model.Email = userToManage.Email;
-            model.UserName = userToManage.UserName;
-            model.LockoutEnabled = userToManage.LockoutEnabled;
+            var model = Mapper.Map<ApplicationUser, LockUserVM>(userToManage);
             return View(model);
         }
 
@@ -46,8 +35,7 @@ namespace PersonalFinanceManager.Areas.Administration.Controllers
         public ActionResult LockUser(LockUserVM model)
         {
             PfmDbContext db = new PfmDbContext();
-            db.Users.FirstOrDefault(user => user.Id == model.Id).LockoutEnabled =
-                model.LockoutEnabled;
+            db.Users.FirstOrDefault(user => user.Id == model.Id).LockoutEnabled = model.LockoutEnabled;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

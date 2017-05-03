@@ -1,9 +1,6 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using PersonalFinanceManager.Data.Data;
 using PersonalFinanceManager.Data.Models;
-using PersonalFinanceManager.Interfaces;
 using PersonalFinanceManager.Services.ControllerServices;
 using PersonalFinanceManager.Services.Interfaces;
 using PersonalFinanceManager.ViewModels.Books;
@@ -11,45 +8,53 @@ using PersonalFinanceManager.ViewModels.Books;
 namespace PersonalFinanceManager.Controllers
 {
     [Authorize]
-    public class BooksController : Controller, IServices
+    public class BooksController : Controller
     {
+        private readonly IApplicationUserService _applicationUsersService;
+        private readonly IBooksService _booksService;
+        private readonly ICategoriesService _categoriesService;
+        private readonly IMoneyStreamsService _moneyStreamsService;
+
         public BooksController()
         {
-            this.ApplicationUsersService = new ApplicationUsersService();
-            this.BooksService = new BooksService();
-            this.CategoriesService = new CategoriesService();
-            this.MoneyStreamsService = new MoneyStreamsService();
+            this._booksService = new BooksService();
+            this._categoriesService = new CategoriesService();
+            this._moneyStreamsService = new MoneyStreamsService();
+            this._applicationUsersService = new ApplicationUsersService();
         }
 
-        public ApplicationUsersService ApplicationUsersService { get; set; }
-        public BooksService BooksService { get; set; }
-        public CategoriesService CategoriesService { get; set; }
-        public MoneyStreamsService MoneyStreamsService { get; set; }
+        public BooksController(IApplicationUserService applicationUsersService, IBooksService booksService,
+            ICategoriesService categoriesService, IMoneyStreamsService moneyStreamsService) : this()
+        {
+            this._booksService = booksService;
+            this._categoriesService = categoriesService;
+            this._moneyStreamsService = moneyStreamsService;
+            this._applicationUsersService = applicationUsersService;
+        }
+
 
         [HandleError(View = "Home/Index")]
         public ActionResult Index()
         {
             string currentUserId = User.Identity.GetUserId();
-            PfmDbContext context = new PfmDbContext();
-            BooksVM booksVM= new BooksVM();
-            booksVM.BookFormVm = new BooksFormVM();
-            booksVM.Books = BooksService.GetBooks(context, currentUserId);
-            return View(booksVM);
+            BooksVM booksVm = new BooksVM();
+            booksVm.BookFormVm = new BooksFormVM();
+            booksVm.Books = _booksService.GetBooks(currentUserId);
+            return View(booksVm);
         }
 
         [HandleError(View = "Books/Index")]
         public ActionResult Details(int id)
         {
             string currentUserId = User.Identity.GetUserId();
-            PfmDbContext context = new PfmDbContext();
-            if (BooksService.CheckIfValidBook(context, id, currentUserId))
+            if (_booksService.CheckIfValidBook(id, currentUserId))
             {
                 BooksDetailsVM model = new BooksDetailsVM();
-                Book currentBook = BooksService.GetBook(context, id, currentUserId);
+                Book currentBook = _booksService.GetBook(id, currentUserId);
                 model.Name = currentBook.Name;
-                model.Currency = currentBook.Currency;    
-                model.AverageDailyBudget = MoneyStreamsService.GetCurrentMonthDailyBudget(context, id, currentUserId);
-                model.ExpensesByCategory = CategoriesService.GetCurrentMonthExpensesCategories(context, id, currentUserId);
+                model.Currency = currentBook.Currency;
+                model.AverageDailyBudget = _moneyStreamsService.GetCurrentMonthDailyBudget(id, currentUserId);
+                model.ExpensesByCategory = _categoriesService.GetCurrentMonthExpensesCategories(id, currentUserId);
                 return View(model);
             }
             return RedirectToAction("Index");
@@ -59,25 +64,24 @@ namespace PersonalFinanceManager.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(BooksFormVM booksFormVM)
-        {         
+        {
             string currentUserId = User.Identity.GetUserId();
-            PfmDbContext context = new PfmDbContext();
-            var currentBook = BooksService.GetBook(context, booksFormVM.Id, currentUserId);
+            var currentBook = _booksService.GetBook(booksFormVM.Id, currentUserId);
             if (currentBook != null)
             {
                 currentBook.Name = booksFormVM.Name;
                 currentBook.Currency = booksFormVM.Currency;
-                BooksService.SaveBook(context);
+                _booksService.SaveBook();
             }
             else
             {
                 Book toAdd = new Book();
                 toAdd.Name = booksFormVM.Name;
                 toAdd.Currency = booksFormVM.Currency;
-                toAdd.Owner = ApplicationUsersService.GetUser(context, currentUserId);
-                BooksService.SaveBook(context, toAdd);
+                toAdd.Owner = _applicationUsersService.GetUser(currentUserId);
+                _booksService.SaveBook(toAdd);
             }
-            return this.PartialView("_BooksListPartial", BooksService.GetBooks(context, currentUserId));
+            return this.PartialView("_BooksListPartial", _booksService.GetBooks(currentUserId));
         }
 
         [HandleError(View = "_ErrorPartial")]
@@ -86,8 +90,7 @@ namespace PersonalFinanceManager.Controllers
         public ActionResult Edit(int id)
         {
             string currentUserId = User.Identity.GetUserId();
-            PfmDbContext context = new PfmDbContext();
-            Book currentBook = BooksService.GetBook(context, id, currentUserId);
+            Book currentBook = _booksService.GetBook(id, currentUserId);
             BooksFormVM model = new BooksFormVM();
             model.Id = currentBook.Id;
             model.Name = currentBook.Name;
@@ -101,9 +104,8 @@ namespace PersonalFinanceManager.Controllers
         public ActionResult Delete(int id)
         {
             string currentUserId = User.Identity.GetUserId();
-            PfmDbContext context = new PfmDbContext();
-            BooksService.DeleteBook(context, id, currentUserId);
-            return this.PartialView("_BooksListPartial", BooksService.GetBooks(context, currentUserId));
+            _booksService.DeleteBook(id, currentUserId);
+            return this.PartialView("_BooksListPartial", _booksService.GetBooks(currentUserId));
         }
     }
 }

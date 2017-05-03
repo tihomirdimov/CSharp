@@ -6,7 +6,7 @@ namespace PersonalFinanceManager.Data.Models
     {
         public Category()
         {
-            this.IsDeleted = false;
+            IsDeleted = false;
         }
 
         [Key]

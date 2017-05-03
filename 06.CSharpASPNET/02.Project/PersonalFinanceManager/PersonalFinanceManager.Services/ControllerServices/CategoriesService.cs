@@ -1,48 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using PersonalFinanceManager.Data.Data;
 using PersonalFinanceManager.Data.Models;
+using PersonalFinanceManager.Services.Interfaces;
 
 namespace PersonalFinanceManager.Services.ControllerServices
 {
-    public class CategoriesService
+    public class CategoriesService : ICategoriesService
     {
-        public Category GetCategory(PfmDbContext context, int categoryId, string userId)
+        private readonly PfmDbContext _context;
+
+        public CategoriesService()
         {
-            return context.Categories.FirstOrDefault(c => c.Id == categoryId && c.Owner.Id == userId);
+            _context = new PfmDbContext();
         }
 
-        public ICollection<Category> GetCategories(PfmDbContext context, string userId)
+        public Category GetCategory(int categoryId, string userId)
         {
-            return context.Categories
+            return _context.Categories.FirstOrDefault(c => c.Id == categoryId && c.Owner.Id == userId);
+        }
+
+        public ICollection<Category> GetCategories(string userId)
+        {
+            return _context.Categories
                 .Where(c => c.Owner.Id == userId && c.IsDeleted == false)
                 .OrderBy(c => c.Name).ToList();
         }
 
-        public void SaveCategory(PfmDbContext context)
+        public void SaveCategory()
         {
-            context.SaveChanges();
+            _context.SaveChanges();
         }
 
-        public void SaveCategory(PfmDbContext context, Category category)
+        public void SaveCategory(Category category)
         {
-            context.Categories.Add(category);
-            context.SaveChanges();
+            _context.Categories.Add(category);
+            _context.SaveChanges();
         }
 
-        public void DeleteCategory(PfmDbContext context, int categoryId, string userId)
+        public void DeleteCategory(int categoryId, string userId)
         {
-            context
+            _context
                  .Categories
                  .FirstOrDefault(c => c.Id == categoryId && c.Owner.Id == userId)
                  .IsDeleted = true;
-            context.SaveChanges();
+            _context.SaveChanges();
         }
 
-        public Dictionary<string, decimal> GetCurrentMonthExpensesCategories(PfmDbContext context, int bookId, string userId)
+        public Dictionary<string, decimal> GetCurrentMonthExpensesCategories(int bookId, string userId)
         {
-            var expenses = context.MoneyStreams.Where(ms => ms.Book.Id == bookId &&
+            var expenses = _context.MoneyStreams.Where(ms => ms.Book.Id == bookId &&
                                                      ms.Owner.Id == userId &&
                                                      ms.IsIncome == false &&
                                                      ms.IsDeleted == false &&

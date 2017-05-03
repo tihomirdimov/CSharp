@@ -4,24 +4,32 @@ using System.Diagnostics;
 using System.Linq;
 using PersonalFinanceManager.Data.Data;
 using PersonalFinanceManager.Data.Models;
+using PersonalFinanceManager.Services.Interfaces;
 
 namespace PersonalFinanceManager.Services.ControllerServices
 {
-    public class BooksService
+    public class BooksService : IBooksService
     {
-        public Book GetBook(PfmDbContext context, int bookId, string userId)
+        private readonly PfmDbContext _context;
+
+        public BooksService()
         {
-            return context.Books.FirstOrDefault(b => b.Id == bookId && b.Owner.Id == userId);
+            _context = new PfmDbContext();        
         }
 
-        public ICollection<Book> GetBooks(PfmDbContext context, string userId)
+        public Book GetBook(int bookId, string userId)
         {
-            return context.Books.Where(b => b.Owner.Id == userId && b.IsDeleted == false).OrderBy(b => b.Name).ToList();
+            return _context.Books.FirstOrDefault(b => b.Id == bookId && b.Owner.Id == userId);
         }
 
-        public bool CheckIfValidBook(PfmDbContext context, int bookId, string userId)
+        public ICollection<Book> GetBooks(string userId)
         {
-            var currentBook = context.Books.FirstOrDefault(b => b.Id == bookId);
+            return _context.Books.Where(b => b.Owner.Id == userId && b.IsDeleted == false).OrderBy(b => b.Name).ToList();
+        }
+
+        public bool CheckIfValidBook(int bookId, string userId)
+        {
+            var currentBook = _context.Books.FirstOrDefault(b => b.Id == bookId);
             if (currentBook == null)
             {
                 return false;
@@ -33,21 +41,21 @@ namespace PersonalFinanceManager.Services.ControllerServices
             return true;
         }
 
-        public void SaveBook(PfmDbContext context)
+        public void SaveBook()
         {
-            context.SaveChanges();
+            _context.SaveChanges();
         }
 
-        public void SaveBook(PfmDbContext context, Book book)
+        public void SaveBook(Book book)
         {
-            context.Books.Add(book);
-            context.SaveChanges();
+            _context.Books.Add(book);
+            _context.SaveChanges();
         }
 
-        public void DeleteBook(PfmDbContext context, int bookId, string userId)
+        public void DeleteBook(int bookId, string userId)
         {
-            context.Books.FirstOrDefault(b => b.Id == bookId && b.Owner.Id == userId).IsDeleted = true;
-            context.SaveChanges();
+            _context.Books.FirstOrDefault(b => b.Id == bookId && b.Owner.Id == userId).IsDeleted = true;
+            _context.SaveChanges();
         }
     }
 }

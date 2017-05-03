@@ -88,10 +88,12 @@
     <Compile Include="ControllerServices\ApplicationUsersService.cs" />
     <Compile Include="ControllerServices\BooksService.cs" />
     <Compile Include="ControllerServices\CategoriesService.cs" />
-    <Compile Include="Interfaces\IContext.cs" />
+    <Compile Include="Interfaces\IApplicationUserService.cs" />
+    <Compile Include="Interfaces\IBooksService.cs" />
     <Compile Include="ControllerServices\MoneyStreamsService.cs" />
+    <Compile Include="Interfaces\ICategoriesService.cs" />
+    <Compile Include="Interfaces\IMoneyStreamsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DbService\DbService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

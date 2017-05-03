@@ -3,14 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using PersonalFinanceManager.Data.Data;
 using PersonalFinanceManager.Data.Models;
+using PersonalFinanceManager.Services.Interfaces;
 
 namespace PersonalFinanceManager.Services.ControllerServices
 {
-    public class MoneyStreamsService
+    public class MoneyStreamsService : IMoneyStreamsService
     {
-        public bool CheckIfValidMoneyStream(PfmDbContext context, int moneyStreamId, int bookId, string userId)
+        private readonly PfmDbContext _context;
+
+        public MoneyStreamsService()
         {
-            var currentMoneystream = context.MoneyStreams.FirstOrDefault(ms => ms.Id == moneyStreamId);
+            _context = new PfmDbContext();
+        }
+
+        public bool CheckIfValidMoneyStream(int moneyStreamId, int bookId, string userId)
+        {
+            var currentMoneystream = _context.MoneyStreams.FirstOrDefault(ms => ms.Id == moneyStreamId);
             if (currentMoneystream == null)
             {
                 return false;
@@ -26,38 +34,38 @@ namespace PersonalFinanceManager.Services.ControllerServices
             return true;
         }
 
-        public MoneyStream GetMoneyStream(PfmDbContext context, int moneyStreamId, string userId)
+        public MoneyStream GetMoneyStream(int moneyStreamId, string userId)
         {
-            return context.MoneyStreams.FirstOrDefault(ms => ms.Id == moneyStreamId && ms.Owner.Id == userId);
+            return _context.MoneyStreams.FirstOrDefault(ms => ms.Id == moneyStreamId && ms.Owner.Id == userId);
         }
 
-        public ICollection<MoneyStream> GetMoneyStreamsList(PfmDbContext context, int bookId, string userId)
+        public ICollection<MoneyStream> GetMoneyStreamsList(int bookId, string userId)
         {
-            return context.MoneyStreams
+            return _context.MoneyStreams
                 .Where(ms => ms.Owner.Id == userId && ms.Book.Id == bookId && ms.IsDeleted == false)
                 .OrderByDescending(ms => ms.Date).ToList();
         }
 
-        public void SaveMoneyStream(PfmDbContext context, MoneyStream moneyStream)
+        public void SaveMoneyStream(MoneyStream moneyStream)
         {
-            context.MoneyStreams.Add(moneyStream);
-            context.SaveChanges();
+            _context.MoneyStreams.Add(moneyStream);
+            _context.SaveChanges();
         }
 
-        public void DeleteMoneyStream(PfmDbContext context, int moneyStreamId, string userId)
+        public void DeleteMoneyStream(int moneyStreamId, string userId)
         {
-            context.MoneyStreams.FirstOrDefault(c => c.Id == moneyStreamId && c.Owner.Id == userId).IsDeleted = true;
-            context.SaveChanges();
+            _context.MoneyStreams.FirstOrDefault(c => c.Id == moneyStreamId && c.Owner.Id == userId).IsDeleted = true;
+            _context.SaveChanges();
         }
 
-        public decimal GetCurrentMonthDailyBudget(PfmDbContext context, int bookId, string userId)
+        public decimal GetCurrentMonthDailyBudget(int bookId, string userId)
         {
-            decimal expenses = context.MoneyStreams.Where(ms => ms.Book.Id == bookId &&
+            decimal expenses = _context.MoneyStreams.Where(ms => ms.Book.Id == bookId &&
                                                     ms.Owner.Id == userId &&
                                                     ms.IsIncome == false &&
                                                     ms.IsDeleted == false &&
                                                     ms.Date.Month == DateTime.Today.Month).Sum(ms => ms.Amount);
-            decimal incomes = context.MoneyStreams.Where(ms => ms.Book.Id == bookId &&
+            decimal incomes = _context.MoneyStreams.Where(ms => ms.Book.Id == bookId &&
                                                     ms.Owner.Id == userId &&
                                                     ms.IsIncome == true &&
                                                     ms.IsDeleted == false &&
