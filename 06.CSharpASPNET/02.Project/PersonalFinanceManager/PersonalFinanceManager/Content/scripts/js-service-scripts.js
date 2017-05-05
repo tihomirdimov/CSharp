@@ -13,6 +13,6 @@ function ClearMoneyStreamForm() {
     $('#moneyStream-name').val('');
     $('#moneyStream-amount').val('');
     $('#moneyStream-date').val('');
-    $('#moneyStream-isIncome').val('');
+    $('#moneyStream-isIncome').removeAttr('checked');
     $('#moneyStream-id').val('');
 }

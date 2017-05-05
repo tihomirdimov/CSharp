@@ -6,7 +6,7 @@ using PersonalFinanceManager.Services.Interfaces;
 
 namespace PersonalFinanceManager.Services.ControllerServices
 {
-    public class ApplicationUsersService : IApplicationUserService
+    public class ApplicationUsersService : IApplicationUsersService
     {
         private readonly PfmDbContext _context;
 

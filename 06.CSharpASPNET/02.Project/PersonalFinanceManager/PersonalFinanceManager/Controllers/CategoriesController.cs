@@ -1,37 +1,27 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Diagnostics;
+using System.Web.Mvc;
+using AutoMapper;
 using Microsoft.AspNet.Identity;
-using PersonalFinanceManager.Data.Data;
 using PersonalFinanceManager.Data.Models;
 using PersonalFinanceManager.Services.ControllerServices;
 using PersonalFinanceManager.Services.Interfaces;
 using PersonalFinanceManager.ViewModels.Categories;
-using AutoMapper.Mappers;
 
 namespace PersonalFinanceManager.Controllers
 {
     [Authorize]
     public class CategoriesController : Controller
     {
-        private readonly IApplicationUserService _applicationUsersService;
-        private readonly IBooksService _booksService;
         private readonly ICategoriesService _categoriesService;
-        private readonly IMoneyStreamsService _moneyStreamsService;
 
-        public CategoriesController()
+        public CategoriesController() : this(new CategoriesService())
         {
-            this._booksService = new BooksService();
-            this._categoriesService = new CategoriesService();
-            this._moneyStreamsService = new MoneyStreamsService();
-            this._applicationUsersService = new ApplicationUsersService();
         }
 
-        public CategoriesController(IApplicationUserService applicationUsersService, IBooksService booksService,
-            ICategoriesService categoriesService, IMoneyStreamsService moneyStreamsService) : this()
+        public CategoriesController(ICategoriesService categoriesService)
         {
-            this._booksService = booksService;
             this._categoriesService = categoriesService;
-            this._moneyStreamsService = moneyStreamsService;
-            this._applicationUsersService = applicationUsersService;
         }
 
         [HandleError(View = "_ErrorPartial")]
@@ -49,17 +39,16 @@ namespace PersonalFinanceManager.Controllers
         public ActionResult Create(CategoriesFormVM categoryFormVM)
         {
             string currentUserId = User.Identity.GetUserId();
-            var currentCategory = _categoriesService.GetCategory(categoryFormVM.Id, currentUserId);
-            if (currentCategory != null)
+            if (categoryFormVM.Id != 0) // update
             {
+                var currentCategory = _categoriesService.GetCategory(categoryFormVM.Id, currentUserId);
                 currentCategory.Name = categoryFormVM.Name;
                 _categoriesService.SaveCategory();
             }
-            else
+            else // add
             {
-                Category toAdd = new Category();
-                toAdd.Name = categoryFormVM.Name;
-                toAdd.Owner = _applicationUsersService.GetUser(currentUserId);
+                var toAdd = Mapper.Map<CategoriesFormVM, Category>(categoryFormVM);
+                toAdd.OwnerId = currentUserId;
                 _categoriesService.SaveCategory(toAdd);
             }
             return this.PartialView("_CategoriesListPartial", _categoriesService.GetCategories(currentUserId));
@@ -72,9 +61,16 @@ namespace PersonalFinanceManager.Controllers
         {
             string currentUserId = User.Identity.GetUserId();
             Category currentCategory = _categoriesService.GetCategory(id, currentUserId);
-            CategoriesFormVM model = new CategoriesFormVM();
-            model.Id = currentCategory.Id;
-            model.Name = currentCategory.Name;
+            try
+            {
+                var model2 = Mapper.Map<Category, CategoriesFormVM>(currentCategory);
+            }
+            catch (Exception e)
+            {
+                    
+                Debug.WriteLine(e);
+            }
+            var model = Mapper.Map<Category,CategoriesFormVM>(currentCategory);
             return this.PartialView("_CategoriesFormPartial", model);
         }
 

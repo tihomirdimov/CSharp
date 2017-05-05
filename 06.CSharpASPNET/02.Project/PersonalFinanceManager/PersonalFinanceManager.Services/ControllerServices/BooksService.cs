@@ -19,12 +19,12 @@ namespace PersonalFinanceManager.Services.ControllerServices
 
         public Book GetBook(int bookId, string userId)
         {
-            return _context.Books.FirstOrDefault(b => b.Id == bookId && b.Owner.Id == userId);
+            return _context.Books.FirstOrDefault(b => b.Id == bookId && b.OwnerId == userId);
         }
 
         public ICollection<Book> GetBooks(string userId)
         {
-            return _context.Books.Where(b => b.Owner.Id == userId && b.IsDeleted == false).OrderBy(b => b.Name).ToList();
+            return _context.Books.Where(b => b.OwnerId == userId && b.IsDeleted == false).OrderBy(b => b.Name).ToList();
         }
 
         public bool CheckIfValidBook(int bookId, string userId)
@@ -34,7 +34,7 @@ namespace PersonalFinanceManager.Services.ControllerServices
             {
                 return false;
             }
-            if (currentBook.Owner.Id != userId)
+            if (currentBook.OwnerId != userId)
             {
                 return false;
             }
@@ -54,7 +54,7 @@ namespace PersonalFinanceManager.Services.ControllerServices
 
         public void DeleteBook(int bookId, string userId)
         {
-            _context.Books.FirstOrDefault(b => b.Id == bookId && b.Owner.Id == userId).IsDeleted = true;
+            _context.Books.FirstOrDefault(b => b.Id == bookId && b.OwnerId == userId).IsDeleted = true;
             _context.SaveChanges();
         }
     }

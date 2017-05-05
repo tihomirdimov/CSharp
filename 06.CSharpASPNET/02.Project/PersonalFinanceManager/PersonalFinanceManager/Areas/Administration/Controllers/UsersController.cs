@@ -11,18 +11,16 @@ using PersonalFinanceManager.Services.Interfaces;
 
 namespace PersonalFinanceManager.Areas.Administration.Controllers
 {
-    [Authorize]
     [Authorize(Roles = "Admin")]
     public class UsersController : Controller
     {
-        private readonly IApplicationUserService _applicationUsersService;
+        private readonly IApplicationUsersService _applicationUsersService;
 
-        public UsersController()
+        public UsersController() : this(new ApplicationUsersService())
         {
-            this._applicationUsersService = new ApplicationUsersService();
         }
 
-        public UsersController(IApplicationUserService applicationUsersService) : this()
+        public UsersController(IApplicationUsersService applicationUsersService) 
         {
             this._applicationUsersService = applicationUsersService;
         }

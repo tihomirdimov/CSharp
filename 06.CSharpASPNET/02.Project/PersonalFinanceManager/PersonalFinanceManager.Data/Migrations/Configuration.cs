@@ -1,3 +1,6 @@
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+
 namespace PersonalFinanceManager.Data.Migrations
 {
     using System;
@@ -26,6 +29,16 @@ namespace PersonalFinanceManager.Data.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            if (!roleManager.RoleExists("Admin"))
+            {
+                roleManager.Create(new IdentityRole("Admin"));
+            }
+            if (!roleManager.RoleExists("User"))
+            {
+                roleManager.Create(new IdentityRole("User"));
+            }
         }
     }
 }

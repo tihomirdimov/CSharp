@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Migrations;
+using System.Diagnostics;
 using System.Linq;
 using PersonalFinanceManager.Data.Data;
 using PersonalFinanceManager.Data.Models;
@@ -19,13 +19,13 @@ namespace PersonalFinanceManager.Services.ControllerServices
 
         public Category GetCategory(int categoryId, string userId)
         {
-            return _context.Categories.FirstOrDefault(c => c.Id == categoryId && c.Owner.Id == userId);
+            return _context.Categories.FirstOrDefault(c => c.Id == categoryId && c.OwnerId == userId);
         }
 
         public ICollection<Category> GetCategories(string userId)
         {
             return _context.Categories
-                .Where(c => c.Owner.Id == userId && c.IsDeleted == false)
+                .Where(c => c.OwnerId == userId && c.IsDeleted == false)
                 .OrderBy(c => c.Name).ToList();
         }
 
@@ -36,15 +36,23 @@ namespace PersonalFinanceManager.Services.ControllerServices
 
         public void SaveCategory(Category category)
         {
-            _context.Categories.Add(category);
-            _context.SaveChanges();
+            try
+            {
+                _context.Categories.Add(category);
+                _context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);         
+            }
+            
         }
 
         public void DeleteCategory(int categoryId, string userId)
         {
             _context
                  .Categories
-                 .FirstOrDefault(c => c.Id == categoryId && c.Owner.Id == userId)
+                 .FirstOrDefault(c => c.Id == categoryId && c.OwnerId == userId)
                  .IsDeleted = true;
             _context.SaveChanges();
         }
@@ -52,7 +60,7 @@ namespace PersonalFinanceManager.Services.ControllerServices
         public Dictionary<string, decimal> GetCurrentMonthExpensesCategories(int bookId, string userId)
         {
             var expenses = _context.MoneyStreams.Where(ms => ms.Book.Id == bookId &&
-                                                     ms.Owner.Id == userId &&
+                                                     ms.OwnerId == userId &&
                                                      ms.IsIncome == false &&
                                                      ms.IsDeleted == false &&
                                                      ms.Date.Month == DateTime.Today.Month).ToList();

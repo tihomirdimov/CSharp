@@ -92,6 +92,10 @@
   <ItemGroup>
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="Data\PfmDbContext.cs" />
+    <Compile Include="Migrations\201705041130507_firstmigration.cs" />
+    <Compile Include="Migrations\201705041130507_firstmigration.Designer.cs">
+      <DependentUpon>201705041130507_firstmigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Book.cs" />
@@ -102,6 +106,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201705041130507_firstmigration.resx">
+      <DependentUpon>201705041130507_firstmigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

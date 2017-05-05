@@ -1,4 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Diagnostics;
+using System.Web.Mvc;
+using AutoMapper;
 using Microsoft.AspNet.Identity;
 using PersonalFinanceManager.Data.Models;
 using PersonalFinanceManager.Services.ControllerServices;
@@ -10,26 +13,21 @@ namespace PersonalFinanceManager.Controllers
     [Authorize]
     public class BooksController : Controller
     {
-        private readonly IApplicationUserService _applicationUsersService;
         private readonly IBooksService _booksService;
         private readonly ICategoriesService _categoriesService;
         private readonly IMoneyStreamsService _moneyStreamsService;
 
-        public BooksController()
+        public BooksController() : this(new BooksService(),
+            new CategoriesService(), new MoneyStreamsService())
         {
-            this._booksService = new BooksService();
-            this._categoriesService = new CategoriesService();
-            this._moneyStreamsService = new MoneyStreamsService();
-            this._applicationUsersService = new ApplicationUsersService();
         }
 
-        public BooksController(IApplicationUserService applicationUsersService, IBooksService booksService,
-            ICategoriesService categoriesService, IMoneyStreamsService moneyStreamsService) : this()
+        public BooksController(IBooksService booksService,
+            ICategoriesService categoriesService, IMoneyStreamsService moneyStreamsService)
         {
             this._booksService = booksService;
             this._categoriesService = categoriesService;
             this._moneyStreamsService = moneyStreamsService;
-            this._applicationUsersService = applicationUsersService;
         }
 
 
@@ -66,19 +64,17 @@ namespace PersonalFinanceManager.Controllers
         public ActionResult Create(BooksFormVM booksFormVM)
         {
             string currentUserId = User.Identity.GetUserId();
-            var currentBook = _booksService.GetBook(booksFormVM.Id, currentUserId);
-            if (currentBook != null)
+            if (booksFormVM.Id != 0)
             {
+                var currentBook = _booksService.GetBook(booksFormVM.Id, currentUserId);
                 currentBook.Name = booksFormVM.Name;
                 currentBook.Currency = booksFormVM.Currency;
                 _booksService.SaveBook();
             }
             else
             {
-                Book toAdd = new Book();
-                toAdd.Name = booksFormVM.Name;
-                toAdd.Currency = booksFormVM.Currency;
-                toAdd.Owner = _applicationUsersService.GetUser(currentUserId);
+                var toAdd = Mapper.Map<BooksFormVM, Book>(booksFormVM);
+                toAdd.OwnerId = currentUserId;
                 _booksService.SaveBook(toAdd);
             }
             return this.PartialView("_BooksListPartial", _booksService.GetBooks(currentUserId));
@@ -91,11 +87,16 @@ namespace PersonalFinanceManager.Controllers
         {
             string currentUserId = User.Identity.GetUserId();
             Book currentBook = _booksService.GetBook(id, currentUserId);
-            BooksFormVM model = new BooksFormVM();
-            model.Id = currentBook.Id;
-            model.Name = currentBook.Name;
-            model.Currency = currentBook.Currency;
-            return this.PartialView("_BooksFormPartial", model);
+            try
+            {
+                var model = Mapper.Map<Book, BooksFormVM>(currentBook);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+            var model2 = Mapper.Map<Book, BooksFormVM>(currentBook);
+            return this.PartialView("_BooksFormPartial", model2);
         }
 
         [HandleError(View = "_ErrorPartial")]

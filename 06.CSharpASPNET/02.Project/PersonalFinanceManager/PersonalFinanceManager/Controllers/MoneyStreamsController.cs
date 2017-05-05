@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
+using AutoMapper;
 using Microsoft.AspNet.Identity;
-using PersonalFinanceManager.Data.Data;
 using PersonalFinanceManager.Data.Models;
 using PersonalFinanceManager.Services.ControllerServices;
 using PersonalFinanceManager.Services.Interfaces;
@@ -11,26 +11,21 @@ namespace PersonalFinanceManager.Controllers
     [Authorize]
     public class MoneyStreamsController : Controller
     {
-        private readonly IApplicationUserService _applicationUsersService;
         private readonly IBooksService _booksService;
         private readonly ICategoriesService _categoriesService;
         private readonly IMoneyStreamsService _moneyStreamsService;
 
-        public MoneyStreamsController()
+        public MoneyStreamsController() : this(new BooksService(),
+            new CategoriesService(), new MoneyStreamsService())
         {
-            this._booksService = new BooksService();
-            this._categoriesService = new CategoriesService();
-            this._moneyStreamsService = new MoneyStreamsService();
-            this._applicationUsersService = new ApplicationUsersService();
         }
 
-        public MoneyStreamsController(IApplicationUserService applicationUsersService, IBooksService booksService,
-            ICategoriesService categoriesService, IMoneyStreamsService moneyStreamsService) : this()
+        public MoneyStreamsController(IBooksService booksService,
+            ICategoriesService categoriesService, IMoneyStreamsService moneyStreamsService)
         {
             this._booksService = booksService;
             this._categoriesService = categoriesService;
             this._moneyStreamsService = moneyStreamsService;
-            this._applicationUsersService = applicationUsersService;
         }
 
         [HandleError(View = "Home/Index")]
@@ -55,17 +50,10 @@ namespace PersonalFinanceManager.Controllers
         public ActionResult Create(MoneyStreamsFormVM model)
         {
             string currentUserId = User.Identity.GetUserId();
-            PfmDbContext context = new PfmDbContext();
             if (_booksService.CheckIfValidBook(model.BookId, currentUserId))
             {
-                MoneyStream toAdd = new MoneyStream();
-                toAdd.Name = model.Name;
-                toAdd.Amount = model.Amount;
-                toAdd.Date = model.Date;
-                toAdd.IsIncome = model.IsIncome;
-                toAdd.Book = _booksService.GetBook(model.BookId, currentUserId);
-                toAdd.Category = _categoriesService.GetCategory(model.CategoryId, currentUserId);
-                toAdd.Owner = _applicationUsersService.GetUser(currentUserId);
+                var toAdd = Mapper.Map<MoneyStreamsFormVM, MoneyStream>(model);
+                toAdd.OwnerId = currentUserId;
                 _moneyStreamsService.SaveMoneyStream(toAdd);
             }
             MoneyStreamsListVM outputModel = new MoneyStreamsListVM();
@@ -80,7 +68,6 @@ namespace PersonalFinanceManager.Controllers
         public ActionResult Delete(int id, int bookId)
         {
             string currentUserId = User.Identity.GetUserId();
-            PfmDbContext context = new PfmDbContext();
             if (_moneyStreamsService.CheckIfValidMoneyStream(id, bookId, currentUserId))
             {
                 _moneyStreamsService.DeleteMoneyStream(id, currentUserId);

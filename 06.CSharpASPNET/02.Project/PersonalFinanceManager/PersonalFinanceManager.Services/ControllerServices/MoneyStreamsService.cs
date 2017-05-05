@@ -23,11 +23,11 @@ namespace PersonalFinanceManager.Services.ControllerServices
             {
                 return false;
             }
-            if (currentMoneystream.Book.Id != bookId)
+            if (currentMoneystream.BookId != bookId)
             {
                 return false;
             }
-            if (currentMoneystream.Owner.Id != userId)
+            if (currentMoneystream.OwnerId != userId)
             {
                 return false;
             }
@@ -36,13 +36,13 @@ namespace PersonalFinanceManager.Services.ControllerServices
 
         public MoneyStream GetMoneyStream(int moneyStreamId, string userId)
         {
-            return _context.MoneyStreams.FirstOrDefault(ms => ms.Id == moneyStreamId && ms.Owner.Id == userId);
+            return _context.MoneyStreams.FirstOrDefault(ms => ms.Id == moneyStreamId && ms.OwnerId == userId);
         }
 
         public ICollection<MoneyStream> GetMoneyStreamsList(int bookId, string userId)
         {
             return _context.MoneyStreams
-                .Where(ms => ms.Owner.Id == userId && ms.Book.Id == bookId && ms.IsDeleted == false)
+                .Where(ms => ms.OwnerId == userId && ms.BookId == bookId && ms.IsDeleted == false)
                 .OrderByDescending(ms => ms.Date).ToList();
         }
 
@@ -54,19 +54,19 @@ namespace PersonalFinanceManager.Services.ControllerServices
 
         public void DeleteMoneyStream(int moneyStreamId, string userId)
         {
-            _context.MoneyStreams.FirstOrDefault(c => c.Id == moneyStreamId && c.Owner.Id == userId).IsDeleted = true;
+            _context.MoneyStreams.FirstOrDefault(c => c.Id == moneyStreamId && c.OwnerId == userId).IsDeleted = true;
             _context.SaveChanges();
         }
 
         public decimal GetCurrentMonthDailyBudget(int bookId, string userId)
         {
-            decimal expenses = _context.MoneyStreams.Where(ms => ms.Book.Id == bookId &&
-                                                    ms.Owner.Id == userId &&
+            decimal expenses = _context.MoneyStreams.Where(ms => ms.BookId == bookId &&
+                                                    ms.OwnerId == userId &&
                                                     ms.IsIncome == false &&
                                                     ms.IsDeleted == false &&
                                                     ms.Date.Month == DateTime.Today.Month).Sum(ms => ms.Amount);
-            decimal incomes = _context.MoneyStreams.Where(ms => ms.Book.Id == bookId &&
-                                                    ms.Owner.Id == userId &&
+            decimal incomes = _context.MoneyStreams.Where(ms => ms.BookId == bookId &&
+                                                    ms.OwnerId == userId &&
                                                     ms.IsIncome == true &&
                                                     ms.IsDeleted == false &&
                                                     ms.Date.Month == DateTime.Today.Month).Sum(ms => ms.Amount);

@@ -10,7 +10,7 @@ namespace PersonalFinanceManager.Data.Data
     public class PfmDbContext : IdentityDbContext<ApplicationUser>
     {
         public PfmDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("PersonalFinanceManager", throwIfV1Schema: false)
         {
         }
 

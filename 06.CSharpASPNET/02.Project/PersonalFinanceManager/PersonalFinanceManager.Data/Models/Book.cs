@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PersonalFinanceManager.Data.Models
 {
@@ -16,7 +17,9 @@ namespace PersonalFinanceManager.Data.Models
         public string Name { get; set; }
         public string Currency { get; set; }
         public bool IsDeleted { get; set; }
-        public virtual ICollection<MoneyStream> MoneyStreams { get; set; }
+        [ForeignKey(nameof(Owner))]
+        public string OwnerId { get; set; }      
         public virtual ApplicationUser Owner { get; set; }
+        public virtual ICollection<MoneyStream> MoneyStreams { get; set; }
     }
 }

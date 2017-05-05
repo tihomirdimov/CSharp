@@ -88,7 +88,7 @@
     <Compile Include="ControllerServices\ApplicationUsersService.cs" />
     <Compile Include="ControllerServices\BooksService.cs" />
     <Compile Include="ControllerServices\CategoriesService.cs" />
-    <Compile Include="Interfaces\IApplicationUserService.cs" />
+    <Compile Include="Interfaces\IApplicationUsersService.cs" />
     <Compile Include="Interfaces\IBooksService.cs" />
     <Compile Include="ControllerServices\MoneyStreamsService.cs" />
     <Compile Include="Interfaces\ICategoriesService.cs" />
