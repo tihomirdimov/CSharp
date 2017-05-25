@@ -15,10 +15,6 @@ namespace PersonalFinanceManager.Controllers
     {
         private readonly ICategoriesService _categoriesService;
 
-        public CategoriesController() : this(new CategoriesService())
-        {
-        }
-
         public CategoriesController(ICategoriesService categoriesService)
         {
             this._categoriesService = categoriesService;

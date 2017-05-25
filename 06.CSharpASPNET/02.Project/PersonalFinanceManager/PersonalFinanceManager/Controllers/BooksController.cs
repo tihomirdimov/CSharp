@@ -17,19 +17,12 @@ namespace PersonalFinanceManager.Controllers
         private readonly ICategoriesService _categoriesService;
         private readonly IMoneyStreamsService _moneyStreamsService;
 
-        public BooksController() : this(new BooksService(),
-            new CategoriesService(), new MoneyStreamsService())
-        {
-        }
-
-        public BooksController(IBooksService booksService,
-            ICategoriesService categoriesService, IMoneyStreamsService moneyStreamsService)
+        public BooksController(IBooksService booksService, ICategoriesService categoriesService, IMoneyStreamsService moneyStreamsService)
         {
             this._booksService = booksService;
             this._categoriesService = categoriesService;
             this._moneyStreamsService = moneyStreamsService;
         }
-
 
         [HandleError(View = "Home/Index")]
         public ActionResult Index()

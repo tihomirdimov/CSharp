@@ -15,11 +15,6 @@ namespace PersonalFinanceManager.Controllers
         private readonly ICategoriesService _categoriesService;
         private readonly IMoneyStreamsService _moneyStreamsService;
 
-        public MoneyStreamsController() : this(new BooksService(),
-            new CategoriesService(), new MoneyStreamsService())
-        {
-        }
-
         public MoneyStreamsController(IBooksService booksService,
             ICategoriesService categoriesService, IMoneyStreamsService moneyStreamsService)
         {
