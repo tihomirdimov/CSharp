@@ -1,0 +1,11 @@
+C:\Users\Tihomir Dimov\Desktop\Minedraft.Tests\bin\Debug\Minedraft.Tests.dll
+C:\Users\Tihomir Dimov\Desktop\Minedraft.Tests\bin\Debug\Minedraft.Tests.pdb
+C:\Users\Tihomir Dimov\Desktop\Minedraft.Tests\bin\Debug\Minedraft.exe
+C:\Users\Tihomir Dimov\Desktop\Minedraft.Tests\bin\Debug\nunit.framework.dll
+C:\Users\Tihomir Dimov\Desktop\Minedraft.Tests\bin\Debug\Minedraft.pdb
+C:\Users\Tihomir Dimov\Desktop\Minedraft.Tests\bin\Debug\Minedraft.exe.config
+C:\Users\Tihomir Dimov\Desktop\Minedraft.Tests\bin\Debug\nunit.framework.xml
+C:\Users\Tihomir Dimov\Desktop\Minedraft.Tests\obj\Debug\Minedraft.Tests.csprojResolveAssemblyReference.cache
+C:\Users\Tihomir Dimov\Desktop\Minedraft.Tests\obj\Debug\Minedraft.Tests.csproj.CoreCompileInputs.cache
+C:\Users\Tihomir Dimov\Desktop\Minedraft.Tests\obj\Debug\Minedraft.Tests.dll
+C:\Users\Tihomir Dimov\Desktop\Minedraft.Tests\obj\Debug\Minedraft.Tests.pdb

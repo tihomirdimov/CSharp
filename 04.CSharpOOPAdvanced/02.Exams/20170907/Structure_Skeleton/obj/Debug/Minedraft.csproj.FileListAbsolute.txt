@@ -1,0 +1,6 @@
+C:\Users\Tihomir Dimov\Desktop\Structure_Skeleton\obj\Debug\Minedraft.csproj.CoreCompileInputs.cache
+C:\Users\Tihomir Dimov\Desktop\Structure_Skeleton\bin\Debug\Minedraft.exe.config
+C:\Users\Tihomir Dimov\Desktop\Structure_Skeleton\bin\Debug\Minedraft.exe
+C:\Users\Tihomir Dimov\Desktop\Structure_Skeleton\bin\Debug\Minedraft.pdb
+C:\Users\Tihomir Dimov\Desktop\Structure_Skeleton\obj\Debug\Minedraft.exe
+C:\Users\Tihomir Dimov\Desktop\Structure_Skeleton\obj\Debug\Minedraft.pdb
